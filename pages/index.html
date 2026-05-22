@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLYMPUS — Anomaly Fact Book</title>
+  <link rel="stylesheet" href="../components/shared/base.css">
+  <style>
+
+    /* === LANDING PAGE STYLES === */
+
+    .olp-hero {
+      padding: 40px 48px 28px;
+    }
+
+    .olp-designation {
+      padding-top: 4px;
+      margin-bottom: 28px;
+    }
+
+    .olp-designation .doc-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .olp-designation h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      line-height: 1.0;
+      margin-bottom: 4px;
+    }
+
+    .olp-designation .subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .olp-rule {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 0 48px 36px;
+    }
+
+    .olp-body {
+      padding: 0 48px 52px;
+      max-width: 760px;
+    }
+
+    .olp-mission p {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text-dim);
+      margin-bottom: 1.2em;
+    }
+
+    .olp-mission p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* === SECTION CARDS === */
+
+    .section-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .section-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--border-accent);
+      padding: 20px 22px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.15s, border-top-color 0.15s;
+    }
+
+    .section-card.live {
+      cursor: pointer;
+    }
+
+    .section-card.live:hover {
+      background: #243d52;
+      border-top-color: var(--text-dim);
+    }
+
+    .section-card.disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .section-card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .section-card-desc {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+
+    .section-card.disabled .section-card-desc {
+      color: var(--text-disabled);
+    }
+
+    .section-card-status {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      margin-top: 14px;
+    }
+
+    .section-card.live .section-card-status {
+      color: var(--text-mid);
+    }
+
+    .section-card.disabled .section-card-status {
+      color: var(--text-primary);
+    }
+
+  </style>
+</head>
+<body class="page-body">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a class="topbar-wordmark" href="index.html">
+      <div class="topbar-seal">
+        <!-- Replace with: <img src="../assets/images/OLYMPUS_Seal.svg" alt="OLYMPUS Seal"> -->
+        <div style="width:46px;height:46px;background:var(--bg-panel-mid);border:1px solid var(--border-accent);"></div>
+      </div>
+      <span class="topbar-name">OLYMPUS</span>
+      <span class="topbar-fullname">Office for the Legislative<br>Management of Powers<br>in the United States</span>
+    </a>
+    <button class="topbar-login" id="btnLogin" onclick="handleLogin()" title="Login with GitHub">&#9650;</button>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-item">
+      <a class="nav-link" href="index.html">Home</a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="heroes.html">Metahuman Registry</a>
+    </div>
+    <div class="nav-item" id="nav-world">
+      <div class="nav-link" onclick="toggleNav('nav-world')">World <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="locations.html" class="disabled">Locations</a>
+        <a href="organizations.html" class="disabled">Organizations</a>
+        <a href="events.html" class="disabled">Events</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-catalog">
+      <div class="nav-link" onclick="toggleNav('nav-catalog')">Catalog <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="artifacts.html" class="disabled">Artifacts</a>
+        <a href="substances.html" class="disabled">Substances</a>
+        <a href="phenomena.html" class="disabled">Phenomena</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-about">
+      <div class="nav-link" onclick="toggleNav('nav-about')">About <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="about-olympus.html" class="disabled">About OLYMPUS</a>
+        <a href="about-project.html" class="disabled">About This Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="olp-hero">
+    <div class="olp-designation">
+      <div class="doc-number">Public Portal &mdash; Classification: Unclassified</div>
+      <h1>Anomaly Fact Book</h1>
+      <div class="subtitle">OLYMPUS World Index &mdash; Metahumans, Organizations, Locations &amp; More</div>
+    </div>
+  </div>
+
+  <hr class="olp-rule">
+
+  <!-- BODY -->
+  <div class="olp-body">
+
+    <div class="olp-mission">
+      <p>The Office for the Legislative Management of Powers in the United States was established by the Adamantine Restraint Act of 2008 to provide federal oversight of metahuman activity within U.S. jurisdiction. OLYMPUS consolidates responsibility for registration, monitoring, classification, and &mdash; where necessary &mdash; containment of anomalous individuals whose abilities constitute a matter of public safety.</p>
+      <p>This portal provides public access to the OLYMPUS Anomaly Fact Book: a living record of registered metahumans &mdash; known to the public as Titans &mdash; alongside affiliated organizations, known locations of interest, catalogued artifacts, anomalous phenomena, and substances of metahuman origin or relevance.</p>
+      <p>Records in this database reflect the most current available intelligence as determined by OLYMPUS analysts. Some records are withheld or redacted in whole or in part pursuant to national security considerations under the Adamantine Restraint Act of 2008.</p>
+    </div>
+
+    <div class="section-cards">
+
+      <a class="section-card live" href="heroes.html">
+        <div class="section-card-title">Metahuman Registry</div>
+        <div class="section-card-desc">The central record of all registered metahumans operating within U.S. jurisdiction &mdash; known abilities, status, area of operations, and more.</div>
+        <div class="section-card-status">Access Registry &rarr;</div>
+      </a>
+
+      <a class="section-card disabled" href="world.html">
+        <div class="section-card-title">World</div>
+        <div class="section-card-desc">Locations of significance, organizations operating in the metahuman sphere, and documented events that have shaped the current landscape.</div>
+        <div class="section-card-status">Coming Soon</div>
+      </a>
+
+      <a class="section-card disabled" href="catalog.html">
+        <div class="section-card-title">Catalog</div>
+        <div class="section-card-desc">Artifacts of metahuman origin or interest, anomalous phenomena under active study, and substances with documented metahuman effects.</div>
+        <div class="section-card-status">Coming Soon</div>
+      </a>
+
+      <a class="section-card disabled" href="about.html">
+        <div class="section-card-title">About</div>
+        <div class="section-card-desc">The mandate and structure of OLYMPUS, and information about this project and the people behind it.</div>
+        <div class="section-card-status">Coming Soon</div>
+      </a>
+
+    </div>
+
+    <div class="classified-note">All information subject to review under the Adamantine Restraint Act. Unauthorized reproduction or distribution is prohibited.</div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    OLYMPUS&trade; and the OLYMPUS Anomaly Fact Book are fictional creations. All characters and content &copy; 2026 David M. Arnold. All rights reserved.
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="../components/shared/utils.js"></script>
+  <script>
+
+    // === NAV DROPDOWNS ===
+    function toggleNav(id) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-item')) {
+        document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open'));
+      }
+    });
+
+    // === AUTH ===
+    // Supabase client and auth handled in utils.js
+    // handleLogin() defined in utils.js
+
+  </script>
+
+</body>
+</html>
