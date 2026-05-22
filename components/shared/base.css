@@ -351,6 +351,7 @@ button {
 
 .page-body {
   padding-top: 104px;   /* topbar 64 + navbar 40 */
+  padding-bottom: 36px;
 }
 
 .page-body.has-breadcrumbs {
@@ -371,6 +372,10 @@ button {
   color: var(--text-footer);
   text-align: center;
   letter-spacing: 0.05em;
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
 }
 
 
