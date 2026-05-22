@@ -39,7 +39,7 @@
   /* Text */
   --text-primary:  #e8e8e8;   /* primary light text */
   --text-mid:      #aac4e0;   /* secondary text, nav links */
-  --text-dim:      #8aaccc;   /* muted text, subtitles, card descriptions */
+  --text-dim:      #b8d0e8;   /* muted text, subtitles, card descriptions */
   --text-faint:    #5a7a9a;   /* very muted, labels, classified notes */
   --text-footer:   #666666;   /* footer text */
   --text-disabled: #4a6a8a;   /* disabled states */
