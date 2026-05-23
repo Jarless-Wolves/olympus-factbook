@@ -814,7 +814,6 @@
 
     function populateDetail(char) {
       document.getElementById('charName').textContent        = char.name || '—';
-      document.getElementById('detailName').textContent      = char.name || '—';
       document.getElementById('breadcrumb-current').innerHTML = `<a href="titans.html" onclick="showGallery(); return false;">Titan Registry</a><span class="sep">›</span><span class="current">${char.name || '—'}</span>`;
       document.getElementById('charBackground').textContent  = char.short_bio || '';
       document.getElementById('charPowers').textContent      = char.powers || '';
