@@ -908,7 +908,7 @@
         ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
       requestAnimationFrame(() => drawRadar(char));
     }
-
+    
     function computePowerLevel(char) {
       const v = ['strength','durability','speed','fighting','senses','intellect','will','projection']
         .map(k => parseInt(char[k])||0);
@@ -996,6 +996,11 @@
         d.setAttribute('font-family','Barlow Condensed, sans-serif');d.setAttribute('font-size','13');d.setAttribute('fill','#7a9ab8');
         d.textContent=desc[val]||'';
         svg.appendChild(d);
+      });
+      requestAnimationFrame(() => {
+        const container = document.getElementById('radarContainer');
+        const gap = container.clientHeight - svg.clientHeight;
+        if (gap > 0) svg.style.marginTop = (gap / 2) + 'px';
       });
     }
 
