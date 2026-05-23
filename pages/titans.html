@@ -610,17 +610,16 @@
         <option>Sovereign</option>
         <option>Unknown</option>
       </select>
-      <select class="gallery-filter" id="filterArea" onchange="applyFilters()">
-        <option value="">All Areas</option>
-        <option>Local</option>
-        <option>City</option>
-        <option>Regional</option>
-        <option>National</option>
-        <option>Global</option>
-        <option>Solar</option>
-        <option>Interstellar</option>
-        <option>Galactic</option>
-        <option>Universal</option>
+      <select class="gallery-filter" id="filterPowerLevel" onchange="applyFilters()">
+        <option value="">All Power Levels</option>
+        <option>Normal Human</option>
+        <option>Expert Human</option>
+        <option>Elite Human</option>
+        <option>Low Meta</option>
+        <option>Mid Meta</option>
+        <option>High Meta</option>
+        <option>Extreme Meta</option>
+        <option>Cosmic</option>
       </select>
       <select class="gallery-filter" id="filterArchetype" onchange="applyFilters()">
         <option value="">All Archetypes</option>
@@ -852,13 +851,13 @@
     function applyFilters() {
       const search = document.getElementById('searchInput').value.toLowerCase();
       const status = document.getElementById('filterStatus').value;
-      const area   = document.getElementById('filterArea').value;
+      const powerLevel = document.getElementById('filterPowerLevel').value;
       const arch   = document.getElementById('filterArchetype').value;
 
       filteredChars = characters.filter(c => {
         if (search && !(c.name || '').toLowerCase().includes(search)) return false;
         if (status && c.status !== status) return false;
-        if (area   && c.area_of_operations !== area) return false;
+        if (powerLevel && computePowerLevel(c) !== powerLevel) return false;
         if (arch   && !(c.archetype || '').includes(arch)) return false;
         return true;
       });
