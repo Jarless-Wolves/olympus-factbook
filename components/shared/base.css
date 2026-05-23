@@ -309,7 +309,7 @@ button {
 
 .breadcrumbs {
   position: fixed;
-  top: 104px;   /* 64px topbar + 40px navbar */
+  top: 112px;   /* 72px topbar + 40px navbar */
   left: 0;
   width: 100%;
   background: var(--bg-page);
@@ -350,12 +350,12 @@ button {
    ------------------------------------------------------------ */
 
 .page-body {
-  padding-top: 104px;   /* topbar 64 + navbar 40 */
+  padding-top: 112px;   /* topbar 72 + navbar 40 */
   padding-bottom: 36px;
 }
 
 .page-body.has-breadcrumbs {
-  padding-top: 136px;   /* + breadcrumbs ~32 */
+  padding-top: 144px;   /* + breadcrumbs ~32 */
 }
 
 
