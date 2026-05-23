@@ -636,6 +636,8 @@
           <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
           <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
           <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
+          <div class="bio-row"><span class="bio-label">Species</span><span class="bio-value" id="bioSpecies"></span></div>
+          <div class="bio-row"><span class="bio-label">Culture</span><span class="bio-value" id="bioCulture"></span></div>
           <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
           <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
           <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
@@ -644,8 +646,8 @@
           <div class="bio-section-title">Ability Profile</div>
           <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
           <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
+          <div class="bio-row"><span class="bio-label">Power Origin</span><span class="bio-value" id="abilPowerOrigin"></span></div>
           <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
-
           <div id="radarContainer">
             <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
@@ -859,7 +861,10 @@
       document.getElementById('bioTrauma').textContent       = char.trauma || '—';
       document.getElementById('abilArchetypes').textContent  = char.archetype || '—';
       document.getElementById('abilPowerLevel').textContent  = computePowerLevel(char);
-      document.getElementById('abilPowerSource').textContent = char.power_origin || '—';
+      document.getElementById('abilPowerOrigin').textContent = char.power_origin || '—';
+      document.getElementById('bioSpecies').textContent = char.species || '—';
+      document.getElementById('bioCulture').textContent = char.culture || '—';
+      document.getElementById('abilPowerSource').textContent = char.power_source || '—';
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
       document.getElementById('charCredit').textContent = char.created_by
         ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
@@ -1074,20 +1079,23 @@
 
       // Bio fields
       [['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],['bioEyes','eyes'],
-       ['bioHeight','height'],['bioWeight','weight'],['bioAge','age'],['bioOccupation','occupation']]
-        .forEach(([id,f])=>rep(id,inp(char[f],f)));
+       ['bioHeight','height'],['bioWeight','weight'],['bioAge','age'],['bioOccupation','occupation'],
+       ['bioSpecies','species'],['bioCulture','culture']]
+      .forEach(([id,f])=>rep(id,inp(char[f],f)));
 
       rep('bioStatus', sel('status', STATUS_OPTIONS, char.status));
       rep('bioOperations', sel('area_of_operations', OPERATIONS_OPTIONS, char.area_of_operations));
 
       [['bioMotivation','motivation',MOTIVATION_OPTIONS],['bioTrauma','trauma',TRAUMA_OPTIONS],
-       ['abilArchetypes','archetype',ARCHETYPE_OPTIONS],['abilPowerSource','power_origin',ORIGIN_OPTIONS]]
+       ['abilArchetypes','archetype',ARCHETYPE_OPTIONS],['abilPowerOrigin','power_origin',ORIGIN_OPTIONS]]
         .forEach(([id,f,opts])=>{
           const el=document.getElementById(id);
           el.textContent='';
           el.appendChild(createMultiSelect(f,opts,splitList(char[f])));
         });
 
+      rep('abilPowerSource', inp(char.power_source, 'power_source'));
+      
       document.getElementById('abilPowerLevel').textContent = computePowerLevel(char);
 
       // Portrait upload
@@ -1183,6 +1191,9 @@
         intellect:          parseInt(characters[currentIndex].intellect)||0,
         will:               parseInt(characters[currentIndex].will)||0,
         projection:         parseInt(characters[currentIndex].projection)||0,
+        species:            gf('bioSpecies','input'),
+        culture:            gf('bioCulture','input'),
+        power_source:       gf('abilPowerSource','input'),
       };
       const {error}=await db.from('mhr_characters').update(updates).eq('id',char.id);
       if(error){alert('Save failed: '+error.message);return;}
