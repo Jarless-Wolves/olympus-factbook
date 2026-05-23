@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLYMPUS — Titan Registry</title>
+  <link rel="stylesheet" href="../components/shared/base.css">
+  <style>
+
+    /* ============================================================
+       TITAN REGISTRY PAGE STYLES
+       ============================================================ */
+
+
+    /* --- GALLERY VIEW --- */
+
+    #view-gallery {
+      display: block;
+    }
+
+    #view-detail {
+      display: none;
+    }
+
+    .gallery-header {
+      padding: 16px 24px;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .gallery-search {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 6px 10px;
+      width: 200px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .gallery-search:focus {
+      border-color: var(--border-accent);
+    }
+
+    .gallery-search::placeholder {
+      color: var(--text-disabled);
+    }
+
+    .gallery-filter {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 6px 10px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .gallery-filter:focus {
+      border-color: var(--border-accent);
+    }
+
+    .gallery-count {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-left: auto;
+    }
+
+    .gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    /* --- CHARACTER CARD (card-image: 260x260) --- */
+
+    .char-card {
+      width: 260px;
+      height: 260px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border: 2px solid var(--border-strong);
+      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--bg-panel);
+      background-size: cover;
+      background-position: top center;
+      flex-shrink: 0;
+    }
+
+    .char-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    /* Status border colors */
+    .char-card.status-hero        { border-color: #4a80c0; }
+    .char-card.status-vigilante   { border-color: #888888; }
+    .char-card.status-criminal    { border-color: #cc4444; }
+    .char-card.status-incarcerated { border-color: #993333; }
+    .char-card.status-inactive    { border-color: #333333; }
+    .char-card.status-sovereign   { border-color: var(--gold); }
+    .char-card.status-agent       { border-color: #cccccc; }
+    .char-card.status-deceased    { border-color: #222222; }
+    .char-card.status-retired     { border-color: #555555; }
+    .char-card.status-unknown     { border-color: var(--border-strong); }
+
+    .char-card-scrim {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.85));
+    }
+
+    .char-card-title {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      right: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .char-card-status {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(0,0,0,0.5);
+      padding: 2px 6px;
+    }
+
+    .char-card-unpublished {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6bcc6b;
+      background: rgba(0,0,0,0.6);
+      padding: 2px 6px;
+    }
+
+
+    /* --- DETAIL VIEW --- */
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    .detail-breadcrumb {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .detail-breadcrumb a {
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .detail-breadcrumb a:hover {
+      color: var(--text-mid);
+    }
+
+    .detail-breadcrumb .sep { margin: 0 6px; opacity: 0.4; }
+    .detail-breadcrumb .current { color: var(--text-mid); }
+
+    .detail-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-btn {
+      background: none;
+      border: 1px solid var(--border-accent);
+      color: var(--text-mid);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .detail-btn:hover {
+      background: var(--bg-panel);
+      color: var(--text-primary);
+    }
+
+    .detail-btn.admin {
+      color: var(--text-faint);
+      border-color: var(--border-strong);
+    }
+
+    .detail-btn.publish-on  { color: #ff6b6b; border-color: #cc4444; }
+    .detail-btn.publish-off { color: #6bcc6b; border-color: #449944; }
+
+    .detail-btn.close {
+      border-color: var(--border-strong);
+      color: var(--text-faint);
+      font-size: 16px;
+      padding: 2px 8px;
+    }
+
+    /* --- CHARACTER SHEET --- */
+
+    .sheet-wrap {
+      padding: 20px 24px 80px;
+      overflow-y: auto;
+    }
+
+    /* Sheet is the same proportional layout as the prototype,
+       but fluid rather than fixed-ratio */
+
+    .sheet {
+      background: #f0f0f0;
+      color: #111;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 900px;
+      --sw: 860px;
+    }
+
+    .sheet-title {
+      border: 2px solid #111;
+      border-radius: 8px;
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: calc(var(--sw) * 0.042);
+      font-weight: 400;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #fff;
+    }
+
+    .sheet-middle {
+      display: flex;
+      gap: 10px;
+      min-height: 280px;
+    }
+
+    .sheet-bio {
+      width: 54%;
+      border: 2px solid #111;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .sheet-portrait {
+      flex: 1;
+      border: 2px solid #111;
+      border-radius: 8px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top center;
+      min-height: 280px;
+    }
+
+    .sheet-bottom {
+      display: flex;
+      gap: 10px;
+      min-height: 300px;
+    }
+
+    .sheet-powers {
+      width: 46%;
+      border: 2px solid #111;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .sheet-ability {
+      flex: 1;
+      border: 2px solid #111;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sheet-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .bio-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12px;
+    }
+
+    .bio-group { margin-bottom: 6px; }
+
+    .bio-row {
+      display: flex;
+      gap: 6px;
+      line-height: 1.4;
+    }
+
+    .bio-label {
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-weight: bold;
+      min-width: 80px;
+      flex-shrink: 0;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .bio-value {
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: 11px;
+      color: #111;
+      white-space: pre-wrap;
+    }
+
+    .bio-description {
+      margin-top: 6px;
+    }
+
+    .powers-text {
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: 11px;
+      margin-top: 6px;
+      white-space: pre-wrap;
+      color: #111;
+      line-height: 1.5;
+    }
+
+    .ability-fields {
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    #radarContainer {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    #radarChart {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .radar-legend {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: 9px;
+      margin-top: 6px;
+      padding: 0 4px;
+      color: #111;
+    }
+
+    .legend-col { display: flex; flex-direction: column; align-items: center; }
+    .legend-header { font-weight: bold; margin-bottom: 2px; }
+
+    .sheet-credit {
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: #80C0FF;
+      text-align: center;
+    }
+
+    /* --- EDIT MODE --- */
+
+    .edit-input, .edit-textarea, .edit-select {
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: inherit;
+      background: transparent;
+      border: 1px solid #4a90d9;
+      border-radius: 2px;
+      padding: 0 2px;
+      color: #111;
+      width: 100%;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .edit-input:focus, .edit-textarea:focus, .edit-select:focus {
+      border-color: #1a60b0;
+      background: #f0f8ff;
+    }
+
+    .edit-textarea {
+      resize: none;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .edit-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: calc(var(--sw) * 0.042);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+      background: transparent;
+      border: 1px solid #4a90d9;
+      border-radius: 2px;
+      width: 100%;
+      color: #111;
+      outline: none;
+    }
+
+    .edit-title:focus {
+      border-color: #1a60b0;
+      background: #f0f8ff;
+    }
+
+    /* Custom multiselect */
+    .custom-multiselect { position: relative; width: 100%; }
+
+    .custom-multiselect-display {
+      border: 1px solid #4a90d9;
+      border-radius: 2px;
+      padding: 0 2px;
+      cursor: pointer;
+      background: transparent;
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: inherit;
+      color: #111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 1.2em;
+      line-height: 1.2em;
+    }
+
+    .custom-multiselect-display:hover {
+      border-color: #1a60b0;
+      background: #f0f8ff;
+    }
+
+    .custom-multiselect-panel {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 200;
+      background: #fff;
+      border: 1px solid #4a90d9;
+      border-radius: 2px;
+      padding: 4px;
+      min-width: 150px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .custom-multiselect-panel.open { display: block; }
+
+    .custom-multiselect-panel label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 4px;
+      cursor: pointer;
+      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-size: inherit;
+      white-space: nowrap;
+      color: #111;
+    }
+
+    .custom-multiselect-panel label:hover { background: #f0f8ff; }
+
+    /* Status legend */
+    .status-legend {
+      position: fixed;
+      bottom: 40px;
+      right: 16px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-strong);
+      padding: 10px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 20;
+    }
+
+    .status-legend-title {
+      color: var(--text-faint);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+      color: var(--text-mid);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+      border: 2px solid;
+    }
+
+  </style>
+</head>
+<body class="page-body has-breadcrumbs">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a class="topbar-wordmark" href="index.html">
+      <div class="topbar-seal">
+        <img src="https://aopklhrfxtyhglznelua.supabase.co/storage/v1/object/public/assets/OLYMPUS%20Seal.svg" alt="OLYMPUS Seal" style="width:64px;height:64px;">
+      </div>
+      <span class="topbar-name">OLYMPUS</span>
+      <span class="topbar-fullname">Office for the Legislative<br>Management of Powers<br>in the United States</span>
+    </a>
+    <button class="topbar-login" id="btnLogin" onclick="handleLogin()" title="Login with GitHub">&#9650;</button>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-item">
+      <a class="nav-link" href="index.html">Home</a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="heroes.html">Titan Registry</a>
+    </div>
+    <div class="nav-item" id="nav-world">
+      <div class="nav-link" onclick="toggleNav('nav-world')">World <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="locations.html" class="disabled">Locations</a>
+        <a href="organizations.html" class="disabled">Organizations</a>
+        <a href="events.html" class="disabled">Events</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-catalog">
+      <div class="nav-link" onclick="toggleNav('nav-catalog')">Catalog <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="artifacts.html" class="disabled">Artifacts</a>
+        <a href="substances.html" class="disabled">Substances</a>
+        <a href="phenomena.html" class="disabled">Phenomena</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-about">
+      <div class="nav-link" onclick="toggleNav('nav-about')">About <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="about-olympus.html" class="disabled">About OLYMPUS</a>
+        <a href="about-project.html" class="disabled">About This Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMBS -->
+  <div class="breadcrumbs">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current" id="breadcrumb-current">Titan Registry</span>
+  </div>
+
+  <!-- ============================================================
+       GALLERY VIEW
+       ============================================================ -->
+  <div id="view-gallery">
+
+    <div class="gallery-header">
+      <input class="gallery-search" type="text" id="searchInput" placeholder="Search by name…" oninput="applyFilters()">
+      <select class="gallery-filter" id="filterStatus" onchange="applyFilters()">
+        <option value="">All Statuses</option>
+        <option>Registered Hero</option>
+        <option>Vigilante</option>
+        <option>Criminal</option>
+        <option>Incarcerated</option>
+        <option>Incapacitated</option>
+        <option>Retired</option>
+        <option>Deceased</option>
+        <option>Sovereign</option>
+        <option>Unknown</option>
+      </select>
+      <select class="gallery-filter" id="filterArea" onchange="applyFilters()">
+        <option value="">All Areas</option>
+        <option>Local</option>
+        <option>City</option>
+        <option>Regional</option>
+        <option>National</option>
+        <option>Global</option>
+        <option>Solar</option>
+        <option>Interstellar</option>
+        <option>Galactic</option>
+        <option>Universal</option>
+      </select>
+      <select class="gallery-filter" id="filterArchetype" onchange="applyFilters()">
+        <option value="">All Archetypes</option>
+        <option>Brick</option>
+        <option>Striker</option>
+        <option>Protector</option>
+        <option>Tactician</option>
+        <option>Occultist</option>
+        <option>Gadgeteer</option>
+        <option>Sapper</option>
+        <option>Speedster</option>
+        <option>Shooter</option>
+        <option>Manipulator</option>
+        <option>Infiltrator</option>
+      </select>
+      <span class="gallery-count" id="galleryCount"></span>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid"></div>
+
+  </div>
+
+
+  <!-- ============================================================
+       DETAIL VIEW
+       ============================================================ -->
+  <div id="view-detail">
+
+    <div class="detail-header">
+      <div class="detail-breadcrumb">
+        <a href="heroes.html" onclick="showGallery(); return false;">Titan Registry</a>
+        <span class="sep">›</span>
+        <span class="current" id="detailName"></span>
+      </div>
+      <div class="detail-controls">
+        <button class="detail-btn" id="btnPrev" onclick="navigateChar(-1)">&#9650; Prev</button>
+        <button class="detail-btn" id="btnNext" onclick="navigateChar(1)">Next &#9660;</button>
+        <button class="detail-btn admin" id="btnPrint" onclick="window.print()" title="Print">Print</button>
+        <div id="adminControls" style="display:none; display:flex; gap:8px;">
+          <button class="detail-btn admin publish-off" id="btnPublish" onclick="togglePublish()">Unpublished</button>
+          <button class="detail-btn admin" id="btnEdit" onclick="enterEditMode()">Edit</button>
+          <button class="detail-btn admin" id="btnNew" onclick="newCharacter()">New</button>
+          <button class="detail-btn admin" style="color:#ff6b6b;border-color:#cc4444;" id="btnDelete" onclick="deleteCharacter()">Delete</button>
+        </div>
+        <div id="editControls" style="display:none; gap:8px;">
+          <button class="detail-btn admin" id="btnSave" onclick="saveCharacter()">Save</button>
+          <button class="detail-btn admin" id="btnCancel" onclick="cancelEdit()">Cancel</button>
+        </div>
+        <button class="detail-btn close" onclick="showGallery()">✕</button>
+      </div>
+    </div>
+
+    <div class="sheet-wrap">
+      <div class="sheet" id="sheet">
+
+        <div class="sheet-title" id="sheetTitle"></div>
+
+        <div class="sheet-middle">
+          <div class="sheet-bio" id="sheetBio">
+            <div class="sheet-section-title">Biographical Data</div>
+            <div class="bio-fields">
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
+                <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
+                <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
+                <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
+                <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
+                <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
+                <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
+                <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
+                <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="bioTrauma"></span></div>
+              </div>
+              <div class="bio-description">
+                <div class="bio-label">Background</div>
+                <div class="bio-value" id="bioBackground"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sheet-portrait" id="sheetPortrait"></div>
+        </div>
+
+        <div class="sheet-bottom">
+          <div class="sheet-powers">
+            <div class="sheet-section-title">Powers</div>
+            <div class="powers-text" id="powerText"></div>
+          </div>
+          <div class="sheet-ability">
+            <div class="sheet-section-title">Ability Profile</div>
+            <div class="ability-fields">
+              <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
+              <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
+              <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
+            </div>
+            <div id="radarContainer">
+              <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <div class="radar-legend">
+              <div class="legend-col">
+                <div class="legend-header">DISABILITY</div>
+                <div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div>
+              </div>
+              <div class="legend-col">
+                <div class="legend-header">HUMAN</div>
+                <div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div>
+              </div>
+              <div class="legend-col">
+                <div class="legend-header">SUPERIOR</div>
+                <div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div>
+              </div>
+              <div class="legend-col">
+                <div class="legend-header">COSMIC</div>
+                <div>11 Cosmic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sheet-credit" id="sheetCredit"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- STATUS LEGEND -->
+  <div class="status-legend">
+    <div class="status-legend-title">Status</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:#4a80c0"></div> Registered Hero</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:#888888"></div> Vigilante</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:#cc4444"></div> Criminal</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:#333333"></div> Inactive</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:var(--gold)"></div> Sovereign</div>
+    <div class="legend-item"><div class="legend-dot" style="border-color:#cccccc"></div> Agent</div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    OLYMPUS&trade; and the OLYMPUS Titan Factbook&trade; are fictional creations and trademarks of David M. Arnold. OLYMPUS has no affiliation with the United States government or any actual federal body. All characters and content &copy; 2026 David M. Arnold. All rights reserved.
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../components/shared/utils.js"></script>
+  <script>
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+
+    let characters = [];
+    let filteredChars = [];
+    let currentIndex = 0;
+    let isEditMode = false;
+    let isDirty = false;
+
+    const STATUS_CLASSES = {
+      'Registered Hero': 'status-hero',
+      'Vigilante': 'status-vigilante',
+      'Criminal': 'status-criminal',
+      'Incarcerated': 'status-incarcerated',
+      'Incapacitated': 'status-inactive',
+      'Retired': 'status-retired',
+      'Deceased': 'status-deceased',
+      'Sovereign': 'status-sovereign',
+      'Unknown': 'status-unknown',
+      'Law Enforcement / Agent': 'status-agent',
+    };
+
+    const STATUS_OPTIONS    = ['Registered Hero','Vigilante','Criminal','Incarcerated','Incapacitated','Retired','Deceased','Sovereign','Unknown'];
+    const OPERATIONS_OPTIONS = ['Local','City','Regional','National','Global','Solar','Interstellar','Galactic','Universal'];
+    const ORIGIN_OPTIONS    = ['Constructed','Experiment','Inheritance','Intrinsic','Accident','Bestowed','Stolen'];
+    const ARCHETYPE_OPTIONS = ['Brick','Striker','Protector','Tactician','Occultist','Gadgeteer','Sapper','Speedster','Shooter','Manipulator','Infiltrator'];
+    const MOTIVATION_OPTIONS = ['Adventure','Responsibility','Redemption','Justice','Wealth','Power','Escape','Revenge'];
+    const TRAUMA_OPTIONS    = ['Violence','Betrayal','Loss','Shame','Conditioning'];
+
+
+    /* ============================================================
+       LOAD
+       ============================================================ */
+
+    async function loadCharacters() {
+      let query = db.from('mhr_characters').select('*').order('name');
+      if (!currentUser) query = query.eq('publish', true);
+      const { data, error } = await query;
+      if (error) { console.error(error); return; }
+      characters = data;
+      filteredChars = [...characters];
+      buildGallery();
+      checkURLForCharacter();
+    }
+
+    function checkURLForCharacter() {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('character');
+      if (name) {
+        const idx = characters.findIndex(c =>
+          c.name && c.name.toLowerCase().replace(/\s+/g, '-') === name.toLowerCase()
+        );
+        if (idx >= 0) openCharacter(idx);
+      }
+    }
+
+
+    /* ============================================================
+       GALLERY
+       ============================================================ */
+
+    function buildGallery() {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+      filteredChars.forEach((char, i) => {
+        const card = document.createElement('div');
+        card.className = 'char-card ' + (STATUS_CLASSES[char.status] || 'status-unknown');
+        if (char.pic_url) card.style.backgroundImage = `url('${char.pic_url}')`;
+        card.addEventListener('click', () => {
+          currentIndex = characters.indexOf(char);
+          openCharacter(currentIndex);
+        });
+
+        if (!char.publish && currentUser) {
+          const unpub = document.createElement('div');
+          unpub.className = 'char-card-unpublished';
+          unpub.textContent = 'Unpublished';
+          card.appendChild(unpub);
+        }
+
+        if (char.status) {
+          const status = document.createElement('div');
+          status.className = 'char-card-status';
+          status.textContent = char.status;
+          card.appendChild(status);
+        }
+
+        const scrim = document.createElement('div');
+        scrim.className = 'char-card-scrim';
+        card.appendChild(scrim);
+
+        const title = document.createElement('div');
+        title.className = 'char-card-title';
+        title.textContent = char.name || '—';
+        card.appendChild(title);
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById('galleryCount').textContent =
+        filteredChars.length + ' record' + (filteredChars.length !== 1 ? 's' : '');
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('filterStatus').value;
+      const area   = document.getElementById('filterArea').value;
+      const arch   = document.getElementById('filterArchetype').value;
+
+      filteredChars = characters.filter(c => {
+        if (search && !(c.name || '').toLowerCase().includes(search)) return false;
+        if (status && c.status !== status) return false;
+        if (area   && c.area_of_operations !== area) return false;
+        if (arch   && !(c.archetype || '').includes(arch)) return false;
+        return true;
+      });
+
+      buildGallery();
+    }
+
+
+    /* ============================================================
+       DETAIL VIEW
+       ============================================================ */
+
+    function openCharacter(index) {
+      currentIndex = index;
+      const char = characters[index];
+      showDetail();
+      populateSheet(char);
+      updateURL(char);
+      updateBreadcrumb(char.name);
+      updateAdminUI(char);
+    }
+
+    function showGallery() {
+      document.getElementById('view-gallery').style.display = 'block';
+      document.getElementById('view-detail').style.display = 'none';
+      document.querySelector('.status-legend').style.display = 'block';
+      document.getElementById('breadcrumb-current').textContent = 'Titan Registry';
+      history.pushState({}, '', 'heroes.html');
+    }
+
+    function showDetail() {
+      document.getElementById('view-gallery').style.display = 'none';
+      document.getElementById('view-detail').style.display = 'block';
+      document.querySelector('.status-legend').style.display = 'none';
+    }
+
+    function updateURL(char) {
+      if (!char.name) return;
+      const slug = char.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      history.pushState({}, '', `heroes.html?character=${slug}`);
+    }
+
+    function updateBreadcrumb(name) {
+      document.getElementById('detailName').textContent = name || '—';
+      document.getElementById('breadcrumb-current').textContent = name || 'Titan Registry';
+    }
+
+    function navigateChar(dir) {
+      const newIndex = (currentIndex + dir + characters.length) % characters.length;
+      openCharacter(newIndex);
+    }
+
+    function updateAdminUI(char) {
+      const adminControls = document.getElementById('adminControls');
+      if (!currentUser) { adminControls.style.display = 'none'; return; }
+      adminControls.style.display = 'flex';
+      const pubBtn = document.getElementById('btnPublish');
+      pubBtn.textContent = char.publish ? 'Published' : 'Unpublished';
+      pubBtn.className = 'detail-btn admin ' + (char.publish ? 'publish-on' : 'publish-off');
+    }
+
+
+    /* ============================================================
+       POPULATE SHEET (display mode)
+       ============================================================ */
+
+    function populateSheet(char) {
+      document.getElementById('sheetTitle').textContent = char.name || '—';
+      document.getElementById('sheetPortrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
+      document.getElementById('bioIdentity').textContent   = char.identity || '';
+      document.getElementById('bioSkin').textContent       = char.skin || '';
+      document.getElementById('bioHair').textContent       = char.hair || '';
+      document.getElementById('bioEyes').textContent       = char.eyes || '';
+      document.getElementById('bioHeight').textContent     = char.height || '';
+      document.getElementById('bioWeight').textContent     = char.weight || '';
+      document.getElementById('bioAge').textContent        = char.age || '';
+      document.getElementById('bioOccupation').textContent = char.occupation || '';
+      document.getElementById('bioStatus').textContent     = char.status || '';
+      document.getElementById('bioOperations').textContent = char.area_of_operations || '';
+      document.getElementById('bioMotivation').textContent = char.motivation || '';
+      document.getElementById('bioTrauma').textContent     = char.trauma || '';
+      document.getElementById('bioBackground').textContent = char.short_bio || '';
+      document.getElementById('powerText').textContent     = char.powers || '';
+      document.getElementById('abilArchetypes').textContent  = char.archetype || '';
+      document.getElementById('abilPowerSource').textContent = char.power_origin || '';
+      document.getElementById('abilPowerLevel').textContent  = computePowerLevel(char);
+
+      const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
+      document.getElementById('sheetCredit').textContent = char.created_by
+        ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.`
+        : '';
+
+      requestAnimationFrame(() => drawRadar(char));
+    }
+
+    function computePowerLevel(char) {
+      const vals = ['strength','durability','speed','fighting','senses','intellect','will','projection']
+        .map(k => parseInt(char[k]) || 0);
+      const sum = vals.reduce((a,b) => a+b, 0);
+      const max = Math.max(...vals);
+      if (sum >= 60)               return 'Cosmic';
+      if (max >= 11 || sum >= 56)  return 'Extreme Meta';
+      if (max >= 10 || sum >= 52)  return 'High Meta';
+      if (max >= 9  || sum >= 48)  return 'Mid Meta';
+      if (max >= 8  || sum >= 44)  return 'Low Meta';
+      if (max >= 7  || sum >= 40)  return 'Elite Human';
+      if (sum >= 36)               return 'Expert Human';
+      return 'Normal Human';
+    }
+
+
+    /* ============================================================
+       RADAR CHART
+       ============================================================ */
+
+    function drawRadar(char) {
+      const svg = document.getElementById('radarChart');
+      svg.innerHTML = '';
+      const cx = 150, cy = 105, maxR = 70;
+      const rings = 11;
+      const ringColors = [
+        '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
+        '#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'
+      ];
+      const yOff = maxR * 0.17;
+      const stats = [
+        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0    },
+        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOff },
+        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0    },
+        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0    },
+        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOff},
+        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOff},
+        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0    },
+        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOff },
+      ];
+      const toRad = deg => deg * Math.PI / 180;
+      const ns = 'http://www.w3.org/2000/svg';
+
+      const bg = document.createElementNS(ns, 'circle');
+      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
+      bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
+      svg.appendChild(bg);
+
+      const sliceAngle = 360 / 8;
+      stats.forEach(stat => {
+        const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
+        if (val === 0) return;
+        const sa = stat.angle - sliceAngle / 2;
+        const ea = stat.angle + sliceAngle / 2;
+        for (let ring = 1; ring <= val; ring++) {
+          const oR = (ring / rings) * maxR, iR = ((ring-1) / rings) * maxR;
+          const x1 = cx + oR*Math.cos(toRad(sa)), y1 = cy + oR*Math.sin(toRad(sa));
+          const x2 = cx + oR*Math.cos(toRad(ea)), y2 = cy + oR*Math.sin(toRad(ea));
+          const x3 = cx + iR*Math.cos(toRad(ea)), y3 = cy + iR*Math.sin(toRad(ea));
+          const x4 = cx + iR*Math.cos(toRad(sa)), y4 = cy + iR*Math.sin(toRad(sa));
+          const path = document.createElementNS(ns, 'path');
+          path.setAttribute('d', `M ${x4} ${y4} L ${x1} ${y1} A ${oR} ${oR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${iR} ${iR} 0 0 0 ${x4} ${y4} Z`);
+          path.setAttribute('fill', ringColors[ring-1]);
+          svg.appendChild(path);
+        }
+      });
+
+      for (let ring = 1; ring <= rings; ring++) {
+        const r = (ring / rings) * maxR;
+        const c = document.createElementNS(ns, 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy);
+        c.setAttribute('r', r); c.setAttribute('fill', 'none');
+        c.setAttribute('stroke', '#111'); c.setAttribute('stroke-width', '0.8');
+        if (ring === 2 || ring === 6) c.setAttribute('stroke-dasharray', '3,2');
+        svg.appendChild(c);
+      }
+
+      [-135,-90,-45,0,45,90,135,180].forEach(angle => {
+        const p = { x: cx + maxR*Math.cos(toRad(angle)), y: cy + maxR*Math.sin(toRad(angle)) };
+        const line = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
+        line.setAttribute('stroke', '#111'); line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+      });
+
+      const border = document.createElementNS(ns, 'circle');
+      border.setAttribute('cx', cx); border.setAttribute('cy', cy);
+      border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
+      border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
+      svg.appendChild(border);
+
+      const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
+      stats.forEach(stat => {
+        const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
+        const p = { x: cx + (maxR+40)*Math.cos(toRad(stat.angle)), y: cy + (maxR+40)*Math.sin(toRad(stat.angle)) };
+        const label = document.createElementNS(ns, 'text');
+        label.setAttribute('x', p.x); label.setAttribute('y', p.y + stat.yOffset);
+        label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
+        label.setAttribute('font-family', 'Bebas Neue, sans-serif');
+        label.setAttribute('font-size', '10'); label.setAttribute('fill', '#111');
+        label.textContent = `${stat.label.toUpperCase()} ${val}`;
+        svg.appendChild(label);
+        const desc = document.createElementNS(ns, 'text');
+        desc.setAttribute('x', p.x); desc.setAttribute('y', p.y + 11 + stat.yOffset);
+        desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
+        desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
+        desc.setAttribute('font-size', '10'); desc.setAttribute('fill', '#111');
+        desc.textContent = descriptors[val] || '';
+        svg.appendChild(desc);
+      });
+    }
+
+
+    /* ============================================================
+       EDIT MODE
+       ============================================================ */
+
+    function enterEditMode() {
+      if (!currentUser) return;
+      isEditMode = true;
+      isDirty = false;
+      document.getElementById('adminControls').style.display = 'none';
+      document.getElementById('editControls').style.display = 'flex';
+      populateEditMode();
+    }
+
+    function exitEditMode() {
+      isEditMode = false;
+      isDirty = false;
+      document.getElementById('editControls').style.display = 'none';
+      document.getElementById('adminControls').style.display = 'flex';
+      const rc = document.getElementById('radarContainer');
+      rc.style.position = '';
+      rc.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
+      const portrait = document.getElementById('sheetPortrait');
+      const fi = portrait.querySelector('input[type=file]');
+      if (fi) portrait.removeChild(fi);
+    }
+
+    function cancelEdit() {
+      if (isDirty && !confirm('Discard unsaved changes?')) return;
+      exitEditMode();
+      populateSheet(characters[currentIndex]);
+    }
+
+    function createMultiSelect(field, options, currentValues) {
+      const container = document.createElement('div');
+      container.className = 'custom-multiselect';
+      container.dataset.field = field;
+      const display = document.createElement('div');
+      display.className = 'custom-multiselect-display';
+      display.textContent = currentValues.length ? currentValues.join(', ') : '—';
+      const panel = document.createElement('div');
+      panel.className = 'custom-multiselect-panel';
+      options.forEach(opt => {
+        const label = document.createElement('label');
+        const cb = document.createElement('input');
+        cb.type = 'checkbox'; cb.value = opt;
+        cb.checked = currentValues.includes(opt);
+        cb.addEventListener('change', () => {
+          isDirty = true;
+          const checked = Array.from(panel.querySelectorAll('input:checked')).map(c => c.value);
+          display.textContent = checked.length ? checked.join(', ') : '—';
+        });
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(' ' + opt));
+        panel.appendChild(label);
+      });
+      display.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = panel.classList.contains('open');
+        document.querySelectorAll('.custom-multiselect-panel.open').forEach(p => p.classList.remove('open'));
+        if (!isOpen) panel.classList.add('open');
+      });
+      document.addEventListener('click', () => panel.classList.remove('open'));
+      container.appendChild(display);
+      container.appendChild(panel);
+      return container;
+    }
+
+    function populateEditMode() {
+      const char = characters[currentIndex];
+
+      // Title
+      const titleEl = document.getElementById('sheetTitle');
+      titleEl.innerHTML = '';
+      const ti = document.createElement('input');
+      ti.type = 'text'; ti.className = 'edit-title';
+      ti.value = char.name || '';
+      ti.addEventListener('input', () => isDirty = true);
+      titleEl.appendChild(ti);
+
+      // Single text fields
+      [
+        ['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],
+        ['bioEyes','eyes'],['bioHeight','height'],['bioWeight','weight'],
+        ['bioAge','age'],['bioOccupation','occupation']
+      ].forEach(([id, field]) => {
+        const el = document.getElementById(id);
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'edit-input';
+        inp.value = char[field] || '';
+        inp.addEventListener('input', () => isDirty = true);
+        el.textContent = ''; el.appendChild(inp);
+      });
+
+      // Single selects
+      [
+        ['bioStatus','status', STATUS_OPTIONS],
+        ['bioOperations','area_of_operations', OPERATIONS_OPTIONS]
+      ].forEach(([id, field, opts]) => {
+        const el = document.getElementById(id);
+        const sel = document.createElement('select');
+        sel.className = 'edit-select';
+        const blank = document.createElement('option');
+        blank.value = ''; blank.textContent = '—';
+        sel.appendChild(blank);
+        opts.forEach(opt => {
+          const o = document.createElement('option');
+          o.value = opt; o.textContent = opt;
+          if (char[field] === opt) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener('change', () => isDirty = true);
+        el.textContent = ''; el.appendChild(sel);
+      });
+
+      // Multi selects
+      [
+        ['bioMotivation','motivation', MOTIVATION_OPTIONS],
+        ['bioTrauma','trauma', TRAUMA_OPTIONS],
+        ['abilArchetypes','archetype', ARCHETYPE_OPTIONS],
+        ['abilPowerSource','power_origin', ORIGIN_OPTIONS]
+      ].forEach(([id, field, opts]) => {
+        const el = document.getElementById(id);
+        const current = splitList(char[field]);
+        el.textContent = '';
+        el.appendChild(createMultiSelect(field, opts, current));
+      });
+
+      // Textareas
+      const bgEl = document.getElementById('bioBackground');
+      const bgTA = document.createElement('textarea');
+      bgTA.className = 'edit-textarea'; bgTA.value = char.short_bio || '';
+      bgTA.style.minHeight = '80px';
+      bgTA.addEventListener('input', () => isDirty = true);
+      bgEl.textContent = ''; bgEl.appendChild(bgTA);
+
+      const pwEl = document.getElementById('powerText');
+      const pwTA = document.createElement('textarea');
+      pwTA.className = 'edit-textarea'; pwTA.value = char.powers || '';
+      pwTA.style.minHeight = '160px';
+      pwTA.addEventListener('input', () => isDirty = true);
+      pwEl.textContent = ''; pwEl.appendChild(pwTA);
+
+      // Portrait upload
+      const portrait = document.getElementById('sheetPortrait');
+      portrait.style.position = 'relative';
+      const fi = document.createElement('input');
+      fi.type = 'file'; fi.accept = 'image/*';
+      fi.className = 'edit-input';
+      fi.style.cssText = 'position:absolute;bottom:4px;left:4px;right:4px;width:calc(100% - 8px);cursor:pointer;';
+      fi.addEventListener('change', async () => {
+        const file = fi.files[0];
+        if (!file) return;
+        const ext = file.name.split('.').pop();
+        const path = `${char.name || char.id}.${ext}`;
+        const { error } = await db.storage.from('mhr_pics').upload(path, file, { upsert: true });
+        if (error) { alert('Upload failed: ' + error.message); return; }
+        const { data: urlData } = db.storage.from('mhr_pics').getPublicUrl(path);
+        portrait.style.backgroundImage = `url('${urlData.publicUrl}')`;
+        characters[currentIndex].pic_url = urlData.publicUrl;
+        isDirty = true;
+      });
+      portrait.appendChild(fi);
+
+      // Credit
+      const creditEl = document.getElementById('sheetCredit');
+      const creditInp = document.createElement('input');
+      creditInp.type = 'text'; creditInp.className = 'edit-input';
+      creditInp.placeholder = 'Created by';
+      creditInp.value = char.created_by || '';
+      creditInp.addEventListener('input', () => isDirty = true);
+      creditEl.textContent = ''; creditEl.appendChild(creditInp);
+
+      // Radar with arrow controls
+      const rc = document.getElementById('radarContainer');
+      rc.innerHTML = '';
+      rc.style.position = 'relative';
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.id = 'radarChart';
+      svg.setAttribute('viewBox', '0 0 300 300');
+      svg.style.cssText = 'width:100%;height:auto;display:block;';
+      rc.appendChild(svg);
+      drawRadar(char);
+      addRadarArrows(char, svg);
+    }
+
+    function addRadarArrows(char, svg) {
+      const cx = 150, cy = 105, maxR = 70;
+      const toRad = deg => deg * Math.PI / 180;
+      const yOff = maxR * 0.17;
+      const statPositions = [
+        { key: 'senses',     angle: -157.5, yOffset: 0    },
+        { key: 'fighting',   angle: -67.5,  yOffset: yOff },
+        { key: 'speed',      angle: -22.5,  yOffset: 0    },
+        { key: 'strength',   angle: 22.5,   yOffset: 0    },
+        { key: 'durability', angle: 67.5,   yOffset: -yOff},
+        { key: 'will',       angle: 112.5,  yOffset: -yOff},
+        { key: 'intellect',  angle: 157.5,  yOffset: 0    },
+        { key: 'projection', angle: -112.5, yOffset: yOff },
+      ];
+      const leftSideKeys = ['senses','intellect','will','projection'];
+
+      statPositions.forEach(({ key, angle, yOffset }) => {
+        const px = cx + (maxR+40)*Math.cos(toRad(angle));
+        const py = cy + (maxR+40)*Math.sin(toRad(angle)) + yOffset;
+        const isLeft = leftSideKeys.includes(key);
+        const gap = 4, labelGap = 35;
+        let arrowLeftX, arrowRightX;
+        if (isLeft) {
+          arrowRightX = px - labelGap;
+          arrowLeftX  = arrowRightX - gap - 8;
+        } else {
+          arrowLeftX  = px + labelGap;
+          arrowRightX = arrowLeftX + gap + 8;
+        }
+
+        const makeArrow = (x, text, delta) => {
+          const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          el.setAttribute('x', x); el.setAttribute('y', py);
+          el.setAttribute('text-anchor', 'middle');
+          el.setAttribute('dominant-baseline', 'middle');
+          el.setAttribute('font-size', '10');
+          el.setAttribute('fill', '#406080');
+          el.setAttribute('cursor', 'pointer');
+          el.setAttribute('font-family', 'sans-serif');
+          el.textContent = text;
+          el.addEventListener('click', () => {
+            isDirty = true;
+            characters[currentIndex][key] = Math.min(11, Math.max(0, (parseInt(characters[currentIndex][key]) || 0) + delta));
+            drawRadar(characters[currentIndex]);
+            addRadarArrows(characters[currentIndex], svg);
+            document.getElementById('abilPowerLevel').textContent = computePowerLevel(characters[currentIndex]);
+          });
+          svg.appendChild(el);
+        };
+
+        makeArrow(arrowLeftX, '◀', -1);
+        makeArrow(arrowRightX, '▶', 1);
+      });
+    }
+
+
+    /* ============================================================
+       SAVE / DELETE / PUBLISH / NEW
+       ============================================================ */
+
+    async function saveCharacter() {
+      const char = characters[currentIndex];
+      const getMulti = field => {
+        const container = document.querySelector(`.custom-multiselect[data-field="${field}"]`);
+        if (!container) return '';
+        return Array.from(container.querySelectorAll('input[type=checkbox]:checked'))
+          .map(cb => cb.value).join(', ');
+      };
+
+      const updates = {
+        name:               document.querySelector('#sheetTitle .edit-title')?.value || null,
+        identity:           document.querySelector('#bioIdentity .edit-input')?.value || null,
+        skin:               document.querySelector('#bioSkin .edit-input')?.value || null,
+        hair:               document.querySelector('#bioHair .edit-input')?.value || null,
+        eyes:               document.querySelector('#bioEyes .edit-input')?.value || null,
+        height:             document.querySelector('#bioHeight .edit-input')?.value || null,
+        weight:             document.querySelector('#bioWeight .edit-input')?.value || null,
+        age:                document.querySelector('#bioAge .edit-input')?.value || null,
+        occupation:         document.querySelector('#bioOccupation .edit-input')?.value || null,
+        status:             document.querySelector('#bioStatus .edit-select')?.value || null,
+        area_of_operations: document.querySelector('#bioOperations .edit-select')?.value || null,
+        motivation:         getMulti('motivation'),
+        trauma:             getMulti('trauma'),
+        archetype:          getMulti('archetype'),
+        power_origin:       getMulti('power_origin'),
+        short_bio:          document.querySelector('#bioBackground .edit-textarea')?.value || null,
+        powers:             document.querySelector('#powerText .edit-textarea')?.value || null,
+        pic_url:            characters[currentIndex].pic_url || null,
+        created_by:         document.querySelector('#sheetCredit .edit-input')?.value || null,
+        strength:           parseInt(characters[currentIndex].strength)   || 0,
+        durability:         parseInt(characters[currentIndex].durability) || 0,
+        speed:              parseInt(characters[currentIndex].speed)      || 0,
+        fighting:           parseInt(characters[currentIndex].fighting)   || 0,
+        senses:             parseInt(characters[currentIndex].senses)     || 0,
+        intellect:          parseInt(characters[currentIndex].intellect)  || 0,
+        will:               parseInt(characters[currentIndex].will)       || 0,
+        projection:         parseInt(characters[currentIndex].projection) || 0,
+      };
+
+      const { error } = await db.from('mhr_characters').update(updates).eq('id', char.id);
+      if (error) { alert('Save failed: ' + error.message); return; }
+      Object.assign(characters[currentIndex], updates);
+      exitEditMode();
+      populateSheet(characters[currentIndex]);
+      buildGallery();
+    }
+
+    async function togglePublish() {
+      if (!currentUser) return;
+      const char = characters[currentIndex];
+      const newVal = !char.publish;
+      const { error } = await db.from('mhr_characters').update({ publish: newVal }).eq('id', char.id);
+      if (error) { alert('Save failed: ' + error.message); return; }
+      characters[currentIndex].publish = newVal;
+      updateAdminUI(characters[currentIndex]);
+      buildGallery();
+    }
+
+    async function deleteCharacter() {
+      if (!currentUser) return;
+      const char = characters[currentIndex];
+      if (!confirm(`Delete ${char.name || 'this record'}? This cannot be undone.`)) return;
+      const { error } = await db.from('mhr_characters').delete().eq('id', char.id);
+      if (error) { alert('Delete failed: ' + error.message); return; }
+      characters.splice(currentIndex, 1);
+      buildGallery();
+      showGallery();
+    }
+
+    async function newCharacter() {
+      if (!currentUser) return;
+      const { data, error } = await db.from('mhr_characters').insert([{ publish: false }]).select().single();
+      if (error) { alert('Create failed: ' + error.message); return; }
+      characters.push(data);
+      buildGallery();
+      openCharacter(characters.length - 1);
+      enterEditMode();
+    }
+
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wait for auth to initialize then load characters
+      const checkAuth = setInterval(() => {
+        if (typeof db !== 'undefined') {
+          clearInterval(checkAuth);
+          db.auth.getSession().then(({ data: { session } }) => {
+            currentUser = session?.user ?? null;
+            updateAuthUI();
+            loadCharacters();
+          });
+          db.auth.onAuthStateChange((_event, session) => {
+            currentUser = session?.user ?? null;
+            updateAuthUI();
+            loadCharacters();
+          });
+        }
+      }, 50);
+    });
+
+  </script>
+
+</body>
+</html>
