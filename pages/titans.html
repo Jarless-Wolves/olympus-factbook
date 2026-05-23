@@ -357,18 +357,21 @@
 
     /* Radar fills remaining space in mid column */
     #radarContainer {
+      flex: 1;
       min-height: 0;
       display: flex;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
+      margin-top: 0;
     }
 
     #radarChart {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
       max-height: 100%;
-      margin: auto 0;
+      margin: auto;
     }
 
     .radar-legend {
