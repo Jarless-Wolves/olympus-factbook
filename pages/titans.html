@@ -323,6 +323,21 @@
       flex-shrink: 0;
     }
 
+    .bio-row-double {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 2px;
+      flex-shrink: 0;
+    }
+    
+    .bio-half {
+      flex: 1;
+      display: flex;
+      gap: 4px;
+      line-height: 1.3;
+      min-width: 0;
+    }
+    
     .bio-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 600;
@@ -628,26 +643,41 @@
         <!-- MIDDLE: bio + ability + radar -->
         <div class="char-col-mid">
           <div class="bio-section-title">Biographical Data</div>
+        
           <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
-          <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
-          <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
-          <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
-          <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
-          <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
-          <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
           <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
-          <div class="bio-row"><span class="bio-label">Species</span><span class="bio-value" id="bioSpecies"></span></div>
-          <div class="bio-row"><span class="bio-label">Culture</span><span class="bio-value" id="bioCulture"></span></div>
           <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
-          <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
+        
+          <div class="bio-row-double">
+            <div class="bio-half"><span class="bio-label">Species</span><span class="bio-value" id="bioSpecies"></span></div>
+            <div class="bio-half"><span class="bio-label">Gender</span><span class="bio-value" id="bioGender"></span></div>
+          </div>
+          <div class="bio-row-double">
+            <div class="bio-half"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
+            <div class="bio-half"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
+          </div>
+          <div class="bio-row-double">
+            <div class="bio-half"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
+            <div class="bio-half"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
+          </div>
+          <div class="bio-row-double">
+            <div class="bio-half"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
+            <div class="bio-half"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
+          </div>
+          <div class="bio-row-double">
+            <div class="bio-half"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
+            <div class="bio-half"><span class="bio-label">Culture</span><span class="bio-value" id="bioCulture"></span></div>
+          </div>
+        
           <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
           <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="bioTrauma"></span></div>
-
+        
           <div class="bio-section-title">Ability Profile</div>
           <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
           <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
           <div class="bio-row"><span class="bio-label">Power Origin</span><span class="bio-value" id="abilPowerOrigin"></span></div>
           <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
+
           <div id="radarContainer">
             <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
@@ -862,9 +892,10 @@
       document.getElementById('abilArchetypes').textContent  = char.archetype || '—';
       document.getElementById('abilPowerLevel').textContent  = computePowerLevel(char);
       document.getElementById('abilPowerOrigin').textContent = char.power_origin || '—';
-      document.getElementById('bioSpecies').textContent = char.species || '—';
-      document.getElementById('bioCulture').textContent = char.culture || '—';
+      document.getElementById('bioSpecies').textContent      = char.species || '—';
+      document.getElementById('bioCulture').textContent      = char.culture || '—';
       document.getElementById('abilPowerSource').textContent = char.power_source || '—';
+      document.getElementById('bioGender').textContent       = char.gender || '—';
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
       document.getElementById('charCredit').textContent = char.created_by
         ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
@@ -1080,7 +1111,7 @@
       // Bio fields
       [['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],['bioEyes','eyes'],
        ['bioHeight','height'],['bioWeight','weight'],['bioAge','age'],['bioOccupation','occupation'],
-       ['bioSpecies','species'],['bioCulture','culture']]
+       ['bioSpecies','species'],['bioCulture','culture'],['bioGender','gender']]
       .forEach(([id,f])=>rep(id,inp(char[f],f)));
 
       rep('bioStatus', sel('status', STATUS_OPTIONS, char.status));
@@ -1128,7 +1159,7 @@
     }
 
     function addRadarArrows(char, svg) {
-      const cx=150,cy=105,maxR=70,toRad=d=>d*Math.PI/180,yOff=maxR*0.17;
+      const cx=150,cy=150,maxR=100,toRad=d=>d*Math.PI/180,yOff=maxR*0.12;
       const sp=[
         {key:'senses',angle:-157.5,yOffset:0},{key:'fighting',angle:-67.5,yOffset:yOff},
         {key:'speed',angle:-22.5,yOffset:0},{key:'strength',angle:22.5,yOffset:0},
@@ -1194,6 +1225,7 @@
         species:            gf('bioSpecies','input'),
         culture:            gf('bioCulture','input'),
         power_source:       gf('abilPowerSource','input'),
+        gender:             gf('bioGender','input'),
       };
       const {error}=await db.from('mhr_characters').update(updates).eq('id',char.id);
       if(error){alert('Save failed: '+error.message);return;}
