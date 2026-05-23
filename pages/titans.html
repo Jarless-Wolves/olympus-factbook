@@ -11,11 +11,10 @@
        TITAN REGISTRY PAGE STYLES
        ============================================================ */
 
-
-    /* --- GALLERY VIEW --- */
-
     #view-gallery { display: block; }
     #view-detail  { display: none;  }
+
+    /* --- GALLERY --- */
 
     .gallery-header {
       padding: 10px 24px;
@@ -53,7 +52,6 @@
       padding: 6px 10px;
       outline: none;
       cursor: pointer;
-      transition: border-color 0.15s;
     }
 
     .gallery-filter:focus { border-color: var(--border-accent); }
@@ -98,18 +96,14 @@
 
     .char-card-scrim {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 50%;
       background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.85));
     }
 
     .char-card-title {
       position: absolute;
-      bottom: 8px;
-      left: 10px;
-      right: 10px;
+      bottom: 8px; left: 10px; right: 10px;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 18px;
       font-weight: 400;
@@ -120,8 +114,7 @@
 
     .char-card-unpublished {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: 8px; left: 8px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
       font-weight: 600;
@@ -135,206 +128,243 @@
 
     /* --- DETAIL VIEW --- */
 
-    .detail-header {
+    /* The detail view fills exactly the space between breadcrumbs and footer.
+       topbar 72 + navbar 40 + breadcrumbs 32 + footer 32 = 176px */
+
+    .char-sheet {
+      height: calc(100vh - 176px);
       display: flex;
-      align-items: center;
-      padding: 0 24px;
-      height: 40px;
-      background: var(--bg-nav);
-      border-bottom: 1px solid var(--border-strong);
-      flex-shrink: 0;
+      flex-direction: row;
+      overflow: hidden;
     }
 
-    .detail-breadcrumb {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-    }
+    /* --- SIDEBAR (far left) --- */
 
-    .detail-breadcrumb a {
-      color: var(--text-faint);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    .detail-breadcrumb a:hover { color: var(--text-mid); }
-    .detail-breadcrumb .sep { margin: 0 6px; opacity: 0.4; }
-    .detail-breadcrumb .current { color: var(--text-mid); }
-
-    .detail-controls {
+    .char-sidebar {
+      width: 52px;
+      min-width: 52px;
+      background: var(--bg-panel-mid);
+      border-right: 1px solid var(--border-strong);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      padding: 8px 0;
+      gap: 4px;
     }
 
-    .detail-btn {
+    .sidebar-btn {
       background: none;
-      border: 1px solid var(--border-accent);
-      color: var(--text-mid);
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      padding: 3px 10px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 5px 2px;
       cursor: pointer;
+      width: 38px;
+      text-align: center;
       transition: background 0.15s, color 0.15s;
+      line-height: 1.2;
     }
 
-    .detail-btn:hover { background: var(--bg-panel); color: var(--text-primary); }
-    .detail-btn.admin { color: var(--text-faint); border-color: var(--border-strong); }
-    .detail-btn.publish-on  { color: #ff6b6b; border-color: #cc4444; }
-    .detail-btn.publish-off { color: #6bcc6b; border-color: #449944; }
-    .detail-btn.close { border-color: var(--border-strong); color: var(--text-faint); font-size: 14px; padding: 2px 8px; }
-
-
-    /* --- CHARACTER PAGE --- */
-
-    .char-page {
-      padding: 24px 24px 60px;
-      overflow-y: auto;
-      height: calc(100vh - 216px); /* topbar 72 + navbar 40 + breadcrumb 32 + detail-header 40 + footer 32 */
+    .sidebar-btn:hover {
+      background: var(--bg-panel);
+      color: var(--text-primary);
     }
 
-    .char-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 42px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: #ffffff;
-      line-height: 1;
-      margin-bottom: 20px;
+    .sidebar-btn.close {
+      font-size: 16px;
+      border-color: var(--border-accent);
+      color: var(--text-mid);
+      margin-bottom: 4px;
     }
 
-    .char-columns {
+    .sidebar-btn.publish-on  { color: #ff6b6b; border-color: #cc4444; }
+    .sidebar-btn.publish-off { color: #6bcc6b; border-color: #449944; }
+    .sidebar-btn.danger      { color: #ff6b6b; border-color: #cc4444; }
+    .sidebar-btn.save        { color: #6bcc6b; border-color: #449944; }
+
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-divider {
+      width: 30px;
+      border: none;
+      border-top: 1px solid var(--border-strong);
+      margin: 4px 0;
+    }
+
+    /* --- CONTENT COLUMNS --- */
+
+    .char-content {
+      flex: 1;
       display: flex;
-      gap: 24px;
-      align-items: flex-start;
+      flex-direction: row;
+      overflow: hidden;
+      padding: 16px;
+      gap: 16px;
     }
 
-    /* Left column — long text */
+    /* Left — long text */
     .char-col-left {
-      flex: 40;
+      flex: 38;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
     }
 
-    /* Middle column — bio fields + ability + radar */
+    /* Middle — bio + ability + radar */
     .char-col-mid {
-      flex: 30;
+      flex: 27;
       background: var(--bg-panel);
       border: 1px solid var(--border-strong);
       border-top: 3px solid var(--border-accent);
-      padding: 14px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
     }
 
-    /* Right column — portrait */
+    /* Right — portrait */
     .char-col-right {
-      flex: 30;
+      flex: 27;
+      min-width: 0;
     }
 
-    /* Portrait */
+    /* Portrait fills column height */
     .char-portrait {
       width: 100%;
-      aspect-ratio: 2/3;
+      height: 100%;
       background-size: cover;
       background-position: top center;
       border: 1px solid var(--border-strong);
     }
 
-    /* Long text sections */
+    /* --- CHARACTER NAME --- */
+
+    .char-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    /* --- LONG TEXT --- */
+
     .char-section {
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .char-section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 400;
       letter-spacing: 0.1em;
       color: var(--text-mid);
       text-transform: uppercase;
       border-bottom: 1px solid var(--border-strong);
-      padding-bottom: 4px;
-      margin-bottom: 10px;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+      flex-shrink: 0;
     }
 
     .char-section-body {
       font-family: 'Libre Baskerville', Georgia, serif;
-      font-size: 13px;
-      line-height: 1.85;
+      font-size: 12px;
+      line-height: 1.8;
       color: var(--text-dim);
       white-space: pre-wrap;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
     }
 
-    /* Bio fields */
+    .char-credit {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-style: italic;
+      color: var(--text-faint);
+      margin-top: auto;
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* --- BIO FIELDS --- */
+
     .bio-section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 400;
       letter-spacing: 0.1em;
       color: var(--text-faint);
       text-transform: uppercase;
       border-bottom: 1px solid var(--border-strong);
-      padding-bottom: 3px;
-      margin-bottom: 8px;
-      margin-top: 14px;
+      padding-bottom: 2px;
+      margin-bottom: 5px;
+      margin-top: 10px;
+      flex-shrink: 0;
     }
 
     .bio-section-title:first-child { margin-top: 0; }
 
     .bio-row {
       display: flex;
-      gap: 6px;
-      margin-bottom: 3px;
-      font-size: 12px;
-      line-height: 1.4;
+      gap: 4px;
+      margin-bottom: 2px;
+      line-height: 1.3;
+      flex-shrink: 0;
     }
 
     .bio-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--text-faint);
-      min-width: 90px;
+      min-width: 80px;
       flex-shrink: 0;
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .bio-value {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-primary);
     }
 
-    /* Credit line */
-    .char-credit {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      font-style: italic;
-      color: var(--text-faint);
-      margin-top: 16px;
-      text-align: center;
-    }
-
-    /* Radar */
+    /* Radar fills remaining space in mid column */
     #radarContainer {
-      margin-top: 12px;
-      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
     }
 
     #radarChart {
       width: 100%;
       height: auto;
       display: block;
+      max-height: 100%;
     }
 
     .radar-legend {
       display: flex;
       justify-content: space-between;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 9px;
-      margin-top: 4px;
+      font-size: 8px;
+      margin-top: 3px;
       color: var(--text-faint);
+      flex-shrink: 0;
     }
 
     .legend-col { display: flex; flex-direction: column; align-items: center; }
@@ -345,11 +375,11 @@
 
     .edit-input, .edit-textarea, .edit-select {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       background: var(--bg-panel-mid);
       border: 1px solid var(--border-accent);
       border-radius: 2px;
-      padding: 2px 4px;
+      padding: 1px 3px;
       color: var(--text-primary);
       width: 100%;
       box-sizing: border-box;
@@ -362,15 +392,16 @@
     }
 
     .edit-textarea {
-      resize: vertical;
+      resize: none;
       width: 100%;
-      min-height: 120px;
+      height: 100%;
       display: block;
+      flex: 1;
     }
 
     .edit-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 42px;
+      font-size: 36px;
       font-weight: 400;
       letter-spacing: 0.06em;
       background: var(--bg-panel);
@@ -379,25 +410,25 @@
       width: 100%;
       outline: none;
       padding: 0 4px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
     }
 
-    /* Custom multiselect */
     .custom-multiselect { position: relative; width: 100%; }
 
     .custom-multiselect-display {
       border: 1px solid var(--border-accent);
       border-radius: 2px;
-      padding: 2px 4px;
+      padding: 1px 3px;
       cursor: pointer;
       background: var(--bg-panel-mid);
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-primary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-height: 1.4em;
+      min-height: 1.3em;
     }
 
     .custom-multiselect-display:hover { background: var(--bg-panel); }
@@ -422,33 +453,26 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 3px 6px;
+      padding: 2px 6px;
       cursor: pointer;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-primary);
       white-space: nowrap;
     }
 
     .custom-multiselect-panel label:hover { background: var(--bg-panel-mid); }
 
-    /* Portrait edit overlay */
-    .portrait-edit-wrap {
-      position: relative;
-    }
-
     .portrait-file-input {
       position: absolute;
-      bottom: 4px;
-      left: 4px;
-      right: 4px;
+      bottom: 4px; left: 4px; right: 4px;
       width: calc(100% - 8px);
-      font-size: 11px;
+      font-size: 10px;
       background: rgba(0,0,0,0.7);
       border: 1px solid var(--border-accent);
       color: var(--text-primary);
       cursor: pointer;
-      padding: 3px;
+      padding: 2px;
     }
 
   </style>
@@ -557,44 +581,52 @@
        DETAIL VIEW
        ============================================================ -->
   <div id="view-detail">
-      <div class="detail-controls">
-        <button class="detail-btn" onclick="navigateChar(-1)">&#9650; Prev</button>
-        <button class="detail-btn" onclick="navigateChar(1)">Next &#9660;</button>
-        <button class="detail-btn admin" onclick="window.print()">Print</button>
-        <div id="adminControls" style="display:none;">
-          <button class="detail-btn admin publish-off" id="btnPublish" onclick="togglePublish()">Unpublished</button>
-          <button class="detail-btn admin" onclick="enterEditMode()">Edit</button>
-          <button class="detail-btn admin" onclick="newCharacter()">New</button>
-          <button class="detail-btn admin" style="color:#ff6b6b;border-color:#cc4444;" onclick="deleteCharacter()">Delete</button>
+    <div class="char-sheet">
+
+      <!-- SIDEBAR -->
+      <div class="char-sidebar">
+        <button class="sidebar-btn close" onclick="showGallery()" title="Back to Registry">✕</button>
+        <hr class="sidebar-divider">
+        <button class="sidebar-btn" onclick="navigateChar(-1)" title="Previous">▲<br>Prev</button>
+        <button class="sidebar-btn" onclick="navigateChar(1)" title="Next">Next<br>▼</button>
+        <hr class="sidebar-divider">
+        <button class="sidebar-btn" onclick="window.print()" title="Print">Print</button>
+        <div class="sidebar-spacer"></div>
+
+        <!-- Admin controls — display mode -->
+        <div id="adminControls" style="display:none; flex-direction:column; align-items:center; gap:4px;">
+          <button class="sidebar-btn publish-off" id="btnPublish" onclick="togglePublish()">Pub</button>
+          <button class="sidebar-btn" onclick="enterEditMode()">Edit</button>
+          <button class="sidebar-btn" onclick="newCharacter()">New</button>
+          <button class="sidebar-btn danger" onclick="deleteCharacter()">Del</button>
         </div>
-        <div id="editControls" style="display:none;">
-          <button class="detail-btn admin" onclick="saveCharacter()">Save</button>
-          <button class="detail-btn admin" onclick="cancelEdit()">Cancel</button>
+
+        <!-- Edit controls -->
+        <div id="editControls" style="display:none; flex-direction:column; align-items:center; gap:4px;">
+          <button class="sidebar-btn save" onclick="saveCharacter()">Save</button>
+          <button class="sidebar-btn" onclick="cancelEdit()">Cancel</button>
         </div>
-        <button class="detail-btn close" onclick="showGallery()">✕</button>
       </div>
 
-    <div class="char-page" id="charPage">
-      <div id="charName" class="char-name"></div>
+      <!-- CONTENT -->
+      <div class="char-content">
 
-      <div class="char-columns">
-
-        <!-- LEFT: long text -->
+        <!-- LEFT: name + long text -->
         <div class="char-col-left">
-          <div class="char-section">
+          <div id="charName" class="char-name"></div>
+          <div class="char-section" style="flex:1; min-height:0;">
             <div class="char-section-title">Background</div>
             <div class="char-section-body" id="charBackground"></div>
           </div>
-          <div class="char-section">
+          <div class="char-section" style="flex:1; min-height:0;">
             <div class="char-section-title">Powers</div>
             <div class="char-section-body" id="charPowers"></div>
           </div>
           <div class="char-credit" id="charCredit"></div>
         </div>
 
-        <!-- MIDDLE: bio fields + ability profile + radar -->
+        <!-- MIDDLE: bio + ability + radar -->
         <div class="char-col-mid">
-
           <div class="bio-section-title">Biographical Data</div>
           <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
           <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
@@ -624,17 +656,15 @@
             <div class="legend-col"><div class="legend-header">SUPERIOR</div><div>7–10</div></div>
             <div class="legend-col"><div class="legend-header">COSMIC</div><div>11</div></div>
           </div>
-
         </div>
 
         <!-- RIGHT: portrait -->
-        <div class="char-col-right">
+        <div class="char-col-right" style="position:relative;">
           <div class="char-portrait" id="charPortrait"></div>
         </div>
 
       </div>
     </div>
-
   </div>
 
 
@@ -648,10 +678,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../components/shared/utils.js"></script>
   <script>
-
-    /* ============================================================
-       STATE
-       ============================================================ */
 
     let characters = [];
     let filteredChars = [];
@@ -667,9 +693,7 @@
     const TRAUMA_OPTIONS     = ['Violence','Betrayal','Loss','Shame','Conditioning'];
 
 
-    /* ============================================================
-       LOAD
-       ============================================================ */
+    /* --- LOAD --- */
 
     async function loadCharacters() {
       let query = db.from('mhr_characters').select('*').order('name');
@@ -687,21 +711,19 @@
       const name = params.get('character');
       if (name) {
         const idx = characters.findIndex(c =>
-          c.name && c.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g,'') === name.toLowerCase()
+          c.name && c.name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') === name.toLowerCase()
         );
         if (idx >= 0) openCharacter(idx);
       }
     }
 
 
-    /* ============================================================
-       GALLERY
-       ============================================================ */
+    /* --- GALLERY --- */
 
     function buildGallery() {
       const grid = document.getElementById('galleryGrid');
       grid.innerHTML = '';
-      filteredChars.forEach((char) => {
+      filteredChars.forEach(char => {
         const card = document.createElement('div');
         card.className = 'char-card';
         if (char.pic_url) card.style.backgroundImage = `url('${char.pic_url}')`;
@@ -709,26 +731,21 @@
           currentIndex = characters.indexOf(char);
           openCharacter(currentIndex);
         });
-
         if (!char.publish && currentUser) {
-          const unpub = document.createElement('div');
-          unpub.className = 'char-card-unpublished';
-          unpub.textContent = 'Unpublished';
-          card.appendChild(unpub);
+          const u = document.createElement('div');
+          u.className = 'char-card-unpublished';
+          u.textContent = 'Unpublished';
+          card.appendChild(u);
         }
-
         const scrim = document.createElement('div');
         scrim.className = 'char-card-scrim';
         card.appendChild(scrim);
-
         const title = document.createElement('div');
         title.className = 'char-card-title';
         title.textContent = char.name || '—';
         card.appendChild(title);
-
         grid.appendChild(card);
       });
-
       document.getElementById('galleryCount').textContent =
         filteredChars.length + ' record' + (filteredChars.length !== 1 ? 's' : '');
     }
@@ -738,22 +755,18 @@
       const status     = document.getElementById('filterStatus').value;
       const powerLevel = document.getElementById('filterPowerLevel').value;
       const arch       = document.getElementById('filterArchetype').value;
-
       filteredChars = characters.filter(c => {
-        if (search     && !(c.name || '').toLowerCase().includes(search)) return false;
+        if (search     && !(c.name||'').toLowerCase().includes(search)) return false;
         if (status     && c.status !== status) return false;
         if (powerLevel && computePowerLevel(c) !== powerLevel) return false;
-        if (arch       && !(c.archetype || '').includes(arch)) return false;
+        if (arch       && !(c.archetype||'').includes(arch)) return false;
         return true;
       });
-
       buildGallery();
     }
 
 
-    /* ============================================================
-       DETAIL VIEW
-       ============================================================ */
+    /* --- DETAIL --- */
 
     function openCharacter(index) {
       currentIndex = index;
@@ -778,43 +791,37 @@
 
     function updateURL(char) {
       if (!char.name) return;
-      const slug = char.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g,'');
+      const slug = char.name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
       history.pushState({}, '', `titans.html?character=${slug}`);
     }
 
     function navigateChar(dir) {
-      const newIndex = (currentIndex + dir + characters.length) % characters.length;
-      openCharacter(newIndex);
+      openCharacter((currentIndex + dir + characters.length) % characters.length);
     }
 
     function updateAdminUI(char) {
-      const adminControls = document.getElementById('adminControls');
-      if (!currentUser) { adminControls.style.display = 'none'; return; }
-      adminControls.style.display = 'flex';
-      adminControls.style.gap = '8px';
-      const pubBtn = document.getElementById('btnPublish');
-      pubBtn.textContent = char.publish ? 'Published' : 'Unpublished';
-      pubBtn.className = 'detail-btn admin ' + (char.publish ? 'publish-on' : 'publish-off');
+      const ac = document.getElementById('adminControls');
+      if (!currentUser) { ac.style.display = 'none'; return; }
+      ac.style.display = 'flex';
+      const pub = document.getElementById('btnPublish');
+      pub.textContent = char.publish ? 'Pub' : 'Pub';
+      pub.className = 'sidebar-btn ' + (char.publish ? 'publish-on' : 'publish-off');
+      pub.title = char.publish ? 'Published — click to unpublish' : 'Unpublished — click to publish';
     }
 
-    // Handle browser back button
     window.addEventListener('popstate', () => {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('character')) {
-        checkURLForCharacter();
-      } else {
-        showGallery();
-      }
+      if (params.get('character')) checkURLForCharacter();
+      else showGallery();
     });
 
 
-    /* ============================================================
-       POPULATE DETAIL (display mode)
-       ============================================================ */
+    /* --- POPULATE --- */
 
     function populateDetail(char) {
       document.getElementById('charName').textContent        = char.name || '—';
-      document.getElementById('breadcrumb-current').innerHTML = `<a href="titans.html" onclick="showGallery(); return false;">Titan Registry</a><span class="sep">›</span><span class="current">${char.name || '—'}</span>`;
+      document.getElementById('breadcrumb-current').innerHTML =
+        `<a href="titans.html" onclick="showGallery();return false;">Titan Registry</a><span class="sep">›</span><span class="current">${char.name||'—'}</span>`;
       document.getElementById('charBackground').textContent  = char.short_bio || '';
       document.getElementById('charPowers').textContent      = char.powers || '';
       document.getElementById('charPortrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
@@ -833,152 +840,123 @@
       document.getElementById('abilArchetypes').textContent  = char.archetype || '—';
       document.getElementById('abilPowerLevel').textContent  = computePowerLevel(char);
       document.getElementById('abilPowerSource').textContent = char.power_origin || '—';
-
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
       document.getElementById('charCredit').textContent = char.created_by
-        ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.`
-        : '';
-
+        ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
       requestAnimationFrame(() => drawRadar(char));
     }
 
     function computePowerLevel(char) {
-      const vals = ['strength','durability','speed','fighting','senses','intellect','will','projection']
-        .map(k => parseInt(char[k]) || 0);
-      const sum = vals.reduce((a,b) => a+b, 0);
-      const max = Math.max(...vals);
-      if (sum >= 60)              return 'Cosmic';
-      if (max >= 11 || sum >= 56) return 'Extreme Meta';
-      if (max >= 10 || sum >= 52) return 'High Meta';
-      if (max >= 9  || sum >= 48) return 'Mid Meta';
-      if (max >= 8  || sum >= 44) return 'Low Meta';
-      if (max >= 7  || sum >= 40) return 'Elite Human';
-      if (sum >= 36)              return 'Expert Human';
+      const v = ['strength','durability','speed','fighting','senses','intellect','will','projection']
+        .map(k => parseInt(char[k])||0);
+      const sum = v.reduce((a,b)=>a+b,0), max = Math.max(...v);
+      if (sum>=60) return 'Cosmic';
+      if (max>=11||sum>=56) return 'Extreme Meta';
+      if (max>=10||sum>=52) return 'High Meta';
+      if (max>=9 ||sum>=48) return 'Mid Meta';
+      if (max>=8 ||sum>=44) return 'Low Meta';
+      if (max>=7 ||sum>=40) return 'Elite Human';
+      if (sum>=36) return 'Expert Human';
       return 'Normal Human';
     }
 
 
-    /* ============================================================
-       RADAR CHART
-       ============================================================ */
+    /* --- RADAR --- */
 
     function drawRadar(char) {
       const svg = document.getElementById('radarChart');
       svg.innerHTML = '';
-      const cx = 150, cy = 105, maxR = 70;
-      const rings = 11;
-      const ringColors = [
-        '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
-        '#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'
+      const cx=150, cy=105, maxR=70, rings=11;
+      const ringColors=['#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00','#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'];
+      const yOff=maxR*0.17;
+      const stats=[
+        {key:'senses',    label:'Senses',  angle:-157.5, yOffset:0    },
+        {key:'fighting',  label:'Agility', angle:-67.5,  yOffset:yOff },
+        {key:'speed',     label:'Speed',   angle:-22.5,  yOffset:0    },
+        {key:'strength',  label:'Might',   angle:22.5,   yOffset:0    },
+        {key:'durability',label:'Body',    angle:67.5,   yOffset:-yOff},
+        {key:'will',      label:'Will',    angle:112.5,  yOffset:-yOff},
+        {key:'intellect', label:'Mind',    angle:157.5,  yOffset:0    },
+        {key:'projection',label:'Project', angle:-112.5, yOffset:yOff },
       ];
-      const yOff = maxR * 0.17;
-      const stats = [
-        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0     },
-        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOff  },
-        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0     },
-        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0     },
-        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOff },
-        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOff },
-        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0     },
-        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOff  },
-      ];
-      const toRad = deg => deg * Math.PI / 180;
-      const ns = 'http://www.w3.org/2000/svg';
-
-      const bg = document.createElementNS(ns, 'circle');
-      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
-      bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
+      const toRad=d=>d*Math.PI/180, ns='http://www.w3.org/2000/svg';
+      const bg=document.createElementNS(ns,'circle');
+      bg.setAttribute('cx',cx);bg.setAttribute('cy',cy);bg.setAttribute('r',maxR);bg.setAttribute('fill','#406080');
       svg.appendChild(bg);
-
-      const sliceAngle = 360 / 8;
-      stats.forEach(stat => {
-        const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-        if (val === 0) return;
-        const sa = stat.angle - sliceAngle / 2;
-        const ea = stat.angle + sliceAngle / 2;
-        for (let ring = 1; ring <= val; ring++) {
-          const oR = (ring / rings) * maxR, iR = ((ring-1) / rings) * maxR;
-          const x1 = cx + oR*Math.cos(toRad(sa)), y1 = cy + oR*Math.sin(toRad(sa));
-          const x2 = cx + oR*Math.cos(toRad(ea)), y2 = cy + oR*Math.sin(toRad(ea));
-          const x3 = cx + iR*Math.cos(toRad(ea)), y3 = cy + iR*Math.sin(toRad(ea));
-          const x4 = cx + iR*Math.cos(toRad(sa)), y4 = cy + iR*Math.sin(toRad(sa));
-          const path = document.createElementNS(ns, 'path');
-          path.setAttribute('d', `M ${x4} ${y4} L ${x1} ${y1} A ${oR} ${oR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${iR} ${iR} 0 0 0 ${x4} ${y4} Z`);
-          path.setAttribute('fill', ringColors[ring-1]);
+      stats.forEach(s=>{
+        const val=Math.min(Math.max(parseInt(char[s.key])||0,0),11);
+        if(!val) return;
+        const sa=s.angle-22.5, ea=s.angle+22.5;
+        for(let r=1;r<=val;r++){
+          const oR=(r/rings)*maxR, iR=((r-1)/rings)*maxR;
+          const path=document.createElementNS(ns,'path');
+          const x1=cx+oR*Math.cos(toRad(sa)),y1=cy+oR*Math.sin(toRad(sa));
+          const x2=cx+oR*Math.cos(toRad(ea)),y2=cy+oR*Math.sin(toRad(ea));
+          const x3=cx+iR*Math.cos(toRad(ea)),y3=cy+iR*Math.sin(toRad(ea));
+          const x4=cx+iR*Math.cos(toRad(sa)),y4=cy+iR*Math.sin(toRad(sa));
+          path.setAttribute('d',`M ${x4} ${y4} L ${x1} ${y1} A ${oR} ${oR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${iR} ${iR} 0 0 0 ${x4} ${y4} Z`);
+          path.setAttribute('fill',ringColors[r-1]);
           svg.appendChild(path);
         }
       });
-
-      for (let ring = 1; ring <= rings; ring++) {
-        const r = (ring / rings) * maxR;
-        const c = document.createElementNS(ns, 'circle');
-        c.setAttribute('cx', cx); c.setAttribute('cy', cy);
-        c.setAttribute('r', r); c.setAttribute('fill', 'none');
-        c.setAttribute('stroke', '#aac4e0'); c.setAttribute('stroke-width', '0.5');
-        if (ring === 2 || ring === 6) c.setAttribute('stroke-dasharray', '3,2');
+      for(let r=1;r<=rings;r++){
+        const c=document.createElementNS(ns,'circle');
+        c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',(r/rings)*maxR);
+        c.setAttribute('fill','none');c.setAttribute('stroke','#aac4e0');c.setAttribute('stroke-width','0.5');
+        if(r===2||r===6) c.setAttribute('stroke-dasharray','3,2');
         svg.appendChild(c);
       }
-
-      [-135,-90,-45,0,45,90,135,180].forEach(angle => {
-        const line = document.createElementNS(ns, 'line');
-        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-        line.setAttribute('x2', cx + maxR*Math.cos(toRad(angle)));
-        line.setAttribute('y2', cy + maxR*Math.sin(toRad(angle)));
-        line.setAttribute('stroke', '#aac4e0'); line.setAttribute('stroke-width', '0.5');
-        svg.appendChild(line);
+      [-135,-90,-45,0,45,90,135,180].forEach(a=>{
+        const l=document.createElementNS(ns,'line');
+        l.setAttribute('x1',cx);l.setAttribute('y1',cy);
+        l.setAttribute('x2',cx+maxR*Math.cos(toRad(a)));l.setAttribute('y2',cy+maxR*Math.sin(toRad(a)));
+        l.setAttribute('stroke','#aac4e0');l.setAttribute('stroke-width','0.5');
+        svg.appendChild(l);
       });
-
-      const border = document.createElementNS(ns, 'circle');
-      border.setAttribute('cx', cx); border.setAttribute('cy', cy);
-      border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
-      border.setAttribute('stroke', '#aac4e0'); border.setAttribute('stroke-width', '1');
+      const border=document.createElementNS(ns,'circle');
+      border.setAttribute('cx',cx);border.setAttribute('cy',cy);border.setAttribute('r',maxR);
+      border.setAttribute('fill','none');border.setAttribute('stroke','#aac4e0');border.setAttribute('stroke-width','1');
       svg.appendChild(border);
-
-      const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
-      stats.forEach(stat => {
-        const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-        const px = cx + (maxR+40)*Math.cos(toRad(stat.angle));
-        const py = cy + (maxR+40)*Math.sin(toRad(stat.angle));
-        const label = document.createElementNS(ns, 'text');
-        label.setAttribute('x', px); label.setAttribute('y', py + stat.yOffset);
-        label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
-        label.setAttribute('font-family', 'Bebas Neue, sans-serif');
-        label.setAttribute('font-size', '10'); label.setAttribute('fill', '#aac4e0');
-        label.textContent = `${stat.label.toUpperCase()} ${val}`;
-        svg.appendChild(label);
-        const desc = document.createElementNS(ns, 'text');
-        desc.setAttribute('x', px); desc.setAttribute('y', py + 11 + stat.yOffset);
-        desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
-        desc.setAttribute('font-family', 'Barlow Condensed, sans-serif');
-        desc.setAttribute('font-size', '9'); desc.setAttribute('fill', '#7a9ab8');
-        desc.textContent = descriptors[val] || '';
-        svg.appendChild(desc);
+      const desc=['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
+      stats.forEach(s=>{
+        const val=Math.min(Math.max(parseInt(char[s.key])||0,0),11);
+        const px=cx+(maxR+40)*Math.cos(toRad(s.angle)), py=cy+(maxR+40)*Math.sin(toRad(s.angle));
+        const lbl=document.createElementNS(ns,'text');
+        lbl.setAttribute('x',px);lbl.setAttribute('y',py+s.yOffset);
+        lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
+        lbl.setAttribute('font-family','Bebas Neue, sans-serif');lbl.setAttribute('font-size','10');lbl.setAttribute('fill','#aac4e0');
+        lbl.textContent=`${s.label.toUpperCase()} ${val}`;
+        svg.appendChild(lbl);
+        const d=document.createElementNS(ns,'text');
+        d.setAttribute('x',px);d.setAttribute('y',py+11+s.yOffset);
+        d.setAttribute('text-anchor','middle');d.setAttribute('dominant-baseline','middle');
+        d.setAttribute('font-family','Barlow Condensed, sans-serif');d.setAttribute('font-size','9');d.setAttribute('fill','#7a9ab8');
+        d.textContent=desc[val]||'';
+        svg.appendChild(d);
       });
     }
 
 
-    /* ============================================================
-       EDIT MODE
-       ============================================================ */
+    /* --- EDIT MODE --- */
 
     function enterEditMode() {
       if (!currentUser) return;
-      isEditMode = true;
-      isDirty = false;
+      isEditMode = true; isDirty = false;
       document.getElementById('adminControls').style.display = 'none';
       document.getElementById('editControls').style.display = 'flex';
-      document.getElementById('editControls').style.gap = '8px';
       populateEditMode();
     }
 
     function exitEditMode() {
-      isEditMode = false;
-      isDirty = false;
+      isEditMode = false; isDirty = false;
       document.getElementById('editControls').style.display = 'none';
       document.getElementById('adminControls').style.display = 'flex';
-      document.getElementById('adminControls').style.gap = '8px';
-      const rc = document.getElementById('radarContainer');
-      rc.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
+      document.getElementById('radarContainer').innerHTML =
+        '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
+      const p = document.getElementById('charPortrait');
+      const fi = p.querySelector('.portrait-file-input');
+      if (fi) p.removeChild(fi);
+      p.style.position = '';
     }
 
     function cancelEdit() {
@@ -988,79 +966,67 @@
     }
 
     function createMultiSelect(field, options, currentValues) {
-      const container = document.createElement('div');
-      container.className = 'custom-multiselect';
-      container.dataset.field = field;
-      const display = document.createElement('div');
-      display.className = 'custom-multiselect-display';
-      display.textContent = currentValues.length ? currentValues.join(', ') : '—';
+      const c = document.createElement('div');
+      c.className = 'custom-multiselect'; c.dataset.field = field;
+      const disp = document.createElement('div');
+      disp.className = 'custom-multiselect-display';
+      disp.textContent = currentValues.length ? currentValues.join(', ') : '—';
       const panel = document.createElement('div');
       panel.className = 'custom-multiselect-panel';
       options.forEach(opt => {
-        const label = document.createElement('label');
+        const lbl = document.createElement('label');
         const cb = document.createElement('input');
-        cb.type = 'checkbox'; cb.value = opt;
-        cb.checked = currentValues.includes(opt);
+        cb.type='checkbox'; cb.value=opt; cb.checked=currentValues.includes(opt);
         cb.addEventListener('change', () => {
           isDirty = true;
-          const checked = Array.from(panel.querySelectorAll('input:checked')).map(c => c.value);
-          display.textContent = checked.length ? checked.join(', ') : '—';
+          const checked = Array.from(panel.querySelectorAll('input:checked')).map(x=>x.value);
+          disp.textContent = checked.length ? checked.join(', ') : '—';
         });
-        label.appendChild(cb);
-        label.appendChild(document.createTextNode(' ' + opt));
-        panel.appendChild(label);
+        lbl.appendChild(cb); lbl.appendChild(document.createTextNode(' '+opt));
+        panel.appendChild(lbl);
       });
-      display.addEventListener('click', e => {
+      disp.addEventListener('click', e => {
         e.stopPropagation();
-        const isOpen = panel.classList.contains('open');
-        document.querySelectorAll('.custom-multiselect-panel.open').forEach(p => p.classList.remove('open'));
-        if (!isOpen) panel.classList.add('open');
+        const open = panel.classList.contains('open');
+        document.querySelectorAll('.custom-multiselect-panel.open').forEach(p=>p.classList.remove('open'));
+        if (!open) panel.classList.add('open');
       });
       document.addEventListener('click', () => panel.classList.remove('open'));
-      container.appendChild(display);
-      container.appendChild(panel);
-      return container;
+      c.appendChild(disp); c.appendChild(panel);
+      return c;
     }
 
-    function makeInput(value, field) {
-      const inp = document.createElement('input');
-      inp.type = 'text'; inp.className = 'edit-input';
-      inp.value = value || '';
-      inp.dataset.field = field;
-      inp.addEventListener('input', () => isDirty = true);
-      return inp;
+    function rep(id, el) {
+      const c = document.getElementById(id);
+      c.textContent = ''; c.appendChild(el);
     }
 
-    function makeTextarea(value, field) {
-      const ta = document.createElement('textarea');
-      ta.className = 'edit-textarea';
-      ta.value = value || '';
-      ta.dataset.field = field;
-      ta.addEventListener('input', () => isDirty = true);
-      return ta;
+    function inp(val, field) {
+      const i = document.createElement('input');
+      i.type='text'; i.className='edit-input'; i.value=val||''; i.dataset.field=field;
+      i.addEventListener('input', ()=>isDirty=true);
+      return i;
     }
 
-    function makeSelect(field, options, currentValue) {
-      const sel = document.createElement('select');
-      sel.className = 'edit-select';
-      sel.dataset.field = field;
+    function ta(val, field) {
+      const t = document.createElement('textarea');
+      t.className='edit-textarea'; t.value=val||''; t.dataset.field=field;
+      t.addEventListener('input', ()=>isDirty=true);
+      return t;
+    }
+
+    function sel(field, opts, cur) {
+      const s = document.createElement('select');
+      s.className='edit-select'; s.dataset.field=field;
       const blank = document.createElement('option');
-      blank.value = ''; blank.textContent = '—';
-      sel.appendChild(blank);
-      options.forEach(opt => {
-        const o = document.createElement('option');
-        o.value = opt; o.textContent = opt;
-        if (currentValue === opt) o.selected = true;
-        sel.appendChild(o);
+      blank.value=''; blank.textContent='—'; s.appendChild(blank);
+      opts.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value=o; opt.textContent=o; if(cur===o) opt.selected=true;
+        s.appendChild(opt);
       });
-      sel.addEventListener('change', () => isDirty = true);
-      return sel;
-    }
-
-    function replaceContent(id, el) {
-      const container = document.getElementById(id);
-      container.textContent = '';
-      container.appendChild(el);
+      s.addEventListener('change', ()=>isDirty=true);
+      return s;
     }
 
     function populateEditMode() {
@@ -1070,230 +1036,185 @@
       const nameEl = document.getElementById('charName');
       nameEl.textContent = '';
       const nameInp = document.createElement('input');
-      nameInp.type = 'text'; nameInp.className = 'edit-name';
-      nameInp.value = char.name || '';
-      nameInp.addEventListener('input', () => isDirty = true);
+      nameInp.type='text'; nameInp.className='edit-name';
+      nameInp.value=char.name||'';
+      nameInp.addEventListener('input',()=>isDirty=true);
       nameEl.appendChild(nameInp);
 
-      // Long text
-      replaceContent('charBackground', makeTextarea(char.short_bio, 'short_bio'));
-      replaceContent('charPowers', makeTextarea(char.powers, 'powers'));
+      // Long text — wrap in flex container so textarea fills height
+      const bgSection = document.getElementById('charBackground');
+      bgSection.style.display='flex'; bgSection.style.flexDirection='column'; bgSection.style.flex='1';
+      rep('charBackground', ta(char.short_bio,'short_bio'));
 
-      // Credit
-      replaceContent('charCredit', makeInput(char.created_by, 'created_by'));
+      const pwSection = document.getElementById('charPowers');
+      pwSection.style.display='flex'; pwSection.style.flexDirection='column'; pwSection.style.flex='1';
+      rep('charPowers', ta(char.powers,'powers'));
 
-      // Bio single text fields
-      [
-        ['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],
-        ['bioEyes','eyes'],['bioHeight','height'],['bioWeight','weight'],
-        ['bioAge','age'],['bioOccupation','occupation']
-      ].forEach(([id, field]) => replaceContent(id, makeInput(char[field], field)));
+      rep('charCredit', inp(char.created_by,'created_by'));
 
-      // Single selects
-      replaceContent('bioStatus', makeSelect('status', STATUS_OPTIONS, char.status));
-      replaceContent('bioOperations', makeSelect('area_of_operations', OPERATIONS_OPTIONS, char.area_of_operations));
+      // Bio fields
+      [['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],['bioEyes','eyes'],
+       ['bioHeight','height'],['bioWeight','weight'],['bioAge','age'],['bioOccupation','occupation']]
+        .forEach(([id,f])=>rep(id,inp(char[f],f)));
 
-      // Multi selects
-      [
-        ['bioMotivation','motivation', MOTIVATION_OPTIONS],
-        ['bioTrauma','trauma', TRAUMA_OPTIONS],
-        ['abilArchetypes','archetype', ARCHETYPE_OPTIONS],
-        ['abilPowerSource','power_origin', ORIGIN_OPTIONS],
-      ].forEach(([id, field, opts]) => {
-        const el = document.getElementById(id);
-        el.textContent = '';
-        el.appendChild(createMultiSelect(field, opts, splitList(char[field])));
-      });
+      rep('bioStatus', sel('status', STATUS_OPTIONS, char.status));
+      rep('bioOperations', sel('area_of_operations', OPERATIONS_OPTIONS, char.area_of_operations));
 
-      // Power level is computed — leave as display
+      [['bioMotivation','motivation',MOTIVATION_OPTIONS],['bioTrauma','trauma',TRAUMA_OPTIONS],
+       ['abilArchetypes','archetype',ARCHETYPE_OPTIONS],['abilPowerSource','power_origin',ORIGIN_OPTIONS]]
+        .forEach(([id,f,opts])=>{
+          const el=document.getElementById(id);
+          el.textContent='';
+          el.appendChild(createMultiSelect(f,opts,splitList(char[f])));
+        });
+
       document.getElementById('abilPowerLevel').textContent = computePowerLevel(char);
 
-      // Portrait with file upload
+      // Portrait upload
       const portrait = document.getElementById('charPortrait');
-      portrait.classList.add('portrait-edit-wrap');
+      portrait.style.position = 'relative';
       const fi = document.createElement('input');
-      fi.type = 'file'; fi.accept = 'image/*';
-      fi.className = 'portrait-file-input';
+      fi.type='file'; fi.accept='image/*'; fi.className='portrait-file-input';
       fi.addEventListener('change', async () => {
-        const file = fi.files[0];
-        if (!file) return;
-        const ext = file.name.split('.').pop();
-        const path = `${char.name || char.id}.${ext}`;
-        const { error } = await db.storage.from('mhr_pics').upload(path, file, { upsert: true });
-        if (error) { alert('Upload failed: ' + error.message); return; }
-        const { data: urlData } = db.storage.from('mhr_pics').getPublicUrl(path);
-        portrait.style.backgroundImage = `url('${urlData.publicUrl}')`;
-        characters[currentIndex].pic_url = urlData.publicUrl;
-        isDirty = true;
+        const file=fi.files[0]; if(!file) return;
+        const ext=file.name.split('.').pop();
+        const path=`${char.name||char.id}.${ext}`;
+        const {error}=await db.storage.from('mhr_pics').upload(path,file,{upsert:true});
+        if(error){alert('Upload failed: '+error.message);return;}
+        const {data:u}=db.storage.from('mhr_pics').getPublicUrl(path);
+        portrait.style.backgroundImage=`url('${u.publicUrl}')`;
+        characters[currentIndex].pic_url=u.publicUrl;
+        isDirty=true;
       });
       portrait.appendChild(fi);
 
       // Radar with arrows
-      const rc = document.getElementById('radarContainer');
-      rc.innerHTML = '';
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.id = 'radarChart';
-      svg.setAttribute('viewBox', '0 0 300 300');
-      svg.style.cssText = 'width:100%;height:auto;display:block;';
+      const rc=document.getElementById('radarContainer');
+      rc.innerHTML='';
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.id='radarChart'; svg.setAttribute('viewBox','0 0 300 300');
+      svg.style.cssText='width:100%;height:auto;display:block;';
       rc.appendChild(svg);
       drawRadar(char);
-      addRadarArrows(char, svg);
+      addRadarArrows(char,svg);
     }
 
     function addRadarArrows(char, svg) {
-      const cx = 150, cy = 105, maxR = 70;
-      const toRad = deg => deg * Math.PI / 180;
-      const yOff = maxR * 0.17;
-      const statPositions = [
-        { key: 'senses',     angle: -157.5, yOffset: 0     },
-        { key: 'fighting',   angle: -67.5,  yOffset: yOff  },
-        { key: 'speed',      angle: -22.5,  yOffset: 0     },
-        { key: 'strength',   angle: 22.5,   yOffset: 0     },
-        { key: 'durability', angle: 67.5,   yOffset: -yOff },
-        { key: 'will',       angle: 112.5,  yOffset: -yOff },
-        { key: 'intellect',  angle: 157.5,  yOffset: 0     },
-        { key: 'projection', angle: -112.5, yOffset: yOff  },
+      const cx=150,cy=105,maxR=70,toRad=d=>d*Math.PI/180,yOff=maxR*0.17;
+      const sp=[
+        {key:'senses',angle:-157.5,yOffset:0},{key:'fighting',angle:-67.5,yOffset:yOff},
+        {key:'speed',angle:-22.5,yOffset:0},{key:'strength',angle:22.5,yOffset:0},
+        {key:'durability',angle:67.5,yOffset:-yOff},{key:'will',angle:112.5,yOffset:-yOff},
+        {key:'intellect',angle:157.5,yOffset:0},{key:'projection',angle:-112.5,yOffset:yOff},
       ];
-      const leftKeys = ['senses','intellect','will','projection'];
-
-      statPositions.forEach(({ key, angle, yOffset }) => {
-        const px = cx + (maxR+40)*Math.cos(toRad(angle));
-        const py = cy + (maxR+40)*Math.sin(toRad(angle)) + yOffset;
-        const isLeft = leftKeys.includes(key);
-        const labelGap = 35, gap = 4;
-        const arrowLeftX  = isLeft ? px - labelGap - gap - 8 : px + labelGap;
-        const arrowRightX = isLeft ? px - labelGap            : px + labelGap + gap + 8;
-
-        const makeArrow = (x, text, delta) => {
-          const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          el.setAttribute('x', x); el.setAttribute('y', py);
-          el.setAttribute('text-anchor', 'middle');
-          el.setAttribute('dominant-baseline', 'middle');
-          el.setAttribute('font-size', '10');
-          el.setAttribute('fill', '#5a80a8');
-          el.setAttribute('cursor', 'pointer');
-          el.textContent = text;
-          el.addEventListener('click', () => {
-            isDirty = true;
-            characters[currentIndex][key] = Math.min(11, Math.max(0, (parseInt(characters[currentIndex][key]) || 0) + delta));
+      const lk=['senses','intellect','will','projection'];
+      sp.forEach(({key,angle,yOffset})=>{
+        const px=cx+(maxR+40)*Math.cos(toRad(angle));
+        const py=cy+(maxR+40)*Math.sin(toRad(angle))+yOffset;
+        const isL=lk.includes(key),lg=35,g=4;
+        const lx=isL?px-lg-g-8:px+lg, rx=isL?px-lg:px+lg+g+8;
+        const arr=(x,t,d)=>{
+          const el=document.createElementNS('http://www.w3.org/2000/svg','text');
+          el.setAttribute('x',x);el.setAttribute('y',py);
+          el.setAttribute('text-anchor','middle');el.setAttribute('dominant-baseline','middle');
+          el.setAttribute('font-size','10');el.setAttribute('fill','#5a80a8');el.setAttribute('cursor','pointer');
+          el.textContent=t;
+          el.addEventListener('click',()=>{
+            isDirty=true;
+            characters[currentIndex][key]=Math.min(11,Math.max(0,(parseInt(characters[currentIndex][key])||0)+d));
             drawRadar(characters[currentIndex]);
-            addRadarArrows(characters[currentIndex], svg);
-            document.getElementById('abilPowerLevel').textContent = computePowerLevel(characters[currentIndex]);
+            addRadarArrows(characters[currentIndex],svg);
+            document.getElementById('abilPowerLevel').textContent=computePowerLevel(characters[currentIndex]);
           });
           svg.appendChild(el);
         };
-
-        makeArrow(arrowLeftX, '◀', -1);
-        makeArrow(arrowRightX, '▶', 1);
+        arr(lx,'◀',-1); arr(rx,'▶',1);
       });
     }
 
 
-    /* ============================================================
-       SAVE / DELETE / PUBLISH / NEW
-       ============================================================ */
+    /* --- SAVE / DELETE / PUBLISH / NEW --- */
 
     async function saveCharacter() {
-      const char = characters[currentIndex];
-
-      const getMulti = field => {
-        const container = document.querySelector(`.custom-multiselect[data-field="${field}"]`);
-        if (!container) return '';
-        return Array.from(container.querySelectorAll('input[type=checkbox]:checked'))
-          .map(cb => cb.value).join(', ');
+      const char=characters[currentIndex];
+      const gm=f=>{
+        const c=document.querySelector(`.custom-multiselect[data-field="${f}"]`);
+        return c?Array.from(c.querySelectorAll('input:checked')).map(x=>x.value).join(', '):'';
       };
-
-      const getField = (id, selector) => {
-        const el = document.getElementById(id);
-        const inp = el.querySelector(selector);
-        return inp ? inp.value || null : null;
+      const gf=(id,sel)=>{const e=document.getElementById(id),i=e?.querySelector(sel);return i?i.value||null:null;};
+      const updates={
+        name:               document.querySelector('#charName input')?.value||null,
+        short_bio:          document.querySelector('#charBackground textarea')?.value||null,
+        powers:             document.querySelector('#charPowers textarea')?.value||null,
+        created_by:         document.querySelector('#charCredit input')?.value||null,
+        identity:           gf('bioIdentity','input'),skin:gf('bioSkin','input'),
+        hair:               gf('bioHair','input'),eyes:gf('bioEyes','input'),
+        height:             gf('bioHeight','input'),weight:gf('bioWeight','input'),
+        age:                gf('bioAge','input'),occupation:gf('bioOccupation','input'),
+        status:             gf('bioStatus','select'),area_of_operations:gf('bioOperations','select'),
+        motivation:         gm('motivation'),trauma:gm('trauma'),
+        archetype:          gm('archetype'),power_origin:gm('power_origin'),
+        pic_url:            characters[currentIndex].pic_url||null,
+        strength:           parseInt(characters[currentIndex].strength)||0,
+        durability:         parseInt(characters[currentIndex].durability)||0,
+        speed:              parseInt(characters[currentIndex].speed)||0,
+        fighting:           parseInt(characters[currentIndex].fighting)||0,
+        senses:             parseInt(characters[currentIndex].senses)||0,
+        intellect:          parseInt(characters[currentIndex].intellect)||0,
+        will:               parseInt(characters[currentIndex].will)||0,
+        projection:         parseInt(characters[currentIndex].projection)||0,
       };
-
-      const updates = {
-        name:               document.querySelector('#charName input')?.value || null,
-        short_bio:          document.querySelector('#charBackground textarea')?.value || null,
-        powers:             document.querySelector('#charPowers textarea')?.value || null,
-        created_by:         document.querySelector('#charCredit input')?.value || null,
-        identity:           getField('bioIdentity', 'input'),
-        skin:               getField('bioSkin', 'input'),
-        hair:               getField('bioHair', 'input'),
-        eyes:               getField('bioEyes', 'input'),
-        height:             getField('bioHeight', 'input'),
-        weight:             getField('bioWeight', 'input'),
-        age:                getField('bioAge', 'input'),
-        occupation:         getField('bioOccupation', 'input'),
-        status:             getField('bioStatus', 'select'),
-        area_of_operations: getField('bioOperations', 'select'),
-        motivation:         getMulti('motivation'),
-        trauma:             getMulti('trauma'),
-        archetype:          getMulti('archetype'),
-        power_origin:       getMulti('power_origin'),
-        pic_url:            characters[currentIndex].pic_url || null,
-        strength:           parseInt(characters[currentIndex].strength)   || 0,
-        durability:         parseInt(characters[currentIndex].durability) || 0,
-        speed:              parseInt(characters[currentIndex].speed)      || 0,
-        fighting:           parseInt(characters[currentIndex].fighting)   || 0,
-        senses:             parseInt(characters[currentIndex].senses)     || 0,
-        intellect:          parseInt(characters[currentIndex].intellect)  || 0,
-        will:               parseInt(characters[currentIndex].will)       || 0,
-        projection:         parseInt(characters[currentIndex].projection) || 0,
-      };
-
-      const { error } = await db.from('mhr_characters').update(updates).eq('id', char.id);
-      if (error) { alert('Save failed: ' + error.message); return; }
-      Object.assign(characters[currentIndex], updates);
+      const {error}=await db.from('mhr_characters').update(updates).eq('id',char.id);
+      if(error){alert('Save failed: '+error.message);return;}
+      Object.assign(characters[currentIndex],updates);
       exitEditMode();
       populateDetail(characters[currentIndex]);
       buildGallery();
     }
 
     async function togglePublish() {
-      if (!currentUser) return;
-      const char = characters[currentIndex];
-      const newVal = !char.publish;
-      const { error } = await db.from('mhr_characters').update({ publish: newVal }).eq('id', char.id);
-      if (error) { alert('Save failed: ' + error.message); return; }
-      characters[currentIndex].publish = newVal;
+      if(!currentUser) return;
+      const char=characters[currentIndex], nv=!char.publish;
+      const {error}=await db.from('mhr_characters').update({publish:nv}).eq('id',char.id);
+      if(error){alert('Save failed: '+error.message);return;}
+      characters[currentIndex].publish=nv;
       updateAdminUI(characters[currentIndex]);
       buildGallery();
     }
 
     async function deleteCharacter() {
-      if (!currentUser) return;
-      const char = characters[currentIndex];
-      if (!confirm(`Delete ${char.name || 'this record'}? This cannot be undone.`)) return;
-      const { error } = await db.from('mhr_characters').delete().eq('id', char.id);
-      if (error) { alert('Delete failed: ' + error.message); return; }
-      characters.splice(currentIndex, 1);
-      buildGallery();
-      showGallery();
+      if(!currentUser) return;
+      const char=characters[currentIndex];
+      if(!confirm(`Delete ${char.name||'this record'}? This cannot be undone.`)) return;
+      const {error}=await db.from('mhr_characters').delete().eq('id',char.id);
+      if(error){alert('Delete failed: '+error.message);return;}
+      characters.splice(currentIndex,1);
+      buildGallery(); showGallery();
     }
 
     async function newCharacter() {
-      if (!currentUser) return;
-      const { data, error } = await db.from('mhr_characters').insert([{ publish: false }]).select().single();
-      if (error) { alert('Create failed: ' + error.message); return; }
+      if(!currentUser) return;
+      const {data,error}=await db.from('mhr_characters').insert([{publish:false}]).select().single();
+      if(error){alert('Create failed: '+error.message);return;}
       characters.push(data);
       buildGallery();
-      openCharacter(characters.length - 1);
+      openCharacter(characters.length-1);
       enterEditMode();
     }
 
 
-    /* ============================================================
-       INIT
-       ============================================================ */
+    /* --- INIT --- */
 
     document.addEventListener('DOMContentLoaded', () => {
-      const checkAuth = setInterval(() => {
+      const t = setInterval(() => {
         if (typeof db !== 'undefined') {
-          clearInterval(checkAuth);
-          db.auth.getSession().then(({ data: { session } }) => {
+          clearInterval(t);
+          db.auth.getSession().then(({data:{session}}) => {
             currentUser = session?.user ?? null;
             updateAuthUI();
             loadCharacters();
           });
-          db.auth.onAuthStateChange((_event, session) => {
+          db.auth.onAuthStateChange((_,session) => {
             currentUser = session?.user ?? null;
             updateAuthUI();
             loadCharacters();
