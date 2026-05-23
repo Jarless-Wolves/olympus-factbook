@@ -14,16 +14,11 @@
 
     /* --- GALLERY VIEW --- */
 
-    #view-gallery {
-      display: block;
-    }
-
-    #view-detail {
-      display: none;
-    }
+    #view-gallery { display: block; }
+    #view-detail  { display: none;  }
 
     .gallery-header {
-      padding: 16px 24px;
+      padding: 10px 24px;
       background: var(--bg-nav);
       border-bottom: 1px solid var(--border-strong);
       display: flex;
@@ -45,13 +40,8 @@
       transition: border-color 0.15s;
     }
 
-    .gallery-search:focus {
-      border-color: var(--border-accent);
-    }
-
-    .gallery-search::placeholder {
-      color: var(--text-disabled);
-    }
+    .gallery-search:focus { border-color: var(--border-accent); }
+    .gallery-search::placeholder { color: var(--text-disabled); }
 
     .gallery-filter {
       font-family: 'Barlow Condensed', sans-serif;
@@ -66,9 +56,7 @@
       transition: border-color 0.15s;
     }
 
-    .gallery-filter:focus {
-      border-color: var(--border-accent);
-    }
+    .gallery-filter:focus { border-color: var(--border-accent); }
 
     .gallery-count {
       font-family: 'Barlow Condensed', sans-serif;
@@ -82,12 +70,12 @@
     .gallery-grid {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 16px;
       padding: 24px;
-      justify-content: center;
     }
 
-    /* --- CHARACTER CARD (card-image: 260x260) --- */
+    /* --- CHARACTER CARD --- */
 
     .char-card {
       width: 260px;
@@ -98,7 +86,6 @@
       border: 2px solid var(--border-strong);
       transition: transform 0.2s, box-shadow 0.2s;
       background: var(--bg-panel);
-      background-size: cover;
       background-size: 200%;
       background-position: top center;
       flex-shrink: 0;
@@ -152,9 +139,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 24px;
+      padding: 0 24px;
+      height: 40px;
       background: var(--bg-nav);
       border-bottom: 1px solid var(--border-strong);
+      flex-shrink: 0;
     }
 
     .detail-breadcrumb {
@@ -171,10 +160,7 @@
       transition: color 0.15s;
     }
 
-    .detail-breadcrumb a:hover {
-      color: var(--text-mid);
-    }
-
+    .detail-breadcrumb a:hover { color: var(--text-mid); }
     .detail-breadcrumb .sep { margin: 0 6px; opacity: 0.4; }
     .detail-breadcrumb .current { color: var(--text-mid); }
 
@@ -191,184 +177,150 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: 13px;
       letter-spacing: 0.1em;
-      padding: 4px 10px;
+      padding: 3px 10px;
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
     }
 
-    .detail-btn:hover {
-      background: var(--bg-panel);
-      color: var(--text-primary);
-    }
-
-    .detail-btn.admin {
-      color: var(--text-faint);
-      border-color: var(--border-strong);
-    }
-
+    .detail-btn:hover { background: var(--bg-panel); color: var(--text-primary); }
+    .detail-btn.admin { color: var(--text-faint); border-color: var(--border-strong); }
     .detail-btn.publish-on  { color: #ff6b6b; border-color: #cc4444; }
     .detail-btn.publish-off { color: #6bcc6b; border-color: #449944; }
+    .detail-btn.close { border-color: var(--border-strong); color: var(--text-faint); font-size: 14px; padding: 2px 8px; }
 
-    .detail-btn.close {
-      border-color: var(--border-strong);
-      color: var(--text-faint);
-      font-size: 16px;
-      padding: 2px 8px;
-    }
 
-    /* --- CHARACTER SHEET --- */
+    /* --- CHARACTER PAGE --- */
 
-    .sheet-wrap {
-      padding: 20px 24px 80px;
+    .char-page {
+      padding: 24px 24px 60px;
       overflow-y: auto;
+      height: calc(100vh - 216px); /* topbar 72 + navbar 40 + breadcrumb 32 + detail-header 40 + footer 32 */
     }
 
-    /* Sheet is the same proportional layout as the prototype,
-       but fluid rather than fixed-ratio */
-
-    .sheet {
-      background: #f0f0f0;
-      color: #111;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 900px;
-      --sw: 860px;
-    }
-
-    .sheet-title {
-      border: 2px solid #111;
-      border-radius: 8px;
-      text-align: center;
+    .char-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: calc(var(--sw) * 0.042);
+      font-size: 42px;
       font-weight: 400;
-      height: 48px;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .char-columns {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: #fff;
+      gap: 24px;
+      align-items: flex-start;
     }
 
-    .sheet-middle {
-      display: flex;
-      gap: 10px;
-      min-height: 280px;
+    /* Left column — long text */
+    .char-col-left {
+      flex: 40;
     }
 
-    .sheet-bio {
-      width: 54%;
-      border: 2px solid #111;
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #fff;
-      overflow: hidden;
+    /* Middle column — bio fields + ability + radar */
+    .char-col-mid {
+      flex: 30;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--border-accent);
+      padding: 14px;
     }
 
-    .sheet-portrait {
-      flex: 1;
-      border: 2px solid #111;
-      border-radius: 8px;
+    /* Right column — portrait */
+    .char-col-right {
+      flex: 30;
+    }
+
+    /* Portrait */
+    .char-portrait {
+      width: 100%;
+      aspect-ratio: 2/3;
       background-size: cover;
-      background-repeat: no-repeat;
       background-position: top center;
-      min-height: 280px;
+      border: 1px solid var(--border-strong);
     }
 
-    .sheet-bottom {
-      display: flex;
-      gap: 10px;
-      min-height: 300px;
+    /* Long text sections */
+    .char-section {
+      margin-bottom: 24px;
     }
 
-    .sheet-powers {
-      width: 46%;
-      border: 2px solid #111;
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #fff;
-    }
-
-    .sheet-ability {
-      flex: 1;
-      border: 2px solid #111;
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sheet-section-title {
+    .char-section-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 16px;
       font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      text-align: center;
-      color: #111;
-      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
     }
 
-    .bio-fields {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 12px;
+    .char-section-body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--text-dim);
+      white-space: pre-wrap;
     }
 
-    .bio-group { margin-bottom: 6px; }
+    /* Bio fields */
+    .bio-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+      margin-top: 14px;
+    }
+
+    .bio-section-title:first-child { margin-top: 0; }
 
     .bio-row {
       display: flex;
       gap: 6px;
+      margin-bottom: 3px;
+      font-size: 12px;
       line-height: 1.4;
     }
 
     .bio-label {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-weight: bold;
-      min-width: 80px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      min-width: 90px;
       flex-shrink: 0;
       font-size: 11px;
-      color: #333;
     }
 
     .bio-value {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    /* Credit line */
+    .char-credit {
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px;
-      color: #111;
-      white-space: pre-wrap;
+      font-style: italic;
+      color: var(--text-faint);
+      margin-top: 16px;
+      text-align: center;
     }
 
-    .bio-description {
-      margin-top: 6px;
-    }
-
-    .powers-text {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: 11px;
-      margin-top: 6px;
-      white-space: pre-wrap;
-      color: #111;
-      line-height: 1.5;
-    }
-
-    .ability-fields {
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
+    /* Radar */
     #radarContainer {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      min-height: 0;
-      min-width: 0;
+      margin-top: 12px;
+      width: 100%;
     }
 
     #radarChart {
@@ -380,94 +332,76 @@
     .radar-legend {
       display: flex;
       justify-content: space-between;
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 9px;
-      margin-top: 6px;
-      padding: 0 4px;
-      color: #111;
+      margin-top: 4px;
+      color: var(--text-faint);
     }
 
     .legend-col { display: flex; flex-direction: column; align-items: center; }
-    .legend-header { font-weight: bold; margin-bottom: 2px; }
+    .legend-header { font-weight: bold; margin-bottom: 1px; }
 
-    .sheet-credit {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: 11px;
-      font-style: italic;
-      color: #80C0FF;
-      text-align: center;
-    }
 
     /* --- EDIT MODE --- */
 
     .edit-input, .edit-textarea, .edit-select {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: inherit;
-      background: transparent;
-      border: 1px solid #4a90d9;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
       border-radius: 2px;
-      padding: 0 2px;
-      color: #111;
+      padding: 2px 4px;
+      color: var(--text-primary);
       width: 100%;
       box-sizing: border-box;
       outline: none;
     }
 
     .edit-input:focus, .edit-textarea:focus, .edit-select:focus {
-      border-color: #1a60b0;
-      background: #f0f8ff;
+      border-color: var(--text-mid);
+      background: var(--bg-panel);
     }
 
     .edit-textarea {
-      resize: none;
+      resize: vertical;
       width: 100%;
-      height: 100%;
+      min-height: 120px;
       display: block;
     }
 
-    .edit-title {
+    .edit-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: calc(var(--sw) * 0.042);
+      font-size: 42px;
       font-weight: 400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-align: center;
-      background: transparent;
-      border: 1px solid #4a90d9;
-      border-radius: 2px;
+      letter-spacing: 0.06em;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-accent);
+      color: #ffffff;
       width: 100%;
-      color: #111;
       outline: none;
-    }
-
-    .edit-title:focus {
-      border-color: #1a60b0;
-      background: #f0f8ff;
+      padding: 0 4px;
+      margin-bottom: 20px;
     }
 
     /* Custom multiselect */
     .custom-multiselect { position: relative; width: 100%; }
 
     .custom-multiselect-display {
-      border: 1px solid #4a90d9;
+      border: 1px solid var(--border-accent);
       border-radius: 2px;
-      padding: 0 2px;
+      padding: 2px 4px;
       cursor: pointer;
-      background: transparent;
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: inherit;
-      color: #111;
+      background: var(--bg-panel-mid);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: var(--text-primary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-height: 1.2em;
-      line-height: 1.2em;
+      min-height: 1.4em;
     }
 
-    .custom-multiselect-display:hover {
-      border-color: #1a60b0;
-      background: #f0f8ff;
-    }
+    .custom-multiselect-display:hover { background: var(--bg-panel); }
 
     .custom-multiselect-panel {
       display: none;
@@ -475,12 +409,12 @@
       top: 100%;
       left: 0;
       z-index: 200;
-      background: #fff;
-      border: 1px solid #4a90d9;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-accent);
       border-radius: 2px;
       padding: 4px;
-      min-width: 150px;
-      box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+      min-width: 160px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.4);
     }
 
     .custom-multiselect-panel.open { display: block; }
@@ -488,51 +422,34 @@
     .custom-multiselect-panel label {
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 2px 4px;
+      gap: 6px;
+      padding: 3px 6px;
       cursor: pointer;
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: inherit;
-      white-space: nowrap;
-      color: #111;
-    }
-
-    .custom-multiselect-panel label:hover { background: #f0f8ff; }
-
-    /* Status legend */
-    .status-legend {
-      position: fixed;
-      bottom: 40px;
-      right: 16px;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-strong);
-      padding: 10px 14px;
       font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .custom-multiselect-panel label:hover { background: var(--bg-panel-mid); }
+
+    /* Portrait edit overlay */
+    .portrait-edit-wrap {
+      position: relative;
+    }
+
+    .portrait-file-input {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      width: calc(100% - 8px);
       font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      z-index: 20;
-    }
-
-    .status-legend-title {
-      color: var(--text-faint);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 3px;
-      color: var(--text-mid);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      flex-shrink: 0;
-      border: 2px solid;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--border-accent);
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 3px;
     }
 
   </style>
@@ -553,12 +470,8 @@
 
   <!-- NAVIGATION -->
   <nav class="navbar">
-    <div class="nav-item">
-      <a class="nav-link" href="index.html">Home</a>
-    </div>
-    <div class="nav-item">
-      <a class="nav-link" href="heroes.html">Titan Registry</a>
-    </div>
+    <div class="nav-item"><a class="nav-link" href="index.html">Home</a></div>
+    <div class="nav-item"><a class="nav-link" href="titans.html">Titan Registry</a></div>
     <div class="nav-item" id="nav-world">
       <div class="nav-link" onclick="toggleNav('nav-world')">World <span class="caret">&#9660;</span></div>
       <div class="nav-dropdown">
@@ -591,11 +504,11 @@
     <span class="current" id="breadcrumb-current">Titan Registry</span>
   </div>
 
+
   <!-- ============================================================
        GALLERY VIEW
        ============================================================ -->
   <div id="view-gallery">
-
     <div class="gallery-header">
       <input class="gallery-search" type="text" id="searchInput" placeholder="Search by name…" oninput="applyFilters()">
       <select class="gallery-filter" id="filterStatus" onchange="applyFilters()">
@@ -637,9 +550,7 @@
       </select>
       <span class="gallery-count" id="galleryCount"></span>
     </div>
-
     <div class="gallery-grid" id="galleryGrid"></div>
-
   </div>
 
 
@@ -650,108 +561,91 @@
 
     <div class="detail-header">
       <div class="detail-breadcrumb">
-        <a href="heroes.html" onclick="showGallery(); return false;">Titan Registry</a>
+        <a href="titans.html" onclick="showGallery(); return false;">Titan Registry</a>
         <span class="sep">›</span>
         <span class="current" id="detailName"></span>
       </div>
       <div class="detail-controls">
-        <button class="detail-btn" id="btnPrev" onclick="navigateChar(-1)">&#9650; Prev</button>
-        <button class="detail-btn" id="btnNext" onclick="navigateChar(1)">Next &#9660;</button>
-        <button class="detail-btn admin" id="btnPrint" onclick="window.print()" title="Print">Print</button>
-        <div id="adminControls" style="display:none; display:flex; gap:8px;">
+        <button class="detail-btn" onclick="navigateChar(-1)">&#9650; Prev</button>
+        <button class="detail-btn" onclick="navigateChar(1)">Next &#9660;</button>
+        <button class="detail-btn admin" onclick="window.print()">Print</button>
+        <div id="adminControls" style="display:none;">
           <button class="detail-btn admin publish-off" id="btnPublish" onclick="togglePublish()">Unpublished</button>
-          <button class="detail-btn admin" id="btnEdit" onclick="enterEditMode()">Edit</button>
-          <button class="detail-btn admin" id="btnNew" onclick="newCharacter()">New</button>
-          <button class="detail-btn admin" style="color:#ff6b6b;border-color:#cc4444;" id="btnDelete" onclick="deleteCharacter()">Delete</button>
+          <button class="detail-btn admin" onclick="enterEditMode()">Edit</button>
+          <button class="detail-btn admin" onclick="newCharacter()">New</button>
+          <button class="detail-btn admin" style="color:#ff6b6b;border-color:#cc4444;" onclick="deleteCharacter()">Delete</button>
         </div>
-        <div id="editControls" style="display:none; gap:8px;">
-          <button class="detail-btn admin" id="btnSave" onclick="saveCharacter()">Save</button>
-          <button class="detail-btn admin" id="btnCancel" onclick="cancelEdit()">Cancel</button>
+        <div id="editControls" style="display:none;">
+          <button class="detail-btn admin" onclick="saveCharacter()">Save</button>
+          <button class="detail-btn admin" onclick="cancelEdit()">Cancel</button>
         </div>
         <button class="detail-btn close" onclick="showGallery()">✕</button>
       </div>
     </div>
 
-    <div class="sheet-wrap">
-      <div class="sheet" id="sheet">
+    <div class="char-page" id="charPage">
+      <div id="charName" class="char-name"></div>
 
-        <div class="sheet-title" id="sheetTitle"></div>
+      <div class="char-columns">
 
-        <div class="sheet-middle">
-          <div class="sheet-bio" id="sheetBio">
-            <div class="sheet-section-title">Biographical Data</div>
-            <div class="bio-fields">
-              <div class="bio-group">
-                <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
-                <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
-                <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
-                <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
-                <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
-                <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
-                <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
-              </div>
-              <div class="bio-group">
-                <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
-              </div>
-              <div class="bio-group">
-                <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
-                <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
-              </div>
-              <div class="bio-group">
-                <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
-                <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="bioTrauma"></span></div>
-              </div>
-              <div class="bio-description">
-                <div class="bio-label">Background</div>
-                <div class="bio-value" id="bioBackground"></div>
-              </div>
-            </div>
+        <!-- LEFT: long text -->
+        <div class="char-col-left">
+          <div class="char-section">
+            <div class="char-section-title">Background</div>
+            <div class="char-section-body" id="charBackground"></div>
           </div>
-          <div class="sheet-portrait" id="sheetPortrait"></div>
+          <div class="char-section">
+            <div class="char-section-title">Powers</div>
+            <div class="char-section-body" id="charPowers"></div>
+          </div>
+          <div class="char-credit" id="charCredit"></div>
         </div>
 
-        <div class="sheet-bottom">
-          <div class="sheet-powers">
-            <div class="sheet-section-title">Powers</div>
-            <div class="powers-text" id="powerText"></div>
+        <!-- MIDDLE: bio fields + ability profile + radar -->
+        <div class="char-col-mid">
+
+          <div class="bio-section-title">Biographical Data</div>
+          <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
+          <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
+          <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
+          <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
+          <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
+          <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
+          <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
+          <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
+          <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
+          <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
+          <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
+          <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="bioTrauma"></span></div>
+
+          <div class="bio-section-title">Ability Profile</div>
+          <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
+          <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
+          <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
+
+          <div id="radarContainer">
+            <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
-          <div class="sheet-ability">
-            <div class="sheet-section-title">Ability Profile</div>
-            <div class="ability-fields">
-              <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
-              <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
-              <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
-            </div>
-            <div id="radarContainer">
-              <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
-            </div>
-            <div class="radar-legend">
-              <div class="legend-col">
-                <div class="legend-header">DISABILITY</div>
-                <div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div>
-              </div>
-              <div class="legend-col">
-                <div class="legend-header">HUMAN</div>
-                <div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div>
-              </div>
-              <div class="legend-col">
-                <div class="legend-header">SUPERIOR</div>
-                <div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div>
-              </div>
-              <div class="legend-col">
-                <div class="legend-header">COSMIC</div>
-                <div>11 Cosmic</div>
-              </div>
-            </div>
+
+          <div class="radar-legend">
+            <div class="legend-col"><div class="legend-header">DISABILITY</div><div>0–2</div></div>
+            <div class="legend-col"><div class="legend-header">HUMAN</div><div>3–6</div></div>
+            <div class="legend-col"><div class="legend-header">SUPERIOR</div><div>7–10</div></div>
+            <div class="legend-col"><div class="legend-header">COSMIC</div><div>11</div></div>
           </div>
+
         </div>
 
-        <div class="sheet-credit" id="sheetCredit"></div>
+        <!-- RIGHT: portrait -->
+        <div class="char-col-right">
+          <div class="char-portrait" id="charPortrait"></div>
+        </div>
 
       </div>
     </div>
 
   </div>
+
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -774,12 +668,12 @@
     let isEditMode = false;
     let isDirty = false;
 
-    const STATUS_OPTIONS    = ['Registered Hero','Vigilante','Criminal','Incarcerated','Incapacitated','Retired','Deceased','Sovereign','Unknown'];
+    const STATUS_OPTIONS     = ['Registered Hero','Vigilante','Criminal','Incarcerated','Incapacitated','Retired','Deceased','Sovereign','Unknown'];
     const OPERATIONS_OPTIONS = ['Local','City','Regional','National','Global','Solar','Interstellar','Galactic','Universal'];
-    const ORIGIN_OPTIONS    = ['Constructed','Experiment','Inheritance','Intrinsic','Accident','Bestowed','Stolen'];
-    const ARCHETYPE_OPTIONS = ['Brick','Striker','Protector','Tactician','Occultist','Gadgeteer','Sapper','Speedster','Shooter','Manipulator','Infiltrator'];
+    const ORIGIN_OPTIONS     = ['Constructed','Experiment','Inheritance','Intrinsic','Accident','Bestowed','Stolen'];
+    const ARCHETYPE_OPTIONS  = ['Brick','Striker','Protector','Tactician','Occultist','Gadgeteer','Sapper','Speedster','Shooter','Manipulator','Infiltrator'];
     const MOTIVATION_OPTIONS = ['Adventure','Responsibility','Redemption','Justice','Wealth','Power','Escape','Revenge'];
-    const TRAUMA_OPTIONS    = ['Violence','Betrayal','Loss','Shame','Conditioning'];
+    const TRAUMA_OPTIONS     = ['Violence','Betrayal','Loss','Shame','Conditioning'];
 
 
     /* ============================================================
@@ -802,7 +696,7 @@
       const name = params.get('character');
       if (name) {
         const idx = characters.findIndex(c =>
-          c.name && c.name.toLowerCase().replace(/\s+/g, '-') === name.toLowerCase()
+          c.name && c.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g,'') === name.toLowerCase()
         );
         if (idx >= 0) openCharacter(idx);
       }
@@ -816,7 +710,7 @@
     function buildGallery() {
       const grid = document.getElementById('galleryGrid');
       grid.innerHTML = '';
-      filteredChars.forEach((char, i) => {
+      filteredChars.forEach((char) => {
         const card = document.createElement('div');
         card.className = 'char-card';
         if (char.pic_url) card.style.backgroundImage = `url('${char.pic_url}')`;
@@ -849,16 +743,16 @@
     }
 
     function applyFilters() {
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const status = document.getElementById('filterStatus').value;
+      const search     = document.getElementById('searchInput').value.toLowerCase();
+      const status     = document.getElementById('filterStatus').value;
       const powerLevel = document.getElementById('filterPowerLevel').value;
-      const arch   = document.getElementById('filterArchetype').value;
+      const arch       = document.getElementById('filterArchetype').value;
 
       filteredChars = characters.filter(c => {
-        if (search && !(c.name || '').toLowerCase().includes(search)) return false;
-        if (status && c.status !== status) return false;
+        if (search     && !(c.name || '').toLowerCase().includes(search)) return false;
+        if (status     && c.status !== status) return false;
         if (powerLevel && computePowerLevel(c) !== powerLevel) return false;
-        if (arch   && !(c.archetype || '').includes(arch)) return false;
+        if (arch       && !(c.archetype || '').includes(arch)) return false;
         return true;
       });
 
@@ -874,35 +768,27 @@
       currentIndex = index;
       const char = characters[index];
       showDetail();
-      populateSheet(char);
+      populateDetail(char);
       updateURL(char);
-      updateBreadcrumb(char.name);
       updateAdminUI(char);
     }
 
     function showGallery() {
       document.getElementById('view-gallery').style.display = 'block';
       document.getElementById('view-detail').style.display = 'none';
-      document.querySelector('.status-legend').style.display = 'block';
       document.getElementById('breadcrumb-current').textContent = 'Titan Registry';
-      history.pushState({}, '', 'heroes.html');
+      history.pushState({}, '', 'titans.html');
     }
 
     function showDetail() {
       document.getElementById('view-gallery').style.display = 'none';
       document.getElementById('view-detail').style.display = 'block';
-      document.querySelector('.status-legend').style.display = 'none';
     }
 
     function updateURL(char) {
       if (!char.name) return;
-      const slug = char.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-      history.pushState({}, '', `heroes.html?character=${slug}`);
-    }
-
-    function updateBreadcrumb(name) {
-      document.getElementById('detailName').textContent = name || '—';
-      document.getElementById('breadcrumb-current').textContent = name || 'Titan Registry';
+      const slug = char.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g,'');
+      history.pushState({}, '', `titans.html?character=${slug}`);
     }
 
     function navigateChar(dir) {
@@ -914,39 +800,52 @@
       const adminControls = document.getElementById('adminControls');
       if (!currentUser) { adminControls.style.display = 'none'; return; }
       adminControls.style.display = 'flex';
+      adminControls.style.gap = '8px';
       const pubBtn = document.getElementById('btnPublish');
       pubBtn.textContent = char.publish ? 'Published' : 'Unpublished';
       pubBtn.className = 'detail-btn admin ' + (char.publish ? 'publish-on' : 'publish-off');
     }
 
+    // Handle browser back button
+    window.addEventListener('popstate', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('character')) {
+        checkURLForCharacter();
+      } else {
+        showGallery();
+      }
+    });
+
 
     /* ============================================================
-       POPULATE SHEET (display mode)
+       POPULATE DETAIL (display mode)
        ============================================================ */
 
-    function populateSheet(char) {
-      document.getElementById('sheetTitle').textContent = char.name || '—';
-      document.getElementById('sheetPortrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
-      document.getElementById('bioIdentity').textContent   = char.identity || '';
-      document.getElementById('bioSkin').textContent       = char.skin || '';
-      document.getElementById('bioHair').textContent       = char.hair || '';
-      document.getElementById('bioEyes').textContent       = char.eyes || '';
-      document.getElementById('bioHeight').textContent     = char.height || '';
-      document.getElementById('bioWeight').textContent     = char.weight || '';
-      document.getElementById('bioAge').textContent        = char.age || '';
-      document.getElementById('bioOccupation').textContent = char.occupation || '';
-      document.getElementById('bioStatus').textContent     = char.status || '';
-      document.getElementById('bioOperations').textContent = char.area_of_operations || '';
-      document.getElementById('bioMotivation').textContent = char.motivation || '';
-      document.getElementById('bioTrauma').textContent     = char.trauma || '';
-      document.getElementById('bioBackground').textContent = char.short_bio || '';
-      document.getElementById('powerText').textContent     = char.powers || '';
-      document.getElementById('abilArchetypes').textContent  = char.archetype || '';
-      document.getElementById('abilPowerSource').textContent = char.power_origin || '';
+    function populateDetail(char) {
+      document.getElementById('charName').textContent        = char.name || '—';
+      document.getElementById('detailName').textContent      = char.name || '—';
+      document.getElementById('breadcrumb-current').textContent = char.name || '—';
+      document.getElementById('charBackground').textContent  = char.short_bio || '';
+      document.getElementById('charPowers').textContent      = char.powers || '';
+      document.getElementById('charPortrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
+      document.getElementById('bioIdentity').textContent     = char.identity || '—';
+      document.getElementById('bioSkin').textContent         = char.skin || '—';
+      document.getElementById('bioHair').textContent         = char.hair || '—';
+      document.getElementById('bioEyes').textContent         = char.eyes || '—';
+      document.getElementById('bioHeight').textContent       = char.height || '—';
+      document.getElementById('bioWeight').textContent       = char.weight || '—';
+      document.getElementById('bioAge').textContent          = char.age || '—';
+      document.getElementById('bioOccupation').textContent   = char.occupation || '—';
+      document.getElementById('bioStatus').textContent       = char.status || '—';
+      document.getElementById('bioOperations').textContent   = char.area_of_operations || '—';
+      document.getElementById('bioMotivation').textContent   = char.motivation || '—';
+      document.getElementById('bioTrauma').textContent       = char.trauma || '—';
+      document.getElementById('abilArchetypes').textContent  = char.archetype || '—';
       document.getElementById('abilPowerLevel').textContent  = computePowerLevel(char);
+      document.getElementById('abilPowerSource').textContent = char.power_origin || '—';
 
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
-      document.getElementById('sheetCredit').textContent = char.created_by
+      document.getElementById('charCredit').textContent = char.created_by
         ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.`
         : '';
 
@@ -958,13 +857,13 @@
         .map(k => parseInt(char[k]) || 0);
       const sum = vals.reduce((a,b) => a+b, 0);
       const max = Math.max(...vals);
-      if (sum >= 60)               return 'Cosmic';
-      if (max >= 11 || sum >= 56)  return 'Extreme Meta';
-      if (max >= 10 || sum >= 52)  return 'High Meta';
-      if (max >= 9  || sum >= 48)  return 'Mid Meta';
-      if (max >= 8  || sum >= 44)  return 'Low Meta';
-      if (max >= 7  || sum >= 40)  return 'Elite Human';
-      if (sum >= 36)               return 'Expert Human';
+      if (sum >= 60)              return 'Cosmic';
+      if (max >= 11 || sum >= 56) return 'Extreme Meta';
+      if (max >= 10 || sum >= 52) return 'High Meta';
+      if (max >= 9  || sum >= 48) return 'Mid Meta';
+      if (max >= 8  || sum >= 44) return 'Low Meta';
+      if (max >= 7  || sum >= 40) return 'Elite Human';
+      if (sum >= 36)              return 'Expert Human';
       return 'Normal Human';
     }
 
@@ -984,14 +883,14 @@
       ];
       const yOff = maxR * 0.17;
       const stats = [
-        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0    },
-        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOff },
-        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0    },
-        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0    },
-        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOff},
-        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOff},
-        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0    },
-        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOff },
+        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0     },
+        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOff  },
+        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0     },
+        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0     },
+        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOff },
+        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOff },
+        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0     },
+        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOff  },
       ];
       const toRad = deg => deg * Math.PI / 180;
       const ns = 'http://www.w3.org/2000/svg';
@@ -1025,42 +924,43 @@
         const c = document.createElementNS(ns, 'circle');
         c.setAttribute('cx', cx); c.setAttribute('cy', cy);
         c.setAttribute('r', r); c.setAttribute('fill', 'none');
-        c.setAttribute('stroke', '#111'); c.setAttribute('stroke-width', '0.8');
+        c.setAttribute('stroke', '#aac4e0'); c.setAttribute('stroke-width', '0.5');
         if (ring === 2 || ring === 6) c.setAttribute('stroke-dasharray', '3,2');
         svg.appendChild(c);
       }
 
       [-135,-90,-45,0,45,90,135,180].forEach(angle => {
-        const p = { x: cx + maxR*Math.cos(toRad(angle)), y: cy + maxR*Math.sin(toRad(angle)) };
         const line = document.createElementNS(ns, 'line');
         line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-        line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
-        line.setAttribute('stroke', '#111'); line.setAttribute('stroke-width', '1');
+        line.setAttribute('x2', cx + maxR*Math.cos(toRad(angle)));
+        line.setAttribute('y2', cy + maxR*Math.sin(toRad(angle)));
+        line.setAttribute('stroke', '#aac4e0'); line.setAttribute('stroke-width', '0.5');
         svg.appendChild(line);
       });
 
       const border = document.createElementNS(ns, 'circle');
       border.setAttribute('cx', cx); border.setAttribute('cy', cy);
       border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
-      border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
+      border.setAttribute('stroke', '#aac4e0'); border.setAttribute('stroke-width', '1');
       svg.appendChild(border);
 
       const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-        const p = { x: cx + (maxR+40)*Math.cos(toRad(stat.angle)), y: cy + (maxR+40)*Math.sin(toRad(stat.angle)) };
+        const px = cx + (maxR+40)*Math.cos(toRad(stat.angle));
+        const py = cy + (maxR+40)*Math.sin(toRad(stat.angle));
         const label = document.createElementNS(ns, 'text');
-        label.setAttribute('x', p.x); label.setAttribute('y', p.y + stat.yOffset);
+        label.setAttribute('x', px); label.setAttribute('y', py + stat.yOffset);
         label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
         label.setAttribute('font-family', 'Bebas Neue, sans-serif');
-        label.setAttribute('font-size', '10'); label.setAttribute('fill', '#111');
+        label.setAttribute('font-size', '10'); label.setAttribute('fill', '#aac4e0');
         label.textContent = `${stat.label.toUpperCase()} ${val}`;
         svg.appendChild(label);
         const desc = document.createElementNS(ns, 'text');
-        desc.setAttribute('x', p.x); desc.setAttribute('y', p.y + 11 + stat.yOffset);
+        desc.setAttribute('x', px); desc.setAttribute('y', py + 11 + stat.yOffset);
         desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
-        desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-        desc.setAttribute('font-size', '10'); desc.setAttribute('fill', '#111');
+        desc.setAttribute('font-family', 'Barlow Condensed, sans-serif');
+        desc.setAttribute('font-size', '9'); desc.setAttribute('fill', '#7a9ab8');
         desc.textContent = descriptors[val] || '';
         svg.appendChild(desc);
       });
@@ -1077,6 +977,7 @@
       isDirty = false;
       document.getElementById('adminControls').style.display = 'none';
       document.getElementById('editControls').style.display = 'flex';
+      document.getElementById('editControls').style.gap = '8px';
       populateEditMode();
     }
 
@@ -1085,18 +986,15 @@
       isDirty = false;
       document.getElementById('editControls').style.display = 'none';
       document.getElementById('adminControls').style.display = 'flex';
+      document.getElementById('adminControls').style.gap = '8px';
       const rc = document.getElementById('radarContainer');
-      rc.style.position = '';
       rc.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
-      const portrait = document.getElementById('sheetPortrait');
-      const fi = portrait.querySelector('input[type=file]');
-      if (fi) portrait.removeChild(fi);
     }
 
     function cancelEdit() {
       if (isDirty && !confirm('Discard unsaved changes?')) return;
       exitEditMode();
-      populateSheet(characters[currentIndex]);
+      populateDetail(characters[currentIndex]);
     }
 
     function createMultiSelect(field, options, currentValues) {
@@ -1134,88 +1032,98 @@
       return container;
     }
 
+    function makeInput(value, field) {
+      const inp = document.createElement('input');
+      inp.type = 'text'; inp.className = 'edit-input';
+      inp.value = value || '';
+      inp.dataset.field = field;
+      inp.addEventListener('input', () => isDirty = true);
+      return inp;
+    }
+
+    function makeTextarea(value, field) {
+      const ta = document.createElement('textarea');
+      ta.className = 'edit-textarea';
+      ta.value = value || '';
+      ta.dataset.field = field;
+      ta.addEventListener('input', () => isDirty = true);
+      return ta;
+    }
+
+    function makeSelect(field, options, currentValue) {
+      const sel = document.createElement('select');
+      sel.className = 'edit-select';
+      sel.dataset.field = field;
+      const blank = document.createElement('option');
+      blank.value = ''; blank.textContent = '—';
+      sel.appendChild(blank);
+      options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt; o.textContent = opt;
+        if (currentValue === opt) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.addEventListener('change', () => isDirty = true);
+      return sel;
+    }
+
+    function replaceContent(id, el) {
+      const container = document.getElementById(id);
+      container.textContent = '';
+      container.appendChild(el);
+    }
+
     function populateEditMode() {
       const char = characters[currentIndex];
 
-      // Title
-      const titleEl = document.getElementById('sheetTitle');
-      titleEl.innerHTML = '';
-      const ti = document.createElement('input');
-      ti.type = 'text'; ti.className = 'edit-title';
-      ti.value = char.name || '';
-      ti.addEventListener('input', () => isDirty = true);
-      titleEl.appendChild(ti);
+      // Name
+      const nameEl = document.getElementById('charName');
+      nameEl.textContent = '';
+      const nameInp = document.createElement('input');
+      nameInp.type = 'text'; nameInp.className = 'edit-name';
+      nameInp.value = char.name || '';
+      nameInp.addEventListener('input', () => isDirty = true);
+      nameEl.appendChild(nameInp);
 
-      // Single text fields
+      // Long text
+      replaceContent('charBackground', makeTextarea(char.short_bio, 'short_bio'));
+      replaceContent('charPowers', makeTextarea(char.powers, 'powers'));
+
+      // Credit
+      replaceContent('charCredit', makeInput(char.created_by, 'created_by'));
+
+      // Bio single text fields
       [
         ['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],
         ['bioEyes','eyes'],['bioHeight','height'],['bioWeight','weight'],
         ['bioAge','age'],['bioOccupation','occupation']
-      ].forEach(([id, field]) => {
-        const el = document.getElementById(id);
-        const inp = document.createElement('input');
-        inp.type = 'text'; inp.className = 'edit-input';
-        inp.value = char[field] || '';
-        inp.addEventListener('input', () => isDirty = true);
-        el.textContent = ''; el.appendChild(inp);
-      });
+      ].forEach(([id, field]) => replaceContent(id, makeInput(char[field], field)));
 
       // Single selects
-      [
-        ['bioStatus','status', STATUS_OPTIONS],
-        ['bioOperations','area_of_operations', OPERATIONS_OPTIONS]
-      ].forEach(([id, field, opts]) => {
-        const el = document.getElementById(id);
-        const sel = document.createElement('select');
-        sel.className = 'edit-select';
-        const blank = document.createElement('option');
-        blank.value = ''; blank.textContent = '—';
-        sel.appendChild(blank);
-        opts.forEach(opt => {
-          const o = document.createElement('option');
-          o.value = opt; o.textContent = opt;
-          if (char[field] === opt) o.selected = true;
-          sel.appendChild(o);
-        });
-        sel.addEventListener('change', () => isDirty = true);
-        el.textContent = ''; el.appendChild(sel);
-      });
+      replaceContent('bioStatus', makeSelect('status', STATUS_OPTIONS, char.status));
+      replaceContent('bioOperations', makeSelect('area_of_operations', OPERATIONS_OPTIONS, char.area_of_operations));
 
       // Multi selects
       [
         ['bioMotivation','motivation', MOTIVATION_OPTIONS],
         ['bioTrauma','trauma', TRAUMA_OPTIONS],
         ['abilArchetypes','archetype', ARCHETYPE_OPTIONS],
-        ['abilPowerSource','power_origin', ORIGIN_OPTIONS]
+        ['abilPowerSource','power_origin', ORIGIN_OPTIONS],
       ].forEach(([id, field, opts]) => {
         const el = document.getElementById(id);
-        const current = splitList(char[field]);
         el.textContent = '';
-        el.appendChild(createMultiSelect(field, opts, current));
+        el.appendChild(createMultiSelect(field, opts, splitList(char[field])));
       });
 
-      // Textareas
-      const bgEl = document.getElementById('bioBackground');
-      const bgTA = document.createElement('textarea');
-      bgTA.className = 'edit-textarea'; bgTA.value = char.short_bio || '';
-      bgTA.style.minHeight = '80px';
-      bgTA.addEventListener('input', () => isDirty = true);
-      bgEl.textContent = ''; bgEl.appendChild(bgTA);
+      // Power level is computed — leave as display
+      document.getElementById('abilPowerLevel').textContent = computePowerLevel(char);
 
-      const pwEl = document.getElementById('powerText');
-      const pwTA = document.createElement('textarea');
-      pwTA.className = 'edit-textarea'; pwTA.value = char.powers || '';
-      pwTA.style.minHeight = '160px';
-      pwTA.addEventListener('input', () => isDirty = true);
-      pwEl.textContent = ''; pwEl.appendChild(pwTA);
-
-      // Portrait upload
-      const portrait = document.getElementById('sheetPortrait');
-      portrait.style.position = 'relative';
+      // Portrait with file upload
+      const portrait = document.getElementById('charPortrait');
+      portrait.classList.add('portrait-edit-wrap');
       const fi = document.createElement('input');
       fi.type = 'file'; fi.accept = 'image/*';
-      fi.className = 'edit-input';
-      fi.style.cssText = 'position:absolute;bottom:4px;left:4px;right:4px;width:calc(100% - 8px);cursor:pointer;';
+      fi.className = 'portrait-file-input';
       fi.addEventListener('change', async () => {
         const file = fi.files[0];
         if (!file) return;
@@ -1230,19 +1138,9 @@
       });
       portrait.appendChild(fi);
 
-      // Credit
-      const creditEl = document.getElementById('sheetCredit');
-      const creditInp = document.createElement('input');
-      creditInp.type = 'text'; creditInp.className = 'edit-input';
-      creditInp.placeholder = 'Created by';
-      creditInp.value = char.created_by || '';
-      creditInp.addEventListener('input', () => isDirty = true);
-      creditEl.textContent = ''; creditEl.appendChild(creditInp);
-
-      // Radar with arrow controls
+      // Radar with arrows
       const rc = document.getElementById('radarContainer');
       rc.innerHTML = '';
-      rc.style.position = 'relative';
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.id = 'radarChart';
       svg.setAttribute('viewBox', '0 0 300 300');
@@ -1257,30 +1155,24 @@
       const toRad = deg => deg * Math.PI / 180;
       const yOff = maxR * 0.17;
       const statPositions = [
-        { key: 'senses',     angle: -157.5, yOffset: 0    },
-        { key: 'fighting',   angle: -67.5,  yOffset: yOff },
-        { key: 'speed',      angle: -22.5,  yOffset: 0    },
-        { key: 'strength',   angle: 22.5,   yOffset: 0    },
-        { key: 'durability', angle: 67.5,   yOffset: -yOff},
-        { key: 'will',       angle: 112.5,  yOffset: -yOff},
-        { key: 'intellect',  angle: 157.5,  yOffset: 0    },
-        { key: 'projection', angle: -112.5, yOffset: yOff },
+        { key: 'senses',     angle: -157.5, yOffset: 0     },
+        { key: 'fighting',   angle: -67.5,  yOffset: yOff  },
+        { key: 'speed',      angle: -22.5,  yOffset: 0     },
+        { key: 'strength',   angle: 22.5,   yOffset: 0     },
+        { key: 'durability', angle: 67.5,   yOffset: -yOff },
+        { key: 'will',       angle: 112.5,  yOffset: -yOff },
+        { key: 'intellect',  angle: 157.5,  yOffset: 0     },
+        { key: 'projection', angle: -112.5, yOffset: yOff  },
       ];
-      const leftSideKeys = ['senses','intellect','will','projection'];
+      const leftKeys = ['senses','intellect','will','projection'];
 
       statPositions.forEach(({ key, angle, yOffset }) => {
         const px = cx + (maxR+40)*Math.cos(toRad(angle));
         const py = cy + (maxR+40)*Math.sin(toRad(angle)) + yOffset;
-        const isLeft = leftSideKeys.includes(key);
-        const gap = 4, labelGap = 35;
-        let arrowLeftX, arrowRightX;
-        if (isLeft) {
-          arrowRightX = px - labelGap;
-          arrowLeftX  = arrowRightX - gap - 8;
-        } else {
-          arrowLeftX  = px + labelGap;
-          arrowRightX = arrowLeftX + gap + 8;
-        }
+        const isLeft = leftKeys.includes(key);
+        const labelGap = 35, gap = 4;
+        const arrowLeftX  = isLeft ? px - labelGap - gap - 8 : px + labelGap;
+        const arrowRightX = isLeft ? px - labelGap            : px + labelGap + gap + 8;
 
         const makeArrow = (x, text, delta) => {
           const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -1288,9 +1180,8 @@
           el.setAttribute('text-anchor', 'middle');
           el.setAttribute('dominant-baseline', 'middle');
           el.setAttribute('font-size', '10');
-          el.setAttribute('fill', '#406080');
+          el.setAttribute('fill', '#5a80a8');
           el.setAttribute('cursor', 'pointer');
-          el.setAttribute('font-family', 'sans-serif');
           el.textContent = text;
           el.addEventListener('click', () => {
             isDirty = true;
@@ -1314,6 +1205,7 @@
 
     async function saveCharacter() {
       const char = characters[currentIndex];
+
       const getMulti = field => {
         const container = document.querySelector(`.custom-multiselect[data-field="${field}"]`);
         if (!container) return '';
@@ -1321,26 +1213,32 @@
           .map(cb => cb.value).join(', ');
       };
 
+      const getField = (id, selector) => {
+        const el = document.getElementById(id);
+        const inp = el.querySelector(selector);
+        return inp ? inp.value || null : null;
+      };
+
       const updates = {
-        name:               document.querySelector('#sheetTitle .edit-title')?.value || null,
-        identity:           document.querySelector('#bioIdentity .edit-input')?.value || null,
-        skin:               document.querySelector('#bioSkin .edit-input')?.value || null,
-        hair:               document.querySelector('#bioHair .edit-input')?.value || null,
-        eyes:               document.querySelector('#bioEyes .edit-input')?.value || null,
-        height:             document.querySelector('#bioHeight .edit-input')?.value || null,
-        weight:             document.querySelector('#bioWeight .edit-input')?.value || null,
-        age:                document.querySelector('#bioAge .edit-input')?.value || null,
-        occupation:         document.querySelector('#bioOccupation .edit-input')?.value || null,
-        status:             document.querySelector('#bioStatus .edit-select')?.value || null,
-        area_of_operations: document.querySelector('#bioOperations .edit-select')?.value || null,
+        name:               document.querySelector('#charName input')?.value || null,
+        short_bio:          document.querySelector('#charBackground textarea')?.value || null,
+        powers:             document.querySelector('#charPowers textarea')?.value || null,
+        created_by:         document.querySelector('#charCredit input')?.value || null,
+        identity:           getField('bioIdentity', 'input'),
+        skin:               getField('bioSkin', 'input'),
+        hair:               getField('bioHair', 'input'),
+        eyes:               getField('bioEyes', 'input'),
+        height:             getField('bioHeight', 'input'),
+        weight:             getField('bioWeight', 'input'),
+        age:                getField('bioAge', 'input'),
+        occupation:         getField('bioOccupation', 'input'),
+        status:             getField('bioStatus', 'select'),
+        area_of_operations: getField('bioOperations', 'select'),
         motivation:         getMulti('motivation'),
         trauma:             getMulti('trauma'),
         archetype:          getMulti('archetype'),
         power_origin:       getMulti('power_origin'),
-        short_bio:          document.querySelector('#bioBackground .edit-textarea')?.value || null,
-        powers:             document.querySelector('#powerText .edit-textarea')?.value || null,
         pic_url:            characters[currentIndex].pic_url || null,
-        created_by:         document.querySelector('#sheetCredit .edit-input')?.value || null,
         strength:           parseInt(characters[currentIndex].strength)   || 0,
         durability:         parseInt(characters[currentIndex].durability) || 0,
         speed:              parseInt(characters[currentIndex].speed)      || 0,
@@ -1355,7 +1253,7 @@
       if (error) { alert('Save failed: ' + error.message); return; }
       Object.assign(characters[currentIndex], updates);
       exitEditMode();
-      populateSheet(characters[currentIndex]);
+      populateDetail(characters[currentIndex]);
       buildGallery();
     }
 
@@ -1397,7 +1295,6 @@
        ============================================================ */
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Wait for auth to initialize then load characters
       const checkAuth = setInterval(() => {
         if (typeof db !== 'undefined') {
           clearInterval(checkAuth);
