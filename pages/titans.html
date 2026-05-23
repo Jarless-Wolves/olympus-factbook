@@ -999,7 +999,8 @@
       });
       requestAnimationFrame(() => {
         const container = document.getElementById('radarContainer');
-        const gap = container.clientHeight - svg.clientHeight;
+        const svgRect = svg.getBoundingClientRect();
+        const gap = container.clientHeight - svgRect.height;
         if (gap > 0) svg.style.marginTop = (gap / 2) + 'px';
       });
     }
