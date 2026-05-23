@@ -39,10 +39,10 @@
   /* Text */
   --text-primary:  #e8e8e8;   /* primary light text */
   --text-mid:      #aac4e0;   /* secondary text, nav links */
-  --text-dim:      #a0bdd8;   /* muted text, subtitles, card descriptions */
-  --text-faint:    #5a7a9a;   /* very muted, labels, classified notes */
-  --text-footer:   #666666;   /* footer text */
-  --text-disabled: #4a6a8a;   /* disabled states */
+  --text-dim:      #b8d0e8;   /* muted text, subtitles, card descriptions */
+  --text-faint:    #7a9ab8;   /* very muted, labels, classified notes */
+  --text-footer:   #888888;   /* footer text */
+  --text-disabled: #6a8aaa;   /* disabled states */
 
   /* Accent */
   --gold:          #c8a84b;   /* lightning bolt, accent gold */
@@ -314,12 +314,14 @@ button {
   width: 100%;
   background: var(--bg-page);
   border-bottom: 1px solid var(--border-mid);
-  padding: 6px 24px;
+  padding: 6px 20px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-faint);
+  display: flex;
+  align-items: center;
   z-index: 48;
 }
 
