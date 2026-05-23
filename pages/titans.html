@@ -98,6 +98,7 @@
       transition: transform 0.2s, box-shadow 0.2s;
       background: var(--bg-panel);
       background-size: cover;
+      background-size: 200%;
       background-position: top center;
       flex-shrink: 0;
     }
@@ -106,18 +107,6 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
-
-    /* Status border colors */
-    .char-card.status-hero        { border-color: #4a80c0; }
-    .char-card.status-vigilante   { border-color: #888888; }
-    .char-card.status-criminal    { border-color: #cc4444; }
-    .char-card.status-incarcerated { border-color: #993333; }
-    .char-card.status-inactive    { border-color: #333333; }
-    .char-card.status-sovereign   { border-color: var(--gold); }
-    .char-card.status-agent       { border-color: #cccccc; }
-    .char-card.status-deceased    { border-color: #222222; }
-    .char-card.status-retired     { border-color: #555555; }
-    .char-card.status-unknown     { border-color: var(--border-strong); }
 
     .char-card-scrim {
       position: absolute;
@@ -139,20 +128,6 @@
       letter-spacing: 0.08em;
       color: #ffffff;
       line-height: 1.1;
-    }
-
-    .char-card-status {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: rgba(0,0,0,0.5);
-      padding: 2px 6px;
     }
 
     .char-card-unpublished {
@@ -778,19 +753,6 @@
 
   </div>
 
-
-  <!-- STATUS LEGEND -->
-  <div class="status-legend">
-    <div class="status-legend-title">Status</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:#4a80c0"></div> Registered Hero</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:#888888"></div> Vigilante</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:#cc4444"></div> Criminal</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:#333333"></div> Inactive</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:var(--gold)"></div> Sovereign</div>
-    <div class="legend-item"><div class="legend-dot" style="border-color:#cccccc"></div> Agent</div>
-  </div>
-
-
   <!-- FOOTER -->
   <footer class="site-footer">
     OLYMPUS&trade; and the OLYMPUS Titan Factbook&trade; are fictional creations and trademarks of David M. Arnold. OLYMPUS has no affiliation with the United States government or any actual federal body. All characters and content &copy; 2026 David M. Arnold. All rights reserved.
@@ -811,19 +773,6 @@
     let currentIndex = 0;
     let isEditMode = false;
     let isDirty = false;
-
-    const STATUS_CLASSES = {
-      'Registered Hero': 'status-hero',
-      'Vigilante': 'status-vigilante',
-      'Criminal': 'status-criminal',
-      'Incarcerated': 'status-incarcerated',
-      'Incapacitated': 'status-inactive',
-      'Retired': 'status-retired',
-      'Deceased': 'status-deceased',
-      'Sovereign': 'status-sovereign',
-      'Unknown': 'status-unknown',
-      'Law Enforcement / Agent': 'status-agent',
-    };
 
     const STATUS_OPTIONS    = ['Registered Hero','Vigilante','Criminal','Incarcerated','Incapacitated','Retired','Deceased','Sovereign','Unknown'];
     const OPERATIONS_OPTIONS = ['Local','City','Regional','National','Global','Solar','Interstellar','Galactic','Universal'];
@@ -869,7 +818,7 @@
       grid.innerHTML = '';
       filteredChars.forEach((char, i) => {
         const card = document.createElement('div');
-        card.className = 'char-card ' + (STATUS_CLASSES[char.status] || 'status-unknown');
+        card.className = 'char-card';
         if (char.pic_url) card.style.backgroundImage = `url('${char.pic_url}')`;
         card.addEventListener('click', () => {
           currentIndex = characters.indexOf(char);
@@ -881,13 +830,6 @@
           unpub.className = 'char-card-unpublished';
           unpub.textContent = 'Unpublished';
           card.appendChild(unpub);
-        }
-
-        if (char.status) {
-          const status = document.createElement('div');
-          status.className = 'char-card-status';
-          status.textContent = char.status;
-          card.appendChild(status);
         }
 
         const scrim = document.createElement('div');
