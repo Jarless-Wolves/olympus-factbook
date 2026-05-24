@@ -492,7 +492,208 @@
       padding: 2px;
     }
 
+    /* --- PRINT SHEET --- */
+
+#print-sheet {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+
+  body > * { display: none !important; }
+
+  #print-sheet {
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+    background: #fff;
+    color: #111;
+    gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .ps-title {
+    border: 2px solid #111;
+    border-radius: 6px;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 6px;
+    flex-shrink: 0;
+  }
+
+  .ps-middle {
+    display: flex;
+    gap: 10px;
+    height: 44%;
+    flex-shrink: 0;
+  }
+
+  .ps-bio {
+    width: 54%;
+    border: 2px solid #111;
+    border-radius: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .ps-portrait {
+    flex: 1;
+    border: 2px solid #111;
+    border-radius: 6px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .ps-bottom {
+    display: flex;
+    gap: 10px;
+    height: 46%;
+    flex-shrink: 0;
+  }
+
+  .ps-powers {
+    width: 46%;
+    border: 2px solid #111;
+    border-radius: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .ps-ability {
+    flex: 1;
+    border: 2px solid #111;
+    border-radius: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .ps-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    border-bottom: 1px solid #111;
+    margin-bottom: 6px;
+    padding-bottom: 2px;
+  }
+
+  .ps-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 11px;
+  }
+
+  .ps-row {
+    display: flex;
+    gap: 6px;
+  }
+
+  .ps-label {
+    font-weight: 600;
+    min-width: 80px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #444;
+  }
+
+  .ps-value {
+    color: #111;
+  }
+
+  .ps-bg-label {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #444;
+    margin-top: 6px;
+  }
+
+  .ps-bg-value {
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    color: #111;
+  }
+
+  .ps-powers-text {
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    color: #111;
+    margin-top: 6px;
+  }
+
+  .ps-ability-fields {
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  #ps-radar-container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  #ps-radar-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ps-radar-legend {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .ps-legend-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ps-legend-header {
+    font-weight: bold;
+    margin-bottom: 1px;
+  }
+
+  .ps-credit {
+    font-size: 10px;
+    font-style: italic;
+    color: #666;
+    text-align: center;
+    flex-shrink: 0;
+  }
+}    
   </style>
+  
 </head>
 <body class="page-body has-breadcrumbs">
 
@@ -726,6 +927,83 @@
     </div>
   </div>
 
+  <!-- PRINT SHEET -->
+<div id="print-sheet">
+  <div class="ps-title" id="ps-name"></div>
+
+  <div class="ps-middle">
+    <div class="ps-bio">
+      <div class="ps-section-title">Biographical Data</div>
+      <div class="ps-fields">
+        <div class="ps-row"><span class="ps-label">Identity</span><span class="ps-value" id="ps-identity"></span></div>
+        <div class="ps-row"><span class="ps-label">Gender</span><span class="ps-value" id="ps-gender"></span></div>
+        <div class="ps-row"><span class="ps-label">Species</span><span class="ps-value" id="ps-species"></span></div>
+        <div class="ps-row"><span class="ps-label">Skin</span><span class="ps-value" id="ps-skin"></span></div>
+        <div class="ps-row"><span class="ps-label">Hair</span><span class="ps-value" id="ps-hair"></span></div>
+        <div class="ps-row"><span class="ps-label">Eyes</span><span class="ps-value" id="ps-eyes"></span></div>
+        <div class="ps-row"><span class="ps-label">Height</span><span class="ps-value" id="ps-height"></span></div>
+        <div class="ps-row"><span class="ps-label">Weight</span><span class="ps-value" id="ps-weight"></span></div>
+        <div class="ps-row"><span class="ps-label">Age</span><span class="ps-value" id="ps-age"></span></div>
+        <div class="ps-row"><span class="ps-label">Occupation</span><span class="ps-value" id="ps-occupation"></span></div>
+        <div class="ps-row"><span class="ps-label">Culture</span><span class="ps-value" id="ps-culture"></span></div>
+        <div class="ps-row"><span class="ps-label">Status</span><span class="ps-value" id="ps-status"></span></div>
+        <div class="ps-row"><span class="ps-label">Operations</span><span class="ps-value" id="ps-operations"></span></div>
+        <div class="ps-row"><span class="ps-label">Motivation</span><span class="ps-value" id="ps-motivation"></span></div>
+        <div class="ps-row"><span class="ps-label">Trauma</span><span class="ps-value" id="ps-trauma"></span></div>
+      </div>
+      <div class="ps-bg-label">Background</div>
+      <div class="ps-bg-value" id="ps-background"></div>
+    </div>
+    <div class="ps-portrait" id="ps-portrait"></div>
+  </div>
+
+  <div class="ps-bottom">
+    <div class="ps-powers">
+      <div class="ps-section-title">Powers</div>
+      <div class="ps-powers-text" id="ps-powers"></div>
+    </div>
+    <div class="ps-ability">
+      <div class="ps-section-title">Ability Profile</div>
+      <div class="ps-ability-fields">
+        <div class="ps-row"><span class="ps-label">Archetypes</span><span class="ps-value" id="ps-archetypes"></span></div>
+        <div class="ps-row"><span class="ps-label">Power Level</span><span class="ps-value" id="ps-powerlevel"></span></div>
+        <div class="ps-row"><span class="ps-label">Power Origin</span><span class="ps-value" id="ps-powerorigin"></span></div>
+        <div class="ps-row"><span class="ps-label">Power Source</span><span class="ps-value" id="ps-powersource"></span></div>
+      </div>
+      <div id="ps-radar-container">
+        <svg id="ps-radar-chart" viewBox="0 20 300 275" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="ps-radar-legend">
+        <div class="ps-legend-col">
+          <div class="ps-legend-header">DISABILITY</div>
+          <div>0 - None</div>
+          <div>1 - Deficient</div>
+          <div>2 - Marginal</div>
+        </div>
+        <div class="ps-legend-col">
+          <div class="ps-legend-header">HUMAN</div>
+          <div>3 - Proficient</div>
+          <div>4 - Exceptional</div>
+          <div>5 - Excellent</div>
+          <div>6 - Elite</div>
+        </div>
+        <div class="ps-legend-col">
+          <div class="ps-legend-header">SUPER HUMAN</div>
+          <div>7 - Extraordinary</div>
+          <div>8 - Superior</div>
+          <div>9 - Phenomenal</div>
+          <div>10 - Apex</div>
+        </div>
+        <div class="ps-legend-col">
+          <div class="ps-legend-header">TRANSCENDENT</div>
+          <div>11 - Transcendent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-credit" id="ps-credit"></div>
+</div>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -908,7 +1186,111 @@
       document.getElementById('charCredit').textContent = char.created_by
         ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
       requestAnimationFrame(() => drawRadar(char));
+      populatePrintSheet(char);
     }
+
+    function populatePrintSheet(char) {
+  document.getElementById('ps-name').textContent        = char.name || '';
+  document.getElementById('ps-identity').textContent    = char.identity || '—';
+  document.getElementById('ps-gender').textContent      = char.gender || '—';
+  document.getElementById('ps-species').textContent     = char.species || '—';
+  document.getElementById('ps-skin').textContent        = char.skin || '—';
+  document.getElementById('ps-hair').textContent        = char.hair || '—';
+  document.getElementById('ps-eyes').textContent        = char.eyes || '—';
+  document.getElementById('ps-height').textContent      = char.height || '—';
+  document.getElementById('ps-weight').textContent      = char.weight || '—';
+  document.getElementById('ps-age').textContent         = char.age || '—';
+  document.getElementById('ps-occupation').textContent  = char.occupation || '—';
+  document.getElementById('ps-culture').textContent     = char.culture || '—';
+  document.getElementById('ps-status').textContent      = char.status || '—';
+  document.getElementById('ps-operations').textContent  = char.area_of_operations || '—';
+  document.getElementById('ps-motivation').textContent  = char.motivation || '—';
+  document.getElementById('ps-trauma').textContent      = char.trauma || '—';
+  document.getElementById('ps-background').textContent  = char.short_bio || '';
+  document.getElementById('ps-portrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
+  document.getElementById('ps-powers').textContent      = char.powers || '';
+  document.getElementById('ps-archetypes').textContent  = char.archetype || '—';
+  document.getElementById('ps-powerlevel').textContent  = computePowerLevel(char);
+  document.getElementById('ps-powerorigin').textContent = char.power_origin || '—';
+  document.getElementById('ps-powersource').textContent = char.power_source || '—';
+  const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
+  document.getElementById('ps-credit').textContent = char.created_by
+    ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
+  requestAnimationFrame(() => drawPrintRadar(char));
+}
+
+function drawPrintRadar(char) {
+  const svg = document.getElementById('ps-radar-chart');
+  svg.innerHTML = '';
+  const cx=150, cy=150, maxR=100, rings=11;
+  const ringColors=['#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00','#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'];
+  const yOff=maxR*0.12;
+  const stats=[
+    {key:'senses',    label:'Senses',  angle:-157.5, yOffset:0    },
+    {key:'fighting',  label:'Agility', angle:-67.5,  yOffset:yOff },
+    {key:'speed',     label:'Speed',   angle:-22.5,  yOffset:0    },
+    {key:'strength',  label:'Might',   angle:22.5,   yOffset:0    },
+    {key:'durability',label:'Body',    angle:67.5,   yOffset:-yOff},
+    {key:'will',      label:'Will',    angle:112.5,  yOffset:-yOff},
+    {key:'intellect', label:'Mind',    angle:157.5,  yOffset:0    },
+    {key:'projection',label:'Project', angle:-112.5, yOffset:yOff },
+  ];
+  const toRad=d=>d*Math.PI/180, ns='http://www.w3.org/2000/svg';
+  const bg=document.createElementNS(ns,'circle');
+  bg.setAttribute('cx',cx);bg.setAttribute('cy',cy);bg.setAttribute('r',maxR);bg.setAttribute('fill','#406080');
+  svg.appendChild(bg);
+  stats.forEach(s=>{
+    const val=Math.min(Math.max(parseInt(char[s.key])||0,0),11);
+    if(!val) return;
+    const sa=s.angle-22.5, ea=s.angle+22.5;
+    for(let r=1;r<=val;r++){
+      const oR=(r/rings)*maxR, iR=((r-1)/rings)*maxR;
+      const path=document.createElementNS(ns,'path');
+      const x1=cx+oR*Math.cos(toRad(sa)),y1=cy+oR*Math.sin(toRad(sa));
+      const x2=cx+oR*Math.cos(toRad(ea)),y2=cy+oR*Math.sin(toRad(ea));
+      const x3=cx+iR*Math.cos(toRad(ea)),y3=cy+iR*Math.sin(toRad(ea));
+      const x4=cx+iR*Math.cos(toRad(sa)),y4=cy+iR*Math.sin(toRad(sa));
+      path.setAttribute('d',`M ${x4} ${y4} L ${x1} ${y1} A ${oR} ${oR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${iR} ${iR} 0 0 0 ${x4} ${y4} Z`);
+      path.setAttribute('fill',ringColors[r-1]);
+      svg.appendChild(path);
+    }
+  });
+  for(let r=1;r<=rings;r++){
+    const c=document.createElementNS(ns,'circle');
+    c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',(r/rings)*maxR);
+    c.setAttribute('fill','none');c.setAttribute('stroke','#111');c.setAttribute('stroke-width','0.5');
+    if(r===2||r===6) c.setAttribute('stroke-dasharray','3,2');
+    svg.appendChild(c);
+  }
+  [-135,-90,-45,0,45,90,135,180].forEach(a=>{
+    const l=document.createElementNS(ns,'line');
+    l.setAttribute('x1',cx);l.setAttribute('y1',cy);
+    l.setAttribute('x2',cx+maxR*Math.cos(toRad(a)));l.setAttribute('y2',cy+maxR*Math.sin(toRad(a)));
+    l.setAttribute('stroke','#111');l.setAttribute('stroke-width','0.5');
+    svg.appendChild(l);
+  });
+  const border=document.createElementNS(ns,'circle');
+  border.setAttribute('cx',cx);border.setAttribute('cy',cy);border.setAttribute('r',maxR);
+  border.setAttribute('fill','none');border.setAttribute('stroke','#111');border.setAttribute('stroke-width','1');
+  svg.appendChild(border);
+  const desc=['None','Deficient','Marginal','Proficient','Exceptional','Excellent','Elite','Extraordinary','Superior','Phenomenal','Apex','Transcendent'];
+  stats.forEach(s=>{
+    const val=Math.min(Math.max(parseInt(char[s.key])||0,0),11);
+    const px=cx+(maxR+40)*Math.cos(toRad(s.angle)), py=cy+(maxR+40)*Math.sin(toRad(s.angle));
+    const lbl=document.createElementNS(ns,'text');
+    lbl.setAttribute('x',px);lbl.setAttribute('y',py+s.yOffset);
+    lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
+    lbl.setAttribute('font-family','Bebas Neue, sans-serif');lbl.setAttribute('font-size','13');lbl.setAttribute('fill','#111');
+    lbl.textContent=`${s.label.toUpperCase()} ${val}`;
+    svg.appendChild(lbl);
+    const d=document.createElementNS(ns,'text');
+    d.setAttribute('x',px);d.setAttribute('y',py+14+s.yOffset);
+    d.setAttribute('text-anchor','middle');d.setAttribute('dominant-baseline','middle');
+    d.setAttribute('font-family','Barlow Condensed, sans-serif');d.setAttribute('font-size','11');d.setAttribute('fill','#444');
+    d.textContent=desc[val]||'';
+    svg.appendChild(d);
+  });
+}
     
     function computePowerLevel(char) {
       const v = ['strength','durability','speed','fighting','senses','intellect','will','projection']
