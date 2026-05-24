@@ -1240,7 +1240,7 @@
         species:            gf('bioSpecies','input'),
         culture:            gf('bioCulture','input'),
         power_source:       gf('abilPowerSource','input'),
-        gender:             gf('bioGender','input'),
+        gender:             gf('bioGender','select'),
       };
       const {error}=await db.from('mhr_characters').update(updates).eq('id',char.id);
       if(error){alert('Save failed: '+error.message);return;}
