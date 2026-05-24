@@ -498,6 +498,11 @@
   display: none;
 }
 
+  @font-face {
+      font-family: 'Red Circle';
+      src: url('../REDCIRCL.ttf') format('truetype');
+    }
+
 @media print {
   @page {
     size: letter portrait;
@@ -513,11 +518,6 @@
   }
 
   body > * { display: none !important; }
-
-  @font-face {
-      font-family: 'Red Circle';
-      src: url('../REDCIRCL.ttf') format('truetype');
-    }
 
   #print-sheet {
     display: flex !important;
