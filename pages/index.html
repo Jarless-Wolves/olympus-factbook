@@ -178,10 +178,13 @@
       </div>
     </div>
     <div class="nav-item" id="nav-about">
-      <div class="nav-link" onclick="toggleNav('nav-about')">About <span class="caret">&#9660;</span></div>
+      <div class="nav-link">
+        <a href="about.html" style="color:inherit;text-decoration:none;">About</a>
+        <span class="caret" onclick="toggleNav('nav-about')" style="padding:0 4px;cursor:pointer;">&#9660;</span>
+      </div>
       <div class="nav-dropdown">
-        <a href="about.html?page=about-olympus" class="disabled">About OLYMPUS</a>
-        <a href="about.html?page=about-project" class="disabled">About This Project</a>
+        <a href="about.html?page=about-olympus">About OLYMPUS</a>
+        <a href="about.html?page=about-project">About This Project</a>
       </div>
     </div>
   </nav>
