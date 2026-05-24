@@ -691,27 +691,27 @@
 
           <div class="radar-legend">
             <div class="legend-col">
-              <div class="legend-header" style="color:#8B0000;">DISABILITY</div>
+              <div class="legend-header">DISABILITY</div>
               <div>0 - None</div>
               <div>1 - Deficient</div>
               <div>2 - Marginal</div>
             </div>
             <div class="legend-col">
-              <div class="legend-header" style="color:#F27D00;">HUMAN</div>
+              <div class="legend-header">HUMAN</div>
               <div>3 - Proficient</div>
               <div>4 - Exceptional</div>
               <div>5 - Excellent</div>
               <div>6 - Elite</div>
             </div>
             <div class="legend-col">
-              <div class="legend-header" style="color:#FCD200;">SUPERIOR</div>
+              <div class="legend-header">SUPER HUMAN</div>
               <div>7 - Extraordinary</div>
               <div>8 - Superior</div>
               <div>9 - Phenomenal</div>
               <div>10 - Apex</div>
             </div>
             <div class="legend-col">
-              <div class="legend-header" style="color:#FFFFD2;">TRANSCENDENT</div>
+              <div class="legend-header">TRANSCENDENT</div>
               <div>11 - Transcendent</div>
             </div>
           </div>
@@ -980,7 +980,7 @@
       border.setAttribute('cx',cx);border.setAttribute('cy',cy);border.setAttribute('r',maxR);
       border.setAttribute('fill','none');border.setAttribute('stroke','#aac4e0');border.setAttribute('stroke-width','1');
       svg.appendChild(border);
-      const desc=['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
+      const desc=['None','Deficient','Marginal','Proficient','Exceptional','Excellent','Elite','Extraordinary','Superior','Phenomenal','Apex','Transcendent'];
       stats.forEach(s=>{
         const val=Math.min(Math.max(parseInt(char[s.key])||0,0),11);
         const px=cx+(maxR+40)*Math.cos(toRad(s.angle)), py=cy+(maxR+40)*Math.sin(toRad(s.angle));
