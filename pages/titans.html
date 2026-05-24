@@ -750,6 +750,7 @@
     const ARCHETYPE_OPTIONS  = ['Brick','Striker','Protector','Tactician','Occultist','Gadgeteer','Sapper','Speedster','Shooter','Manipulator','Infiltrator'];
     const MOTIVATION_OPTIONS = ['Adventure','Responsibility','Redemption','Justice','Wealth','Power','Escape','Revenge'];
     const TRAUMA_OPTIONS     = ['Violence','Betrayal','Loss','Shame','Conditioning'];
+    const GENDER_OPTIONS     = ['Male','Female','Androgynous','Indeterminate'];
 
 
     /* --- LOAD --- */
@@ -1124,11 +1125,12 @@
       // Bio fields
       [['bioIdentity','identity'],['bioSkin','skin'],['bioHair','hair'],['bioEyes','eyes'],
        ['bioHeight','height'],['bioWeight','weight'],['bioAge','age'],['bioOccupation','occupation'],
-       ['bioSpecies','species'],['bioCulture','culture'],['bioGender','gender']]
+       ['bioSpecies','species'],['bioCulture','culture']]
       .forEach(([id,f])=>rep(id,inp(char[f],f)));
 
       rep('bioStatus', sel('status', STATUS_OPTIONS, char.status));
       rep('bioOperations', sel('area_of_operations', OPERATIONS_OPTIONS, char.area_of_operations));
+      rep('bioGender', sel('gender', GENDER_OPTIONS, char.gender));
 
       [['bioMotivation','motivation',MOTIVATION_OPTIONS],['bioTrauma','trauma',TRAUMA_OPTIONS],
        ['abilArchetypes','archetype',ARCHETYPE_OPTIONS],['abilPowerOrigin','power_origin',ORIGIN_OPTIONS]]
