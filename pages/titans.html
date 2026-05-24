@@ -1232,7 +1232,7 @@
     sheetW = pageW - SIDEBAR;
     sheetH = sheetW * (11 / 8.5);
   }
-  sheet.style.setProperty('--sw', sheetW + 'px');
+  document.getElementById('print-sheet').style.setProperty('--sw', sheetW + 'px');
 }
 
 function populatePrintSheet(char) {
@@ -1269,7 +1269,7 @@ function populatePrintSheet(char) {
 function drawPrintRadar(char) {
   const svg = document.getElementById('ps-radar-chart');
   svg.innerHTML = '';
-  const cx=150, cy=150, maxR=100, rings=11;
+  const cx=150, cy=105, maxR=70, rings=11;
   const ringColors=['#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00','#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'];
   const yOff=maxR*0.12;
   const stats=[
