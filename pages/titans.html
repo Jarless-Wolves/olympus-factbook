@@ -1387,13 +1387,13 @@ function drawPrintRadar(char) {
     const lbl=document.createElementNS(ns,'text');
     lbl.setAttribute('x',px);lbl.setAttribute('y',py+s.yOffset);
     lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
-    lbl.setAttribute('font-family','Bebas Neue, sans-serif');lbl.setAttribute('font-size','13');lbl.setAttribute('fill','#111');
+    lbl.setAttribute('font-family','Bebas Neue, sans-serif');lbl.setAttribute('font-size','11');lbl.setAttribute('fill','#111');
     lbl.textContent=`${s.label.toUpperCase()} ${val}`;
     svg.appendChild(lbl);
     const d=document.createElementNS(ns,'text');
     d.setAttribute('x',px);d.setAttribute('y',py+14+s.yOffset);
     d.setAttribute('text-anchor','middle');d.setAttribute('dominant-baseline','middle');
-    d.setAttribute('font-family','Barlow Condensed, sans-serif');d.setAttribute('font-size','11');d.setAttribute('fill','#444');
+    d.setAttribute('font-family','Barlow Condensed, sans-serif');d.setAttribute('font-size','9');d.setAttribute('fill','#444');
     d.textContent=desc[val]||'';
     svg.appendChild(d);
   });
