@@ -625,10 +625,19 @@
     margin-top: calc(var(--sw) * 0.01);
   }
 
-  .ps-row {
-    display: flex;
-    gap: 6px;
-  }
+  .ps-row { display: flex; gap: 6px; }
+
+    .ps-row-double {
+      display: flex;
+      gap: 4px;
+    }
+
+    .ps-half {
+      flex: 1;
+      display: flex;
+      gap: 4px;
+      min-width: 0;
+    }
 
   .ps-label {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -998,22 +1007,36 @@
       <div class="ps-middle">
         <div class="ps-bio">
           <div class="ps-section-title">Biographical Data</div>
-          <div class="ps-fields">
+<div class="ps-fields">
             <div class="ps-row"><span class="ps-label">Identity</span><span class="ps-value" id="ps-identity"></span></div>
-            <div class="ps-row"><span class="ps-label">Gender</span><span class="ps-value" id="ps-gender"></span></div>
-            <div class="ps-row"><span class="ps-label">Species</span><span class="ps-value" id="ps-species"></span></div>
-            <div class="ps-row"><span class="ps-label">Skin</span><span class="ps-value" id="ps-skin"></span></div>
-            <div class="ps-row"><span class="ps-label">Hair</span><span class="ps-value" id="ps-hair"></span></div>
-            <div class="ps-row"><span class="ps-label">Eyes</span><span class="ps-value" id="ps-eyes"></span></div>
-            <div class="ps-row"><span class="ps-label">Height</span><span class="ps-value" id="ps-height"></span></div>
-            <div class="ps-row"><span class="ps-label">Weight</span><span class="ps-value" id="ps-weight"></span></div>
-            <div class="ps-row"><span class="ps-label">Age</span><span class="ps-value" id="ps-age"></span></div>
-            <div class="ps-row"><span class="ps-label">Occupation</span><span class="ps-value" id="ps-occupation"></span></div>
-            <div class="ps-row"><span class="ps-label">Culture</span><span class="ps-value" id="ps-culture"></span></div>
-            <div class="ps-row"><span class="ps-label">Status</span><span class="ps-value" id="ps-status"></span></div>
-            <div class="ps-row"><span class="ps-label">Operations</span><span class="ps-value" id="ps-operations"></span></div>
-            <div class="ps-row"><span class="ps-label">Motivation</span><span class="ps-value" id="ps-motivation"></span></div>
-            <div class="ps-row"><span class="ps-label">Trauma</span><span class="ps-value" id="ps-trauma"></span></div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Status</span><span class="ps-value" id="ps-status"></span></div>
+              <div class="ps-half"><span class="ps-label">Operations</span><span class="ps-value" id="ps-operations"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Species</span><span class="ps-value" id="ps-species"></span></div>
+              <div class="ps-half"><span class="ps-label">Gender</span><span class="ps-value" id="ps-gender"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Height</span><span class="ps-value" id="ps-height"></span></div>
+              <div class="ps-half"><span class="ps-label">Weight</span><span class="ps-value" id="ps-weight"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Skin</span><span class="ps-value" id="ps-skin"></span></div>
+              <div class="ps-half"><span class="ps-label">Hair</span><span class="ps-value" id="ps-hair"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Eyes</span><span class="ps-value" id="ps-eyes"></span></div>
+              <div class="ps-half"><span class="ps-label">Age</span><span class="ps-value" id="ps-age"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Culture</span><span class="ps-value" id="ps-culture"></span></div>
+              <div class="ps-half"><span class="ps-label">Occupation</span><span class="ps-value" id="ps-occupation"></span></div>
+            </div>
+            <div class="ps-row-double">
+              <div class="ps-half"><span class="ps-label">Motivation</span><span class="ps-value" id="ps-motivation"></span></div>
+              <div class="ps-half"><span class="ps-label">Trauma</span><span class="ps-value" id="ps-trauma"></span></div>
+            </div>
           </div>
           <div class="ps-bg-label">Background</div>
           <div class="ps-bg-value" id="ps-background"></div>
