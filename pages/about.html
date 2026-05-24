@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLYMPUS — About</title>
+  <link rel="stylesheet" href="../components/shared/base.css">
+  <style>
+
+    /* ============================================================
+       ABOUT PAGE STYLES
+       ============================================================ */
+
+    /* --- LANDING (no query string) --- */
+
+    .about-hero {
+      padding: 40px 48px 28px;
+    }
+
+    .about-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 4px;
+    }
+
+    .about-hero .subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .about-rule {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 0 48px 36px;
+    }
+
+    .about-body {
+      padding: 0 48px 52px;
+    }
+
+    .about-intro p {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text-dim);
+      margin-bottom: 1.2em;
+    }
+
+    .about-intro p:last-child { margin-bottom: 0; }
+
+    .section-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .section-card {
+      background: var(--bg-panel);
+      width: 260px;
+      border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--border-accent);
+      padding: 20px 22px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.15s, border-top-color 0.15s;
+      cursor: pointer;
+    }
+
+    .section-card:hover {
+      background: #243d52;
+      border-top-color: var(--text-dim);
+    }
+
+    .section-card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .section-card-desc {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+
+    .section-card-status {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      margin-top: 14px;
+      color: var(--text-primary);
+    }
+
+    /* --- CONTENT PAGE (with query string) --- */
+
+    #view-landing  { display: block; }
+    #view-content  { display: none;  }
+
+    .content-layout {
+      display: flex;
+      flex-direction: row;
+      min-height: calc(100vh - 176px); /* topbar+nav+breadcrumbs+footer */
+    }
+
+    /* Sidebar */
+    .content-sidebar {
+      width: 52px;
+      min-width: 52px;
+      background: var(--bg-panel-mid);
+      border-right: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 0;
+      gap: 4px;
+    }
+
+    .sidebar-btn {
+      background: none;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 5px 2px;
+      cursor: pointer;
+      width: 38px;
+      text-align: center;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1.2;
+    }
+
+    .sidebar-btn:hover {
+      background: var(--bg-panel);
+      color: var(--text-primary);
+    }
+
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-divider {
+      width: 30px;
+      border: none;
+      border-top: 1px solid var(--border-strong);
+      margin: 4px 0;
+    }
+
+    .sidebar-btn.save  { color: #6bcc6b; border-color: #449944; }
+    .sidebar-btn.danger { color: #ff6b6b; border-color: #cc4444; }
+
+    /* Main content area */
+    .content-main {
+      flex: 1;
+      padding: 28px 48px 52px;
+      min-width: 0;
+      overflow-y: auto;
+    }
+
+    .content-page-title {
+      font-family: 'Red Circle', sans-serif;
+      font-size: 36px;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .content-page-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-mid);
+    }
+
+    /* Sections */
+    .content-section {
+      margin-bottom: 36px;
+    }
+
+    .content-section-header {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 4px;
+      margin-bottom: 14px;
+    }
+
+    .content-section-body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 13px;
+      line-height: 1.9;
+      color: var(--text-dim);
+      white-space: pre-wrap;
+    }
+
+    /* Image handling */
+    .content-section-img-full {
+      width: 100%;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .content-section-img-left {
+      float: left;
+      max-width: 40%;
+      margin: 0 20px 12px 0;
+    }
+
+    .content-section-img-right {
+      float: right;
+      max-width: 40%;
+      margin: 0 0 12px 20px;
+    }
+
+    .content-section-img-full img,
+    .content-section-img-left img,
+    .content-section-img-right img {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--border-strong);
+    }
+
+    .content-section-clearfix::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    /* Empty state */
+    .content-empty {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: var(--text-disabled);
+      text-align: center;
+      padding: 60px 0;
+      text-transform: uppercase;
+    }
+
+    /* Loading state */
+    .content-loading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 40px 0;
+    }
+
+    /* --- EDIT MODE --- */
+
+    .edit-section {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-accent);
+      border-radius: 2px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .edit-section-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+
+    .edit-section-btn {
+      background: none;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .edit-section-btn:hover {
+      background: var(--bg-panel-mid);
+      color: var(--text-primary);
+    }
+
+    .edit-section-btn.danger {
+      border-color: #cc4444;
+      color: #ff6b6b;
+    }
+
+    .edit-section-btn.danger:hover {
+      background: rgba(204,68,68,0.15);
+    }
+
+    .edit-input {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
+      border-radius: 2px;
+      padding: 4px 8px;
+      color: var(--text-primary);
+      width: 100%;
+      outline: none;
+    }
+
+    .edit-input:focus {
+      border-color: var(--text-mid);
+      background: var(--bg-panel);
+    }
+
+    .edit-textarea {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 13px;
+      line-height: 1.9;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
+      border-radius: 2px;
+      padding: 6px 8px;
+      color: var(--text-dim);
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .edit-textarea:focus {
+      border-color: var(--text-mid);
+      background: var(--bg-panel);
+    }
+
+    .edit-image-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .edit-image-url {
+      flex: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
+      border-radius: 2px;
+      padding: 4px 8px;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .edit-image-url:focus {
+      border-color: var(--text-mid);
+    }
+
+    .edit-select {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
+      border-radius: 2px;
+      padding: 4px 8px;
+      color: var(--text-primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .edit-image-upload {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      background: var(--bg-panel-mid);
+      border: 1px solid var(--border-accent);
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .edit-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 2px;
+    }
+
+    .edit-add-section {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      background: none;
+      border: 1px dashed var(--border-accent);
+      color: var(--text-faint);
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .edit-add-section:hover {
+      background: var(--bg-panel);
+      color: var(--text-mid);
+    }
+
+  </style>
+</head>
+<body class="page-body has-breadcrumbs">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a class="topbar-wordmark" href="index.html">
+      <div class="topbar-seal">
+        <img src="https://aopklhrfxtyhglznelua.supabase.co/storage/v1/object/public/assets/OLYMPUS%20Seal.svg" alt="OLYMPUS Seal" style="width:64px;height:64px;">
+      </div>
+      <span class="topbar-name">OLYMPUS</span>
+      <span class="topbar-fullname">Office for the Legislative<br>Management of Powers<br>in the United States</span>
+    </a>
+    <button class="topbar-login" id="btnLogin" onclick="handleLogin()" title="Login with GitHub">&#9650;</button>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-item"><a class="nav-link" href="index.html">Home</a></div>
+    <div class="nav-item"><a class="nav-link" href="titans.html">Titan Registry</a></div>
+    <div class="nav-item" id="nav-world">
+      <div class="nav-link" onclick="toggleNav('nav-world')">World <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="locations.html" class="disabled">Locations</a>
+        <a href="organizations.html" class="disabled">Organizations</a>
+        <a href="events.html" class="disabled">Events</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-catalog">
+      <div class="nav-link" onclick="toggleNav('nav-catalog')">Catalog <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="artifacts.html" class="disabled">Artifacts</a>
+        <a href="substances.html" class="disabled">Substances</a>
+        <a href="phenomena.html" class="disabled">Phenomena</a>
+      </div>
+    </div>
+    <div class="nav-item" id="nav-about">
+      <div class="nav-link" onclick="toggleNav('nav-about')">About <span class="caret">&#9660;</span></div>
+      <div class="nav-dropdown">
+        <a href="about.html?page=about-olympus">About OLYMPUS</a>
+        <a href="about.html?page=about-project">About This Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMBS -->
+  <div class="breadcrumbs" id="breadcrumbs">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current" id="breadcrumb-current">About</span>
+  </div>
+
+
+  <!-- ============================================================
+       LANDING VIEW (no query string)
+       ============================================================ -->
+  <div id="view-landing">
+    <div class="about-hero">
+      <h1>About</h1>
+      <div class="subtitle">OLYMPUS Titan Factbook</div>
+    </div>
+    <hr class="about-rule">
+    <div class="about-body">
+      <div class="about-intro">
+        <p>This section provides background on the OLYMPUS Titan Factbook — both the in-universe institutional context of the Office for the Legislative Management of Powers, and information about the project itself, its creator, and the tools and methods behind it.</p>
+      </div>
+      <div class="section-cards">
+        <a class="section-card" href="about.html?page=about-olympus">
+          <div class="section-card-title">About OLYMPUS</div>
+          <div class="section-card-desc">The mandate, structure, and history of the Office for the Legislative Management of Powers in the United States.</div>
+          <div class="section-card-status">Read More &rarr;</div>
+        </a>
+        <a class="section-card" href="about.html?page=about-project">
+          <div class="section-card-title">About This Project</div>
+          <div class="section-card-desc">The people, tools, and creative vision behind the OLYMPUS Titan Factbook.</div>
+          <div class="section-card-status">Read More &rarr;</div>
+        </a>
+      </div>
+      <div class="classified-note">All information subject to review under the Adamantine Restraint Act of 2008. Unauthorized reproduction or distribution is prohibited.</div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       CONTENT VIEW (with query string)
+       ============================================================ -->
+  <div id="view-content">
+    <div class="content-layout">
+
+      <!-- SIDEBAR -->
+      <div class="content-sidebar">
+        <button class="sidebar-btn" onclick="goBack()" title="Back">&#8592;<br>Back</button>
+        <hr class="sidebar-divider">
+        <div class="sidebar-spacer"></div>
+
+        <!-- Admin controls — view mode -->
+        <div id="adminControls" style="display:none; flex-direction:column; align-items:center; gap:4px;">
+          <button class="sidebar-btn" onclick="enterEditMode()">Edit</button>
+        </div>
+
+        <!-- Edit controls -->
+        <div id="editControls" style="display:none; flex-direction:column; align-items:center; gap:4px;">
+          <button class="sidebar-btn save" onclick="savePage()">Save</button>
+          <button class="sidebar-btn" onclick="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="content-main" id="contentMain">
+        <div class="content-loading">Loading&hellip;</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    OLYMPUS&trade; and the OLYMPUS Titan Factbook&trade; are fictional creations and trademarks of David M. Arnold. OLYMPUS has no affiliation with the United States government or any actual federal body. All characters and content &copy; 2026 David M. Arnold. All rights reserved.
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../components/shared/utils.js"></script>
+  <script>
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+
+    let pageSlug   = null;
+    let sections   = [];   // current saved sections from Supabase
+    let editState  = [];   // working copy during edit mode
+    let isEditMode = false;
+    let isDirty    = false;
+
+    const PAGE_TITLES = {
+      'about-olympus':  { title: 'About OLYMPUS',      subtitle: 'Institutional Overview' },
+      'about-project':  { title: 'About This Project', subtitle: 'Project Information'    },
+    };
+
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      pageSlug = params.get('page');
+
+      if (pageSlug) {
+        // Content view
+        document.getElementById('view-landing').style.display = 'none';
+        document.getElementById('view-content').style.display = 'block';
+        updateBreadcrumb();
+        waitForDb(() => loadPage());
+      } else {
+        // Landing view — hide breadcrumb depth
+        document.getElementById('breadcrumb-current').textContent = 'About';
+      }
+    });
+
+    function waitForDb(cb) {
+      const t = setInterval(() => {
+        if (typeof db !== 'undefined') { clearInterval(t); cb(); }
+      }, 50);
+    }
+
+    function updateBreadcrumb() {
+      const meta = PAGE_TITLES[pageSlug];
+      const title = meta ? meta.title : 'About';
+      document.getElementById('breadcrumb-current').innerHTML =
+        `<a href="about.html">About</a><span class="sep">›</span><span class="current">${title}</span>`;
+    }
+
+    function updateAdminUI() {
+      const ac = document.getElementById('adminControls');
+      if (!currentUser) { ac.style.display = 'none'; return; }
+      ac.style.display = 'flex';
+    }
+
+
+    /* ============================================================
+       LOAD & RENDER
+       ============================================================ */
+
+    async function loadPage() {
+      let query = db.from('content_pages')
+        .select('*')
+        .eq('page_slug', pageSlug)
+        .order('sort_order');
+
+      if (!currentUser) query = query.eq('publish', true);
+
+      const { data, error } = await query;
+      if (error) { console.error(error); return; }
+
+      sections = data || [];
+      renderPage();
+      updateAdminUI();
+    }
+
+    function renderPage() {
+      const meta = PAGE_TITLES[pageSlug] || { title: pageSlug, subtitle: '' };
+      const main = document.getElementById('contentMain');
+
+      let html = `
+        <div class="content-page-title">${meta.title}</div>
+        <div class="content-page-subtitle">${meta.subtitle}</div>
+      `;
+
+      if (!sections.length) {
+        html += `<div class="content-empty">No content published yet.</div>`;
+      } else {
+        sections.forEach(s => {
+          html += renderSection(s);
+        });
+      }
+
+      main.innerHTML = html;
+    }
+
+    function renderSection(s) {
+      let imgHtml = '';
+      if (s.image_url) {
+        const alignClass = {
+          full:  'content-section-img-full',
+          left:  'content-section-img-left',
+          right: 'content-section-img-right',
+        }[s.image_align] || 'content-section-img-full';
+        imgHtml = `<div class="${alignClass}"><img src="${escHtml(s.image_url)}" alt=""></div>`;
+      }
+
+      const bodyHtml = s.section_body
+        ? `<div class="content-section-body">${escHtml(s.section_body)}</div>`
+        : '';
+
+      return `
+        <div class="content-section content-section-clearfix">
+          ${s.section_title ? `<div class="content-section-header">${escHtml(s.section_title)}</div>` : ''}
+          ${s.image_align === 'left'  ? imgHtml + bodyHtml : ''}
+          ${s.image_align === 'right' ? bodyHtml + imgHtml : ''}
+          ${(!s.image_align || s.image_align === 'full') ? imgHtml + bodyHtml : ''}
+        </div>
+      `;
+    }
+
+
+    /* ============================================================
+       EDIT MODE
+       ============================================================ */
+
+    function enterEditMode() {
+      if (!currentUser) return;
+      isEditMode = true;
+      isDirty = false;
+
+      // Deep copy sections into editState
+      editState = sections.map(s => ({ ...s }));
+
+      document.getElementById('adminControls').style.display = 'none';
+      document.getElementById('editControls').style.display = 'flex';
+
+      renderEditMode();
+    }
+
+    function cancelEdit() {
+      if (isDirty && !confirm('Discard unsaved changes?')) return;
+      isEditMode = false;
+      isDirty = false;
+      document.getElementById('editControls').style.display = 'none';
+      document.getElementById('adminControls').style.display = 'flex';
+      renderPage();
+    }
+
+    function renderEditMode() {
+      const meta = PAGE_TITLES[pageSlug] || { title: pageSlug, subtitle: '' };
+      const main = document.getElementById('contentMain');
+
+      let html = `
+        <div class="content-page-title">${meta.title}</div>
+        <div class="content-page-subtitle">${meta.subtitle}</div>
+        <div id="editSections"></div>
+        <button class="edit-add-section" onclick="addSection()">+ Add Section</button>
+      `;
+
+      main.innerHTML = html;
+      renderEditSections();
+    }
+
+    function renderEditSections() {
+      const container = document.getElementById('editSections');
+      if (!container) return;
+      container.innerHTML = '';
+
+      editState.forEach((s, i) => {
+        const div = document.createElement('div');
+        div.className = 'edit-section';
+        div.dataset.index = i;
+
+        div.innerHTML = `
+          <div class="edit-section-controls">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);flex:1;">Section ${i + 1}</span>
+            ${i > 0 ? `<button class="edit-section-btn" onclick="moveSection(${i}, -1)">&#9650; Up</button>` : ''}
+            ${i < editState.length - 1 ? `<button class="edit-section-btn" onclick="moveSection(${i}, 1)">&#9660; Down</button>` : ''}
+            <button class="edit-section-btn danger" onclick="removeSection(${i})">Delete</button>
+          </div>
+
+          <div class="edit-label">Section Title</div>
+          <input class="edit-input" type="text" value="${escAttr(s.section_title || '')}"
+            oninput="updateField(${i}, 'section_title', this.value)">
+
+          <div class="edit-label">Body Text</div>
+          <textarea class="edit-textarea"
+            oninput="updateField(${i}, 'section_body', this.value)">${escHtml(s.section_body || '')}</textarea>
+
+          <div class="edit-label">Image</div>
+          <div class="edit-image-row">
+            <input class="edit-image-url" type="text" placeholder="Image URL or upload below…"
+              value="${escAttr(s.image_url || '')}"
+              oninput="updateField(${i}, 'image_url', this.value)">
+            <select class="edit-select" onchange="updateField(${i}, 'image_align', this.value)">
+              <option value="">No Image</option>
+              <option value="full"  ${s.image_align === 'full'  ? 'selected' : ''}>Full Width</option>
+              <option value="left"  ${s.image_align === 'left'  ? 'selected' : ''}>Float Left</option>
+              <option value="right" ${s.image_align === 'right' ? 'selected' : ''}>Float Right</option>
+            </select>
+          </div>
+          <input type="file" accept="image/*" class="edit-image-upload"
+            onchange="uploadImage(${i}, this)">
+
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+            <input type="checkbox" id="pub-${i}" ${s.publish ? 'checked' : ''}
+              onchange="updateField(${i}, 'publish', this.checked)">
+            <label for="pub-${i}" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--text-faint);cursor:pointer;letter-spacing:0.06em;">Published</label>
+          </div>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    function updateField(index, field, value) {
+      isDirty = true;
+      editState[index][field] = value;
+    }
+
+    function addSection() {
+      isDirty = true;
+      editState.push({
+        page_slug:     pageSlug,
+        sort_order:    editState.length,
+        section_title: '',
+        section_body:  '',
+        image_url:     null,
+        image_align:   null,
+        publish:       false,
+      });
+      renderEditSections();
+      // Scroll to bottom
+      const container = document.getElementById('editSections');
+      if (container) container.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function removeSection(index) {
+      if (!confirm('Delete this section?')) return;
+      isDirty = true;
+      editState.splice(index, 1);
+      renderEditSections();
+    }
+
+    function moveSection(index, dir) {
+      isDirty = true;
+      const target = index + dir;
+      if (target < 0 || target >= editState.length) return;
+      [editState[index], editState[target]] = [editState[target], editState[index]];
+      renderEditSections();
+    }
+
+    async function uploadImage(index, input) {
+      const file = input.files[0];
+      if (!file) return;
+      const ext  = file.name.split('.').pop();
+      const path = `about/${pageSlug}-${Date.now()}.${ext}`;
+      const { error } = await db.storage.from('mhr_pics').upload(path, file, { upsert: true });
+      if (error) { alert('Upload failed: ' + error.message); return; }
+      const { data: u } = db.storage.from('mhr_pics').getPublicUrl(path);
+      updateField(index, 'image_url', u.publicUrl);
+      // Update the URL input to reflect the uploaded path
+      renderEditSections();
+    }
+
+
+    /* ============================================================
+       SAVE
+       ============================================================ */
+
+    async function savePage() {
+      // Assign sort_order by current position
+      editState.forEach((s, i) => { s.sort_order = i; s.page_slug = pageSlug; });
+
+      // Determine which sections are new (no id) vs existing
+      const toUpsert = editState.map(s => {
+        const rec = {
+          page_slug:     s.page_slug,
+          sort_order:    s.sort_order,
+          section_title: s.section_title || null,
+          section_body:  s.section_body  || null,
+          image_url:     s.image_url     || null,
+          image_align:   s.image_align   || null,
+          publish:       s.publish       || false,
+        };
+        if (s.id) rec.id = s.id;
+        return rec;
+      });
+
+      // Find IDs that have been deleted
+      const savedIds  = sections.map(s => s.id).filter(Boolean);
+      const editIds   = editState.map(s => s.id).filter(Boolean);
+      const deletedIds = savedIds.filter(id => !editIds.includes(id));
+
+      // Delete removed sections
+      if (deletedIds.length) {
+        const { error } = await db.from('content_pages').delete().in('id', deletedIds);
+        if (error) { alert('Delete failed: ' + error.message); return; }
+      }
+
+      // Upsert remaining
+      const { data, error } = await db.from('content_pages').upsert(toUpsert).select();
+      if (error) { alert('Save failed: ' + error.message); return; }
+
+      sections   = data;
+      isEditMode = false;
+      isDirty    = false;
+
+      document.getElementById('editControls').style.display = 'none';
+      document.getElementById('adminControls').style.display = 'flex';
+
+      renderPage();
+    }
+
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+
+    function goBack() {
+      if (isDirty && !confirm('Discard unsaved changes?')) return;
+      window.location.href = 'about.html';
+    }
+
+
+    /* ============================================================
+       UTILITIES
+       ============================================================ */
+
+    function escHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escAttr(str) {
+      if (!str) return '';
+      return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+  </script>
+
+</body>
+</html>
