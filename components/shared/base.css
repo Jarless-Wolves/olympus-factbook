@@ -244,7 +244,7 @@ button {
   transition: transform 0.2s;
 }
 
-.nav-item.open .caret {
+.nav-item:hover .caret {
   transform: rotate(180deg);
 }
 
@@ -262,7 +262,7 @@ button {
   box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-.nav-item.open .nav-dropdown {
+.nav-item:hover .nav-dropdown {
   display: block;
 }
 
