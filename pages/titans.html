@@ -684,9 +684,9 @@
           <div class="bio-row"><span class="bio-label">Power Origin</span><span class="bio-value" id="abilPowerOrigin"></span></div>
           <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
 
-          <div class="bio-section-title" style="margin-bottom:0;">Ability Scales</div>
+          <div class="bio-section-title">Ability Scales</div>
           <div id="radarContainer">
-            <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
+            <svg id="radarChart" viewBox="0 20 300 260" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
 
           <div class="radar-legend">
@@ -1165,7 +1165,7 @@
       const rc=document.getElementById('radarContainer');
       rc.innerHTML='';
       const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      svg.id='radarChart'; svg.setAttribute('viewBox','0 0 300 300');
+      svg.id='radarChart'; svg.setAttribute('viewBox','0 20 300 260');
       svg.style.cssText='width:100%;height:auto;display:block;';
       rc.appendChild(svg);
       drawRadar(char);
