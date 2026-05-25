@@ -857,17 +857,24 @@
       }
 
       // Upsert remaining
-      const { data, error } = await db.from('content_pages').upsert(toUpsert).select();
-      if (error) { alert('Save failed: ' + error.message); return; }
-
-      sections   = data;
+      const toInsert = toUpsert.filter(s => !s.id);
+      const toUpdate = toUpsert.filter(s => s.id);
+      
+      if (toInsert.length) {
+        const { error: insertError } = await db.from('content_pages').insert(toInsert);
+        if (insertError) { alert('Save failed: ' + insertError.message); return; }
+      }
+      
+      if (toUpdate.length) {
+        for (const rec of toUpdate) {
+          const { error: updateError } = await db.from('content_pages').update(rec).eq('id', rec.id);
+          if (updateError) { alert('Save failed: ' + updateError.message); return; }
+        }
+      }
+      
       isEditMode = false;
-      isDirty    = false;
-
-      document.getElementById('editControls').style.display = 'none';
-      document.getElementById('adminControls').style.display = 'flex';
-
-      renderPage();
+      isDirty = false;
+      window.location.reload();
     }
 
 
