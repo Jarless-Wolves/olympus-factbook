@@ -840,6 +840,7 @@
           image_align:   s.image_align   || null,
           publish:       s.publish       || false,
         };
+        delete rec.id;
         if (s.id) rec.id = s.id;
         return rec;
       });
